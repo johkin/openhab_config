@@ -1,12 +1,12 @@
-Group Astro
+Group gAstro
 // shows the sunrise
-DateTime Sunrise_Time  "Sunrise [%1$tH:%1$tM]" (Astro) {astro="planet=sun, type=rise, property=start"}
+DateTime Sunrise_Time  "Sunrise [%1$tH:%1$tM]" (gAstro) {astro="planet=sun, type=rise, property=start"}
 
 // schedules a event which starts 15 minutes AFTER sunrise
-Switch Sunrise_Event (Astro) {astro="planet=sun, type=rise, property=start, offset=15"}
+Switch Sunrise_Event (gAstro) {astro="planet=sun, type=rise, property=start, offset=15"}
 
 // shows the sunset
-DateTime Sunset_Time "Sunset [%1$tH:%1$tM]" (Astro) {astro="planet=sun, type=set, property=end"}
+DateTime Sunset_Time "Sunset [%1$tH:%1$tM]" (gAstro) {astro="planet=sun, type=set, property=end"}
 
 // schedules a event which starts 15 minutes BEFORE sunset:
-Switch Sunset_Event (Astro) {astro="planet=sun, type=set, property=end, offset=-15"}
+Switch Sunset_Event (gAstro) {astro="planet=sun, type=set, property=end, offset=-15"}
