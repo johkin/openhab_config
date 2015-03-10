@@ -1,0 +1,14 @@
+Group All "Allt"
+Group	gFirstFloor	"Övervåning"	<firstfloor> (All)
+Group gGroundFloor "Nedervåning" <groundfloor>   	(All)
+Group gOutdoor "Utomhus" <garden>		(All)
+Group gFrontside "Framsida" <garden>		(gOutdoor)
+Group gBackside "Baksida" <garden>		(gOutdoor)
+Group Status    	(All)
+Group gBattery 		(All)
+Group gLight		(All)
+Group gNight	(All)
+Group gAway	(All)
+
+/* NTP binding demo item */
+DateTime Date	"Dato [%1$tA, %1$td.%1$tm.%1$tY]"	<calendar>	{ ntp="Europe/Stockholm:sv_SE" }
