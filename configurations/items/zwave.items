@@ -1,9 +1,11 @@
 Group All "Allt"
 Group	gFirstFloor	"Övervåning"	<firstfloor> (All)
+Group	gGuestRoom	"Gästrum"	<firstfloor> (gFirstFloor)
+Group	gShower	"Dusch"	<bath> (gFirstFloor)
 Group gGroundFloor "Nedervåning" <groundfloor>   	(All)
 Group gOutdoor "Utomhus" <garden>		(All)
 Group gFrontside "Framsida" <garden>		(gOutdoor)
-Group gBackside "Baksida" <garden>		(gOutdoor)
+Group gBackside "Baksida" <garden2>		(gOutdoor)
 Group Status    	(All)
 Group gBattery 		(All)
 Group gLight		(All)
@@ -11,4 +13,13 @@ Group gNight	(All)
 Group gAway	(All)
 
 /* NTP binding demo item */
-DateTime Date	"Dato [%1$tA, %1$td.%1$tm.%1$tY]"	<calendar>	{ ntp="Europe/Stockholm:sv_SE" }
+DateTime Date	"Datum [%1$tA, %1$td.%1$tm.%1$tY]"	<calendar>	{ ntp="Europe/Stockholm:sv_SE" }
+
+Switch Guestroom_Light_Window <light> (gGuestRoom,gLight)
+Dimmer Shower_Dimmer <light> (gShower,gLight)
+
+
+
+/* Modes 0=HOME, 1=NIGHT, 2=AWAY */
+Number mode "Mode:" <present>
+Number previous_mode

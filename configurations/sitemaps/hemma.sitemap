@@ -1,4 +1,4 @@
-sitemap demo label="Main Menu"
+sitemap demo label="Hemma"
 {
 	Frame {
 		Group item=gFirstFloor label="Övervåning" icon="firstfloor"
@@ -6,5 +6,10 @@ sitemap demo label="Main Menu"
 		Group item=gOutdoor label="Utomhus" icon="garden"
 		Group item=gSystem label="Teknikrummet" icon="garden"
 	}
-	
+	Frame label="Närvaro" {
+		Text label="Läge" icon="present" {
+			Switch item=mode mappings=[0="Hemma", 1="Natt", 2="Borta"]
+			
+		}
+	}
 }
