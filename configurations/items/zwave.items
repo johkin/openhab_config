@@ -20,7 +20,7 @@ Switch Guestroom_Light_Window "Belysning fönster" <light> (gGuestRoom,gLight)
 
 Dimmer Shower_Dimmer <light> (gShower,gLight)
 
-Dimmer Allroom_Wall_Dimmer "Belysning hylla" <light> (gAllRoom,gLight) { zwave="2:1:command=SWITCH_MULTILEVEL,restore_last_value=true" } 
+Dimmer Allroom_Wall_Dimmer "Belysning hylla" <light> (gAllRoom,gLight) { zwave="2:command=SWITCH_MULTILEVEL,restore_last_value=true" } 
 
 
 /* Modes 0=HOME, 1=NIGHT, 2=AWAY */
