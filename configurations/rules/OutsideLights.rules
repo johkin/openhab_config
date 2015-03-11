@@ -11,8 +11,8 @@ end
 
 rule "Tänd utebelysning morgon"
 when
-	Time cron "0 0 6 * * MON-FRI" or
-	Time cron "0 0 7 * * SAT-SUN"
+	Time cron "0 0 6 ? * MON-FRI" or
+	Time cron "0 0 7 ? * SAT-SUN"
 then
 	val SunriseTime = Sunrise_Time.state as DateTimeType
     val jodaSunriseTime = new DateTime(SunriseTime.calendar.timeInMillis)
@@ -34,8 +34,8 @@ end
 
 rule "Släck utebelysning kväll"
 when
-	Time cron "0 30 22 * * MON-THU,SUN" or
-	Time cron "0 30 23 * * FRI-SAT"
+	Time cron "0 30 22 ? * MON-THU,SUN" or
+	Time cron "0 30 23 ? * FRI-SAT"
 then
 	FrontSide_Light.send(OFF)
 	BackSide_Light.send(OFF)
