@@ -2,11 +2,12 @@ Group All "Allt"
 Group	gFirstFloor	"Övervåning"	<firstfloor> (All)
 Group	gGuestRoom	"Gästrum"	<firstfloor> (gFirstFloor)
 Group	gAllRoom	"Allrum"	<firstfloor> (gFirstFloor)
-Group	gShower	"Dusch"	<bath> (gFirstFloor)
+Group	gShower	"Dusch"			<bath> (gFirstFloor)
 Group gGroundFloor "Nedervåning" <groundfloor>   	(All)
-Group gOutdoor "Utomhus" <garden>		(All)
-Group gFrontside "Framsida" <garden>		(gOutdoor)
-Group gBackside "Baksida" <garden2>		(gOutdoor)
+Group gOutdoor "Utomhus" 		<garden>		(All)
+Group gFrontside "Framsida" 	<garden>		(gOutdoor)
+Group gBackside "Baksida" 		<garden>		(gOutdoor)
+Group gOutsideLights "Utebleysning" (gLight,gOutdoor)
 Group Status    	(All)
 Group gBattery 		(All)
 Group gLight		(All)
@@ -14,7 +15,7 @@ Group gNight	(All)
 Group gAway	(All)
 
 /* NTP binding demo item */
-DateTime Date	"Datum [%1$tA, %1$td.%1$tm.%1$tY]"	<calendar>	{ ntp="Europe/Stockholm:sv_SE" }
+DateTime Date "Datum [%1$tA, %1$td.%1$tm.%1$tY]"	<calendar>	{ ntp="Europe/Stockholm:sv_SE" }
 
 Switch Guestroom_Light_Window "Belysning fönster" <light> (gGuestRoom,gLight)
 
@@ -22,6 +23,8 @@ Dimmer Shower_Dimmer <light> (gShower,gLight)
 
 Dimmer Allroom_Wall_Dimmer "Belysning hylla [%d %%]" <light> (gAllRoom,gLight) { zwave="2:command=SWITCH_MULTILEVEL,restore_last_value=true" } 
 
+Switch FrontSide_Light "Belysning framsida" <light> (gFrontside, gOutsideLights, gLight)
+Switch BackSide_Light "Belysning baksida" <light> (gBackside, gOutsideLights, gLight)
 
 /* Modes 0=HOME, 1=NIGHT, 2=AWAY */
 Number mode "Mode:" <present>
