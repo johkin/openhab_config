@@ -8,7 +8,7 @@ sitemap demo label="Hemma"
 		Group item=gAstro label="Sol" icon="sun"
 	}
 	Frame label="Närvaro" {
-			Switch item=mode mappings=[0="Hemma", 1="Natt", 2="Borta"] label="Läge" icon="present" 
+			Selection item=mode mappings=[0="Hemma", 1="Natt", 2="Borta"] label="Läge" icon="present" 
 			
 		
 	}
