@@ -1,12 +1,12 @@
 import org.joda.time.*
 import org.openhab.core.library.types.DateTimeType
+import org.openhab.core.library.items.SwitchItem
 
 rule "Tänd utebelysning eftermiddag"
 when
 	Item Sunset_Event changed to ON
 then
-	FrontSide_Light.send(ON)
-	BackSide_Light.send(ON)
+	gOutsideLights.allMembers.forEach[light| light.sendCommand(ON)]
 end
 
 rule "Tänd utebelysning morgon"
@@ -18,8 +18,7 @@ then
     val jodaSunriseTime = new DateTime(SunriseTime.calendar.timeInMillis)
     
 	if (jodaSunriseTime.afterNow) {
-		FrontSide_Light.send(ON)
-		BackSide_Light.send(ON)	
+		gOutsideLights.allMembers.forEach[light| light.sendCommand(ON)]	
 	}
 end
 
@@ -28,8 +27,7 @@ rule "Släck utebelysning morgon"
 when
 	Item Sunrise_Event changed to ON
 then
-	FrontSide_Light.send(OFF)
-	BackSide_Light.send(OFF)
+	gOutsideLights.allMembers.forEach[light| light.sendCommand(OFF)]
 end
 
 rule "Släck utebelysning kväll"
@@ -37,6 +35,5 @@ when
 	Time cron "0 30 22 ? * MON-THU,SUN" or
 	Time cron "0 30 23 ? * FRI-SAT"
 then
-	FrontSide_Light.send(OFF)
-	BackSide_Light.send(OFF)
+	gOutsideLights.allMembers.forEach[light| light.sendCommand(OFF)]
 end
