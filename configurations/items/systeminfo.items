@@ -1,26 +1,25 @@
 Group gSystem
-Number loadAverage1min  "Load avg. 1min [%.1f]" (gSystem) { systeminfo="LoadAverage1Min:30000" }
-Number loadAverage5min  "Load avg. 5min [%.1f]" (gSystem) { systeminfo="LoadAverage5Min:30000" }
-Number loadAverage15min "Load avg. 15min [%.1f]" (gSystem) { systeminfo="LoadAverage15Min:30000" }
+Number loadAverage1min  "Load avg. 1min [%.1f]" (gSystem) { systeminfo="LoadAverage1Min:60000" }
+Number loadAverage5min  "Load avg. 5min [%.1f]" (gSystem) { systeminfo="LoadAverage5Min:300000" }
+Number loadAverage15min "Load avg. 15min [%.1f]" (gSystem) { systeminfo="LoadAverage15Min:600000" }
 
-Number cpuCombined  "CPU combined [%.1f]"   (gSystem) { systeminfo="CpuCombined:30000" }
+Number cpuCombined  "CPU combined [%.1f]"   (gSystem) { systeminfo="CpuCombined:60000" }
 
-Number uptime   "Server Uptime [%s]" (gSystem) { systeminfo="UptimeFormatted:30000" }
+Number uptime   "Server Uptime [%s]" (gSystem) { systeminfo="UptimeFormatted:60000" }
 
-Number memFreePercentPeriod "MemFree chart selected [%.1f]" (gSystem)
-Number memFreePercent   	"Mem free [%.1f%%]" (gSystem) { systeminfo="MemFreePercent:30000" }
-Number memUsed  			"Mem used [%.1f]"   (gSystem) { systeminfo="MemUsed:30000" }
-Number memUsedPercent   	"Mem used [%.1f%%]" (gSystem) { systeminfo="MemUsedPercent:30000" }
-Number memActualFree    	"Mem actual free [%.1f]"    (gSystem) { systeminfo="MemActualFree:30000" }
-Number memActualUsed    	"Mem actual used [%.1f]"    (gSystem) { systeminfo="MemActualUsed:30000" }
-Number memTotal 			"Mem total [%.1f]"  (gSystem) { systeminfo="MemTotal:30000" }
+Number memFreePercent   	"Mem free [%.1f%%]" (gSystem) { systeminfo="MemFreePercent:60000" }
+Number memUsed  			"Mem used [%.1f]"   (gSystem) { systeminfo="MemUsed:60000" }
+Number memUsedPercent   	"Mem used [%.1f%%]" (gSystem) { systeminfo="MemUsedPercent:60000" }
+Number memActualFree    	"Mem actual free [%.1f]"    (gSystem) { systeminfo="MemActualFree:60000" }
+Number memActualUsed    	"Mem actual used [%.1f]"    (gSystem) { systeminfo="MemActualUsed:60000" }
+Number memTotal 			"Mem total [%.1f]"  (gSystem) { systeminfo="MemTotal:60000" }
 
-Number swapFree 			"Swap free [%.1f]"  (gSystem) { systeminfo="SwapFree:30000" }
-Number swapTotal    		"Swap total [%.1f]" (gSystem) { systeminfo="SwapTotal:30000" }
-Number swapUsed 			"Swap used [%.1f]"  (gSystem) { systeminfo="SwapUsed:30000" }
+Number swapFree 			"Swap free [%.1f]"  (gSystem) { systeminfo="SwapFree:600000" }
+Number swapTotal    		"Swap total [%.1f]" (gSystem) { systeminfo="SwapTotal:600000" }
+Number swapUsed 			"Swap used [%.1f]"  (gSystem) { systeminfo="SwapUsed:600000" }
 
-Number openhabRealMem   	"Real mem [%.1f]"   (gSystem) { systeminfo="ProcessRealMem:30000:$$" }
-Number openhabVirtualMem    "Virtual mem [%.1f]"    (gSystem) { systeminfo="ProcessVirtualMem:30000:$$" }
-Number openhabCpuPercent    "Cpu percent [%.1f%%]"  (gSystem) { systeminfo="ProcessCpuPercent:30000:$$" }
-Number openhabCpuSystem 	"CPU system [%.1f]" (gSystem) { systeminfo="ProcessCpuSystem:30000:$$" }
-String openhabUptimeFormatted "OpenHab Uptime [%s]" (gSystem) { systeminfo="ProcessUptimeFormatted:30000:$$" }
+Number openhabRealMem   	"Real mem [%.1f]"   (gSystem) { systeminfo="ProcessRealMem:60000:$$" }
+Number openhabVirtualMem    "Virtual mem [%.1f]"    (gSystem) { systeminfo="ProcessVirtualMem:60000:$$" }
+Number openhabCpuPercent    "Cpu percent [%.1f%%]"  (gSystem) { systeminfo="ProcessCpuPercent:60000:$$" }
+Number openhabCpuSystem 	"CPU system [%.1f]" (gSystem) { systeminfo="ProcessCpuSystem:60000:$$" }
+String openhabUptimeFormatted "OpenHab Uptime [%s]" (gSystem) { systeminfo="ProcessUptimeFormatted:600000:$$" }
