@@ -4,7 +4,7 @@ sitemap hemma label="Hemma"
 		Group item=gFirstFloor label="Övervåning" icon="firstfloor"
 		Group item=gGroundFloor label="Entréplan" icon="groundfloor"
 		Group item=gOutdoor label="Utomhus" icon="garden"
-		Group item=gSystem label="Teknikrummet" icon="garden"
+		Group item=gSystem label="Teknikrummet" icon="cellar"
 		Group item=gAstro label="Sol" icon="sun"
 	}
 	Frame label="Närvaro" {
