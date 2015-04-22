@@ -34,7 +34,7 @@ Switch Allroom_Window_Light_1 "Belysning fönster 1" <light> (gAllRoom, gLight)
 Switch Allroom_Window_Light_2 "Belysning fönster 2" <light> (gAllRoom, gLight)
 
 /* Elsas rum */
-Switch Elsas_Window_Light "Belysning fönster" <light> (gAllRoom, gLight)
+Switch Elsas_Window_Light "Belysning fönster" <light> (gElsasRoom, gLight)
 
 /* Sovrum */
 Switch Bedrom_Window_Light "Belysning fönster" <light> (gBedRoom, gLight)
@@ -47,9 +47,16 @@ Switch Kitchen_Window_Light "Belysning fönster" <light> (gKitchen, gLight)
 
 
 /* Outside front */
-Switch FrontSide_Light "Belysning framsida" <light> (gFrontside, gOutsideLights, gLight)
+Switch FrontSide_Light "Belysning framsida" <light> (gFrontside, gOutsideLights, gLight) { zwave="12:1:command=switch_binary" }
+Number FrontSide_Light_Consume "Belysning framsida förbrukning [%.1f W]" (gFrontside, gPower) { zwave="12:1:command=meter,meter_scale=E_W" }
 /* Outside front */
-Switch BackSide_Light "Belysning baksida" <light> (gBackside, gOutsideLights, gLight)
+Switch BackSide_Light_Switch "Belysning baksida" <light> (gBackside, gOutsideLights, gLight) { zwave="11:1:command=switch_binary" } 
+Number BackSide_Light_Consume "Belysning baksida förbrukning [%.1f W]" (gBackside, gPower) { zwave="11:1:command=meter,meter_scale=E_W" }
+
+Switch BackSide_Outlet_Switch "Uttag baksida" <light> (gBackside, gOutsideLights, gLight) { zwave="11:1:command=switch_binary" } 
+Number BackSide_Outlet_Consume "Uttag baksida förbrukning [%.1f W]" (gBackside, gPower) { zwave="11:1:command=meter,meter_scale=E_W" }
+
+
 Number BackSide_Temp_Sensor "Temperatur [%.2f] °C" <temperature> (gBackside) { zwave="3:command=sensor_multilevel,sensor_type=1" }
 Number BackSide_Light_Sensor "Ljussensor [%.2f]" <solarplant> (gBackside) { zwave="3:command=sensor_multilevel,sensor_type=3" }
 Number BackSide_Humidity_Sensor "Fuktsensor [%.2f] %" (gBackside) { zwave="3:command=sensor_multilevel,sensor_type=5" }
