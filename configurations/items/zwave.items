@@ -51,9 +51,9 @@ Switch FrontSide_Light "Belysning framsida" <light> (gFrontside, gOutsideLights,
 /* Outside front */
 Switch BackSide_Light "Belysning baksida" <light> (gBackside, gOutsideLights, gLight)
 Number BackSide_Temp_Sensor "Temperatur [%.2f °C]" <temperature> (gBackside) { zwave="3:command=sensor_multilevel,sensor_type=1" }
-Number BackSide_Light_Sensor "Ljussensor %.2f" <solarplant> (gBackside) { zwave="3:command=sensor_multilevel,sensor_type=3" }
-Number BackSide_Humidity_Sensor "Fuktsensor %.2f%" (gBackside) { zwave="3:command=sensor_multilevel,sensor_type=5" }
-Number BackSide_Sensor_Battery "Batteri %.2f%"  (gBackside, gBattery) { zwave="3:command=battery" }
+Number BackSide_Light_Sensor "Ljussensor [%.2f" <solarplant> (gBackside) { zwave="3:command=sensor_multilevel,sensor_type=3" }
+Number BackSide_Humidity_Sensor "Fuktsensor [%.2f%]" (gBackside) { zwave="3:command=sensor_multilevel,sensor_type=5" }
+Number BackSide_Sensor_Battery "Batteri [%.2f%]"  (gBackside, gBattery) { zwave="3:command=battery" }
 Switch BackSide_Motion_Sensor "Rörelsesensor"  (gBackside, gMotion) { zwave="3:command=sensor_binary,respond_to_basic=true" }
 
 /* Modes 0=HOME, 1=NIGHT, 2=AWAY */
