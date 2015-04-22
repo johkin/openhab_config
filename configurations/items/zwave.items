@@ -53,7 +53,7 @@ Number FrontSide_Light_Consume "Belysning framsida förbrukning [%.1f W]" (gFron
 Switch BackSide_Light_Switch "Belysning baksida" <light> (gBackside, gOutsideLights, gLight) { zwave="11:1:command=switch_binary" } 
 Number BackSide_Light_Consume "Belysning baksida förbrukning [%.1f W]" (gBackside, gPower) { zwave="11:1:command=meter,meter_scale=E_W" }
 
-Switch BackSide_Outlet_Switch "Uttag baksida" <light> (gBackside, gOutsideLights, gLight) { zwave="11:2:command=switch_binary" } 
+Switch BackSide_Outlet_Switch "Uttag baksida" <light> (gBackside, gLight) { zwave="11:2:command=switch_binary" } 
 Number BackSide_Outlet_Consume "Uttag baksida förbrukning [%.1f W]" (gBackside, gPower) { zwave="11:2:command=meter,meter_scale=E_W" }
 
 

@@ -37,3 +37,14 @@ when
 then
 	gOutsideLights.allMembers.forEach[light| light.sendCommand(OFF)]
 end
+
+rule "Tänd utebelysning vid rörelse"
+when
+	Item BackSide_Motion_Sensor changed
+then
+	if(BackSide_Motion_Sensor.state == OPEN) {
+		gOutsideLights.allMembers.forEach[light| light.sendCommand(ON)]
+	} else {
+		gOutsideLights.allMembers.forEach[light| light.sendCommand(OFF)]
+	}
+end
