@@ -2,6 +2,7 @@ import org.joda.time.*
 import org.openhab.core.library.types.DateTimeType
 import org.openhab.core.library.items.SwitchItem
 
+
 rule "Tänd utebelysning eftermiddag"
 when
 	Item Sunset_Event changed to ON
@@ -42,9 +43,11 @@ rule "Tänd utebelysning vid rörelse"
 when
 	Item BackSide_Motion_Sensor changed
 then
-	if(BackSide_Motion_Sensor.state == OPEN) {
-		gOutsideLights.allMembers.forEach[light| light.sendCommand(ON)]
-	} else {
-		gOutsideLights.allMembers.forEach[light| light.sendCommand(OFF)]
+	if (BackSide_Light_Sensor.state < 200) {
+		if(BackSide_Motion_Sensor.state == OPEN) {
+			gOutsideLights.allMembers.forEach[light| light.sendCommand(ON)]
+		} else {
+			gOutsideLights.allMembers.forEach[light| light.sendCommand(OFF)]
+		}	
 	}
 end
