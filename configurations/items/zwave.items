@@ -15,8 +15,11 @@ Group gBackside "Baksida" 		<garden>		(gOutdoor)
 Group gOutsideLights "Utebelysning" (gLight,gOutdoor)
 Group Status    	(All)
 Group gBattery 		(All)
-Group gMotion 		(All)
 Group gLight		(All)
+Group gMotionSensor (All)
+Group gLightSensor	(All)
+Group gTempSensor	(All)
+Group gHumiditySensor	(All)
 Group gNight	(All)
 Group gAway	(All)
 
@@ -57,11 +60,11 @@ Switch BackSide_Outlet_Switch "Uttag baksida" <light> (gBackside, gLight) { zwav
 Number BackSide_Outlet_Consume "Uttag baksida förbrukning [%.1f W]" (gBackside, gPower) { zwave="11:2:command=meter,meter_scale=E_W" }
 
 
-Number BackSide_Temp_Sensor "Temperatur [%.2f] °C" <temperature> (gBackside) { zwave="3:command=sensor_multilevel,sensor_type=1" }
-Number BackSide_Light_Sensor "Ljussensor [%.2f]" <solarplant> (gBackside) { zwave="3:command=sensor_multilevel,sensor_type=3" }
-Number BackSide_Humidity_Sensor "Fuktsensor [%.2f] %" (gBackside) { zwave="3:command=sensor_multilevel,sensor_type=5" }
+Number BackSide_Temp_Sensor "Temperatur [%.2f] °C" <temperature> (gBackside, gTempSensor) { zwave="3:command=sensor_multilevel,sensor_type=1" }
+Number BackSide_Light_Sensor "Ljussensor [%.2f]" <solarplant> (gBackside, gLightSensor) { zwave="3:command=sensor_multilevel,sensor_type=3" }
+Number BackSide_Humidity_Sensor "Fuktsensor [%.2f] %" (gBackside, gHumiditySensor) { zwave="3:command=sensor_multilevel,sensor_type=5" }
 Number BackSide_Sensor_Battery "Batteri [%.2f] %"  (gBackside, gBattery) { zwave="3:command=battery" }
-Contact BackSide_Motion_Sensor "Rörelsesensor"  (gBackside, gMotion) { zwave="3:command=sensor_binary" }
+Contact BackSide_Motion_Sensor "Rörelsesensor"  (gBackside, gMotionSensor) { zwave="3:command=sensor_binary" }
 
 /* Modes 0=HOME, 1=NIGHT, 2=AWAY */
 Number mode "Mode:" <present>

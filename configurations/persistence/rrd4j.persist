@@ -19,5 +19,6 @@ Items {
     * : strategy = everyChange, everyDay, restoreOnStartup
 
     // additionally, persist all temperature and weather values every hour
-    Temperature*, Weather* : strategy = everyHour
+    gTempSensor*, gHumiditySensor*, gLightSensor* : strategy = everyHour
+    
 }
