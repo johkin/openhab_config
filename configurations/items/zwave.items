@@ -24,31 +24,31 @@ Group gNight	(All)
 Group gAway	(All)
 
 Group:Switch:OR(ON, OFF)  All_Lights "Alla lampor [(%d)]" (All)
-Group:Switch:OR(ON, OFF)  All_Lights_GroundFloor "Lampor nere [(%d)]" (All_Lights)
-Group:Switch:OR(ON, OFF)  All_Lights_FirstFloor "Lampor uppe [(%d)]" (All_Lights)	
+Group:Switch:OR(ON, OFF)  All_Lights_GroundFloor "Lampor nere [(%d)]" (All)
+Group:Switch:OR(ON, OFF)  All_Lights_FirstFloor "Lampor uppe [(%d)]" (All)	
 
 /* NTP binding demo item */
 DateTime Date "Datum [%1$tA, %1$td.%1$tm.%1$tY]" <calendar>	{ ntp="Europe/Stockholm:sv_SE" }
 /* Gästrum */
-Switch Guestroom_Light_Window "Belysning fönster" <light> (gGuestRoom, gLight, All_Lights_FirstFloor) { zwave="17:command=switch_binary" }
+Switch Guestroom_Light_Window "Belysning fönster" <light> (gGuestRoom, gLight, All_Lights_FirstFloor, All_Lights) { zwave="17:command=switch_binary" }
 /* Dusch */
 Dimmer Shower_Dimmer <light> (gShower, gLight) { zwave="16:command=SWITCH_MULTILEVEL,restore_last_value=true" }
 Contact Shower_Motion_Sensor <motion> (gShower, gMotionSensor) { zwave="15:command=sensor_binary" }
 Number Shower_Motion_Sensor_Battery <motion> (gShower, gBattery)
 /* Allrum */
-Dimmer Allroom_Wall_Dimmer "Belysning hylla [%d %%]" <light> (gAllRoom,gLight, All_Lights_FirstFloor) { zwave="2:command=SWITCH_MULTILEVEL,restore_last_value=true" } 
-Switch Allroom_Window_Light_1 "Belysning fönster 1" <light> (gAllRoom, gLight, All_Lights_FirstFloor) { zwave="18:command=switch_binary" }
-Switch Allroom_Window_Light_2 "Belysning fönster 2" <light> (gAllRoom, gLight, All_Lights_FirstFloor) { zwave="19:command=switch_binary" }
+Dimmer Allroom_Wall_Dimmer "Belysning hylla [%d %%]" <light> (gAllRoom,gLight, All_Lights_FirstFloor, All_Lights) { zwave="2:command=SWITCH_MULTILEVEL,restore_last_value=true" } 
+Switch Allroom_Window_Light_1 "Belysning fönster 1" <light> (gAllRoom, gLight, All_Lights_FirstFloor, All_Lights) { zwave="18:command=switch_binary" }
+Switch Allroom_Window_Light_2 "Belysning fönster 2" <light> (gAllRoom, gLight, All_Lights_FirstFloor, All_Lights) { zwave="19:command=switch_binary" }
 
 /* Elsas rum */
-Switch Elsas_Window_Light "Belysning fönster" <light> (gElsasRoom, gLight, All_Lights_FirstFloor) { zwave="14:command=switch_binary" } 
+Switch Elsas_Window_Light "Belysning fönster" <light> (gElsasRoom, gLight, All_Lights_FirstFloor, All_Lights) { zwave="14:command=switch_binary" } 
 
 /* Sovrum */
-Switch Bedrom_Window_Light "Belysning fönster" <light> (gBedRoom, gLight, All_Lights_FirstFloor) { zwave="20:command=switch_binary" }
+Switch Bedrom_Window_Light "Belysning fönster" <light> (gBedRoom, gLight, All_Lights_FirstFloor, All_Lights) { zwave="20:command=switch_binary" }
 /* Vardagsrum */
-Switch Livingroom_Soffa_Light "Belysning soffa" <light> (gLivingRoom, gLight, All_Lights_GroundFloor) { zwave="21:command=switch_binary" }
-Switch Livingroom_Window_Light "Belysning fönster, tv" <light> (gLivingRoom, gLight, All_Lights_GroundFloor) { zwave="22:command=switch_binary" }
-Switch Livingroom_Tv_Light "Belysning tv" <light> (gLivingRoom, gLight, All_Lights_GroundFloor) { zwave="23:command=SWITCH_MULTILEVEL,restore_last_value=true" }
+Switch Livingroom_Soffa_Light "Belysning soffa" <light> (gLivingRoom, gLight, All_Lights_GroundFloor, All_Lights) { zwave="21:command=switch_binary" }
+Switch Livingroom_Window_Light "Belysning fönster, tv" <light> (gLivingRoom, gLight, All_Lights_GroundFloor, All_Lights) { zwave="22:command=switch_binary" }
+Switch Livingroom_Tv_Light "Belysning tv" <light> (gLivingRoom, gLight, All_Lights_GroundFloor, All_Lights) { zwave="23:command=SWITCH_MULTILEVEL,restore_last_value=true" }
 /* Kök */
 Switch Kitchen_Window_Light "Belysning fönster" <light> (gKitchen, gLight, All_Lights_GroundFloor) { zwave="25:command=switch_binary" }
 
