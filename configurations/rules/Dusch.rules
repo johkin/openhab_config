@@ -5,10 +5,15 @@ import org.openhab.core.library.items.SwitchItem
 
 rule "Tänd dusch dag"
 when
-	Item Shower_Motion_Sensor changed 
+	Item Shower_Motion_Sensor changed or
+	Item Mode changed
 then
 	if (Shower_Motion_Sensor.state == OPEN) {
-		Shower_Dimmer.sendCommand(50)	
+		var Integer level = 40
+		if (Mode.state == 1) {
+			level = 4
+		}
+		Shower_Dimmer.sendCommand(level)	
 	} else {
 		Shower_Dimmer.sendCommand(OFF)
 	}

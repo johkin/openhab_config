@@ -13,7 +13,7 @@ sitemap hemma label="Hemma"
 		Group item=gAstro label="Sol" icon="sun"
 	}
 	Frame label="Närvaro" {
-			Selection item=mode mappings=[0="Hemma", 1="Natt", 2="Borta"] label="Läge" icon="present" 		
+			Selection item=Mode mappings=[0="Hemma", 1="Natt", 2="Borta"] label="Läge" icon="present" 		
 		
 	}
 }

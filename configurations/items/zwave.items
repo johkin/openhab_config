@@ -78,5 +78,5 @@ Number BackSide_Sensor_Battery "Batteri [%.2f] %"  (gBackside, gBattery) { zwave
 Contact BackSide_Motion_Sensor "Rörelsesensor"  (gBackside, gMotionSensor) { zwave="3:command=sensor_binary" }
 
 /* Modes 0=HOME, 1=NIGHT, 2=AWAY */
-Number mode "Mode:" <present>
-Number previous_mode
+Number Mode "Mode:" <present>
+Number Previous_Mode
