@@ -1,0 +1,16 @@
+import org.joda.time.*
+import org.openhab.core.library.types.DateTimeType
+import org.openhab.core.library.items.SwitchItem
+
+
+rule "Tänd dusch dag"
+when
+	Item Shower_Motion_Sensor changed 
+then
+	if (Shower_Motion_Sensor.state == OPEN) {
+		Shower_Dimmer.sendCommand(50)	
+	} else {
+		Shower_Dimmer.sendCommand(OFF)
+	}
+	
+end
