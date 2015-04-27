@@ -40,6 +40,10 @@ Dimmer Allroom_Wall_Dimmer "Belysning hylla [%d %%]" <light> (gAllRoom,gLight, A
 Switch Allroom_Window_Light_1 "Belysning fönster 1" <light> (gAllRoom, gLight, All_Lights_FirstFloor, All_Lights) { zwave="18:command=switch_binary" }
 Switch Allroom_Window_Light_2 "Belysning fönster 2" <light> (gAllRoom, gLight, All_Lights_FirstFloor, All_Lights) { zwave="19:command=switch_binary" }
 
+Contact Allroom_Motion_Sensor <motion> (gAllRoom, gMotionSensor) { zwave="29:command=sensor_binary" }
+Number Allroom_Motion_Sensor_Battery "Batteri [%.2f] %" <motion> (gAllRoom, gBattery)  { zwave="29:command=battery" }
+Number Allroom_Light_Sensor "Ljussensor [%.2f]" <solarplant> (gAllRoom, gLightSensor) { zwave="29:command=sensor_multilevel,sensor_type=3" }
+
 /* Elsas rum */
 Switch Elsas_Window_Light "Belysning fönster" <light> (gElsasRoom, gLight, All_Lights_FirstFloor, All_Lights) { zwave="14:command=switch_binary" } 
 
