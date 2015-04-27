@@ -11,7 +11,7 @@ then
 	if (Shower_Motion_Sensor.state == OPEN) {
 		var Integer level = 40
 		if (Mode.state == 1) {
-			level = 4
+			level = 3
 		}
 		Shower_Dimmer.sendCommand(level)	
 	} else {
