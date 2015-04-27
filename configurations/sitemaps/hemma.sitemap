@@ -1,6 +1,9 @@
 sitemap hemma label="Hemma"
 {
 	Frame {
+		Switch item=gLight mappings=[OFF="Släck allt"]
+	}
+	Frame {
 		Group item=gFirstFloor label="Övervåning" icon="firstfloor"
 		Group item=gGroundFloor label="Entréplan" icon="groundfloor"
 		Group item=gOutdoor label="Utomhus" icon="garden"

@@ -15,13 +15,15 @@ Group gBackside "Baksida" 		<garden>		(gOutdoor)
 Group gOutsideLights "Utebelysning" (gLight,gOutdoor)
 Group Status    	(All)
 Group gBattery 		(All)
-Group gLight		(All)
+//Group gLight		(All)
 Group gMotionSensor (All)
 Group gLightSensor	(All)
 Group gTempSensor	(All)
 Group gHumiditySensor	(All)
 Group gNight	(All)
 Group gAway	(All)
+
+Group:Switch:OR(ON, OFF)  gLight "All Lights [(%d)]" (All)	
 
 /* NTP binding demo item */
 DateTime Date "Datum [%1$tA, %1$td.%1$tm.%1$tY]" <calendar>	{ ntp="Europe/Stockholm:sv_SE" }
