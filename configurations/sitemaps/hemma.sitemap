@@ -1,19 +1,20 @@
 sitemap hemma label="Hemma"
 {
-	Frame {
+	
+	Frame label="Närvaro" {
+			Selection item=Mode mappings=[0="Hemma", 1="Natt", 2="Borta"] label="Läge" icon="present" 		
+		
+	}
+	Frame label="Belysning" {
 		Switch item=All_Light mappings=[OFF="Släck allt", ON="Tänd allt"]
 		Switch item=All_Lights_GroundFloor mappings=[OFF="Släck allt", ON="Tänd allt"]
 		Switch item=All_Lights_FirstFloor mappings=[OFF="Släck allt", ON="Tänd allt"]
 	}
-	Frame {
+	Frame label="Grupper" {
 		Group item=gFirstFloor label="Övervåning" icon="firstfloor"
 		Group item=gGroundFloor label="Entréplan" icon="groundfloor"
 		Group item=gOutdoor label="Utomhus" icon="garden"
 		Group item=gSystem label="Teknikrummet" icon="cellar"
 		Group item=gAstro label="Sol" icon="sun"
-	}
-	Frame label="Närvaro" {
-			Selection item=Mode mappings=[0="Hemma", 1="Natt", 2="Borta"] label="Läge" icon="present" 		
-		
 	}
 }

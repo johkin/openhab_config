@@ -23,9 +23,9 @@ Group gHumiditySensor	(All)
 Group gNight	(All)
 Group gAway	(All)
 
-Group:Switch:OR(ON, OFF)  All_Lights "Alla lampor [(%d)]" (All)
-Group:Switch:OR(ON, OFF)  All_Lights_GroundFloor "Lampor nere [(%d)]" (All)
-Group:Switch:OR(ON, OFF)  All_Lights_FirstFloor "Lampor uppe [(%d)]" (All)	
+Group:Switch:OR(ON, OFF)  All_Lights "Alla [(%d)]" (All)
+Group:Switch:OR(ON, OFF)  All_Lights_GroundFloor "Nere [(%d)]" (All)
+Group:Switch:OR(ON, OFF)  All_Lights_FirstFloor "Uppe [(%d)]" (All)	
 
 /* NTP binding demo item */
 DateTime Date "Datum [%1$tA, %1$td.%1$tm.%1$tY]" <calendar>	{ ntp="Europe/Stockholm:sv_SE" }
