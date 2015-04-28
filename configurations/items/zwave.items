@@ -56,9 +56,21 @@ Switch Livingroom_Tv_Light "Belysning tv" <light> (gLivingRoom, gLight, All_Ligh
 /* Kök */
 Switch Kitchen_Window_Light "Belysning fönster" <light> (gKitchen, gLight, All_Lights_GroundFloor) { zwave="25:command=switch_binary" }
 
-/* Fjärrkontroll  Node 26 */
+/* Fjärrkontroll  Node 28 */
 
+/* Fjärrkontroll Gen5 Node 31*/
+Number KeyFob_Scene "Keyfob scen [%d]" (gGuestRoom) { zwave="31:command=SCENE_ACTIVATION" }
+/*
+Switch KF1_B1Short "KFOB Short Button 1" (ZREMOTE) { zwave="31:command=SCENE_ACTIVATION,scene=1, state=1" }
+Switch KF1_B2Short "KFOB Short Button 2" (ZREMOTE) { zwave="31:command=SCENE_ACTIVATION,scene=5, state=1" }
+Switch KF1_B3Short "KFOB Short Button 3" (ZREMOTE) { zwave="31:command=SCENE_ACTIVATION,scene=3, state=1" }
+Switch KF1_B4Short "KFOB Short Button 4" (ZREMOTE) { zwave="31:command=SCENE_ACTIVATION,scene=7, state=1" }
 
+Switch KF1_B1Long "KFOB Long Button 1" (ZREMOTE) { zwave="31:command=SCENE_ACTIVATION,scene=2, state=1" }
+Switch KF1_B2Long "KFOB Long Button 2" (ZREMOTE) { zwave="31:command=SCENE_ACTIVATION,scene=4, state=1" }
+Switch KF1_B3Long "KFOB Long Button 3" (ZREMOTE) { zwave="31:command=SCENE_ACTIVATION,scene=6, state=1" }
+Switch KF1_B4Long "KFOB Long Button 4" (ZREMOTE) { zwave="31:command=SCENE_ACTIVATION,scene=8, state=1" }
+*/
 
 /* Outside front */
 Switch FrontSide_Light "Belysning framsida" <light> (gFrontside, gOutsideLights, gLight) { zwave="12:1:command=switch_binary" }
