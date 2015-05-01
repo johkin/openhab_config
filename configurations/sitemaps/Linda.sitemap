@@ -1,4 +1,4 @@
-sitemap Linda label="Hemma"
+sitemap Linda label="Linda hemma"
 {
 	Frame label="Närvaro" {
 			Selection item=Mode mappings=[0="Hemma", 1="Natt", 2="Borta"] label="Läge" icon="present" 		
