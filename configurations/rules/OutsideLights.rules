@@ -43,6 +43,7 @@ rule "Tänd utebelysning vid rörelse"
 when
 	Item BackSide_Motion_Sensor changed
 then
+	logDebug("förråd", "Rörelse från förrådet")
 	if (BackSide_Light_Sensor.state < 50) {
 		if(BackSide_Motion_Sensor.state == OPEN) {
 			gOutsideLights.allMembers.forEach[light| light.sendCommand(ON)]

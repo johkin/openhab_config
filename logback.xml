@@ -52,6 +52,8 @@
 
 	<logger name="org.openhab" level="INFO"/>
 
+	<logger name="org.openhab.model.script" level="DEBUG"/>
+
 	<!-- this class gives an irrelevant warning at startup -->
 	<logger name="org.atmosphere.cpr.AtmosphereFramework" level="ERROR" />
 
