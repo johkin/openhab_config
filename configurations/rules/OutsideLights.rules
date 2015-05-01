@@ -36,6 +36,7 @@ when
 	Time cron "0 30 22 ? * MON-THU,SUN" or
 	Time cron "0 30 23 ? * FRI-SAT"
 then
+	logDebug("förråd", "Tid för släckning")
 	gOutsideLights.allMembers.forEach[light| light.sendCommand(OFF)]
 end
 
@@ -45,9 +46,12 @@ when
 then
 	logDebug("förråd", "Rörelse från förrådet")
 	if (BackSide_Light_Sensor.state < 50) {
+		logDebug("förråd", "Tillräckligt låg belysning")
 		if(BackSide_Motion_Sensor.state == OPEN) {
+			logDebug("förråd", "Tänder belysning")
 			gOutsideLights.allMembers.forEach[light| light.sendCommand(ON)]
 		} else {
+			logDebug("förråd", "Släcker belysning")
 			gOutsideLights.allMembers.forEach[light| light.sendCommand(OFF)]
 		}	
 	}
