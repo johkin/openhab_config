@@ -1,8 +1,69 @@
 import org.joda.time.*
+import org.openhab.model.script.actions.Timer
 import org.openhab.core.library.types.DateTimeType
 import org.openhab.core.library.items.SwitchItem
 
+var Timer offTimer = createTimer(null) [|
+	Shower_Dimmer.sendCommand(OFF)
+]
 
+val Integer nightLevel = 3
+var Integer dayLevel = 40
+var Integer level
+
+rule "Initiering"
+when
+	System started
+then
+	if (Mode.state == 1) {
+		level = nightLevel
+	} else {
+		level = dayLevel
+	}
+end	
+
+rule "Ta bort timer"
+when
+	System shuts down
+then
+    if (offTimer != null) {
+    	offTimer.cancel	
+    }
+end
+
+rule "Tänd dusch med timer"
+when
+	Item Shower_Motion_Sensor changed to OPEN
+then
+	if (Shower_Dimmer.state == OFF){
+		Shower_Dimmer.sendCommand(level)	
+	}
+	
+	offTimer.reschedule(now.plusMinutes(10))
+end
+
+rule "Justera ljusstyrka"
+when
+	Item Mode changed
+then
+	if (Mode.state == 1) {
+		level = nightLevel
+	} else {
+		level = dayLevel
+	}
+	if (Shower_Dimmer.state != OFF) {
+		Shower_Dimmer.sendCommand(level)	
+	}
+end
+
+rule "Avsluta timer om belysning släcks"
+when 
+	Item Shower_Dimmer changed to OFF
+then
+	offTimer.cancel
+end
+
+/* 
 rule "Tänd dusch dag"
 when
 	Item Shower_Motion_Sensor changed or
@@ -17,5 +78,5 @@ then
 	} else {
 		Shower_Dimmer.sendCommand(OFF)
 	}
-	
 end
+*/
