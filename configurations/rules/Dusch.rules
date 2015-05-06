@@ -1,15 +1,15 @@
 import org.joda.time.*
 import org.openhab.model.script.actions.Timer
+import org.openhab.core.library.types.DecimalType
 import org.openhab.core.library.types.DateTimeType
 import org.openhab.core.library.items.SwitchItem
 
-var Timer offTimer = createTimer(null) [|
-	Shower_Dimmer.sendCommand(OFF)
-]
+var Timer offTimer
 
 val Integer nightLevel = 3
 var Integer dayLevel = 40
 var Integer level
+var Integer minutesOn = 10
 
 rule "Initiering"
 when
@@ -20,6 +20,12 @@ then
 	} else {
 		level = dayLevel
 	}
+	if (Shower_Dimmer.state != 0) {
+		offTimer = createTimer(now.plusMinutes(minutesOn)) [|
+			logDebug("dusch", "Släcker belysning")
+			sendCommand(Shower_Dimmer, OFF)	
+		]
+	}
 end	
 
 rule "Ta bort timer"
@@ -27,7 +33,9 @@ when
 	System shuts down
 then
     if (offTimer != null) {
-    	offTimer.cancel	
+    	logDebug("dusch", "Avsluta timer")
+    	offTimer.cancel
+    	offTimer = null
     }
 end
 
@@ -35,32 +43,76 @@ rule "Tänd dusch med timer"
 when
 	Item Shower_Motion_Sensor changed to OPEN
 then
-	if (Shower_Dimmer.state == OFF){
-		Shower_Dimmer.sendCommand(level)	
+	logDebug("dusch", "Shower_Motion_Sensor.state {}", Shower_Motion_Sensor.state)
+	logDebug("dusch", "Shower_Dimmer.state {}", Shower_Dimmer.state)
+	if (Shower_Dimmer.state == 0){
+		logDebug("dusch", "Tänder belysning")
+		sendCommand(Shower_Dimmer, level)	
 	}
 	
-	offTimer.reschedule(now.plusMinutes(10))
+	if (offTimer != null) {
+		offTimer.cancel
+		offTimer = null
+	}
 end
+
+rule "Släck dusch med timer"
+when
+	Item Shower_Motion_Sensor changed to CLOSED
+then
+	logDebug("dusch", "Shower_Motion_Sensor.state {}", Shower_Motion_Sensor.state)
+	
+	if (offTimer != null) {
+		offTimer.cancel
+		offTimer = null
+	}
+	logDebug("dusch", "Skapar ny timer")
+	offTimer = createTimer(now.plusMinutes(minutesOn)) [|
+		logDebug("dusch", "Släcker belysning")
+		sendCommand(Shower_Dimmer, OFF)	
+	]
+end
+	
 
 rule "Justera ljusstyrka"
 when
 	Item Mode changed
 then
+	logDebug("dusch", "Justera ljusstyrka Mode.state {}", Mode.state)
 	if (Mode.state == 1) {
 		level = nightLevel
 	} else {
 		level = dayLevel
 	}
-	if (Shower_Dimmer.state != OFF) {
-		Shower_Dimmer.sendCommand(level)	
+	logDebug("dusch", "Justera ljusstyrka level {}", level)
+	logDebug("dusch", "Justera ljusstyrka Shower_Dimmer.state {}", Shower_Dimmer.state)
+	if (Shower_Dimmer.state != 0) {
+		sendCommand(Shower_Dimmer, level)	
 	}
 end
 
 rule "Avsluta timer om belysning släcks"
 when 
-	Item Shower_Dimmer changed to OFF
+	Item Shower_Dimmer changed
 then
-	offTimer.cancel
+	
+	logDebug("dusch", "Shower_Dimmer.state {}", Shower_Dimmer.state)
+	if (Shower_Dimmer.state == 0) {
+		logDebug("dusch", "Avsluta timer")
+		if (offTimer != null) {
+			offTimer.cancel
+			offTimer = null
+		}
+	} else {
+		level = (Shower_Dimmer.state as DecimalType).intValue
+		logDebug("dusch", "Stored new dimmer level {}", level)
+		if (offTimer == null) {
+			offTimer = createTimer(now.plusMinutes(minutesOn)) [|
+				logDebug("dusch", "Släcker belysning")
+				sendCommand(Shower_Dimmer, OFF)	
+			]
+		}
+	}
 end
 
 /* 
