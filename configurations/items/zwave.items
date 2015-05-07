@@ -74,8 +74,8 @@ Number Kitchen_Motion_Sensor_Battery "Batteri [%.2f] %" (gKitchen, gBattery)  { 
 
 /* Fjärrkontroll Gen5 Node 31*/
 Switch KF1_B1Short "KFOB Short Button 1" (gGuestRoom) { zwave="31:command=SCENE_ACTIVATION,scene=1, state=1" }
-Switch KF1_B2Short "KFOB Short Button 2" (gGuestRoom) { zwave="31:command=SCENE_ACTIVATION,scene=5, state=1" }
-Switch KF1_B3Short "KFOB Short Button 3" (gGuestRoom) { zwave="31:command=SCENE_ACTIVATION,scene=3, state=1" }
+Switch KF1_B2Short "KFOB Short Button 2" (gGuestRoom) { zwave="31:command=SCENE_ACTIVATION,scene=3, state=1" }
+Switch KF1_B3Short "KFOB Short Button 3" (gGuestRoom) { zwave="31:command=SCENE_ACTIVATION,scene=5, state=1" }
 Switch KF1_B4Short "KFOB Short Button 4" (gGuestRoom) { zwave="31:command=SCENE_ACTIVATION,scene=7, state=1" }
 
 Switch KF1_B1Long "KFOB Long Button 1" (gGuestRoom) { zwave="31:command=SCENE_ACTIVATION,scene=2, state=1" }
