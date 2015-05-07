@@ -1,0 +1,62 @@
+import org.joda.time.*
+import org.openhab.model.script.actions.Timer
+import org.openhab.core.library.types.DecimalType
+import org.openhab.core.library.types.DateTimeType
+import org.openhab.core.library.items.SwitchItem
+
+
+rule "Knapp 1, kort. Sätt Hemma"
+when
+	Item KF1_B1Short received update
+then
+	sendCommand(Mode, 0)
+end
+
+rule "Knapp 1, lång. Sätt Natt"
+when
+	Item KF1_B1Long received update
+then
+	sendCommand(Mode, 1)
+end
+
+rule "Knapp 2, kort. Sätt Borta"
+when
+	Item KF1_B2Short received update
+then
+	sendCommand(Mode, 3)
+end
+
+rule "Knapp 2, lång. Sätt Semester"
+when
+	Item KF1_B2Long received update
+then
+	sendCommand(Mode, 4)
+end
+
+rule "Knapp 3, kort. Tänd nedervåning"
+when
+	Item KF1_B3Short received update
+then
+	sendCommand(All_Lights_GroundFloor, ON)
+end
+
+rule "Knapp 3, lång. Släck nedervåning"
+when
+	Item KF1_B3Long received update
+then
+	sendCommand(All_Lights_GroundFloor, OFF)
+end
+
+rule "Knapp 4, kort. Tänd övervåning"
+when
+	Item KF1_B4Short received update
+then
+	sendCommand(All_Lights_FirstFloor, ON)
+end
+
+rule "Knapp 4, lång. Släck övervåning"
+when
+	Item KF1_B4Long received update
+then
+	sendCommand(All_Lights_FirstFloor, OFF)
+end
