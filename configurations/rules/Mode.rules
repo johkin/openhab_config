@@ -19,56 +19,29 @@ then
 		// All_Lights.allMembers.forEach[light| sendCommand(light, OFF)]
 	]
 end
-/*
+
 rule "Avsluta timer vid rörelse"
 when
-	Item gMotionSensor received update
+	Item gMotionSensorIndoor received update
 then
-	logDebug("mode", "Rörelse upptäckt")
-	gMotionSensor.allMembers.forEach[sensor |
-		
-		logDebug("mode", "Rörelse upptäckt, tar bort timer.")
-		if (offTimer != null) {
-			offTimer.cancel
-			offTimer = null
-		} 
-		if (sensor.state == OPEN) {
-			logDebug("mode", "Hittade triggad sensor {}", sensor.name)
-			return				
-		} else {
-			logDebug("mode", "Skapar timer.")
+	logDebug("mode", "Rörelse ändrad")
+	if(gMotionSensorIndoor.allMembers.filter([sensor| 
+		sensor.state == OPEN]).empty) {
+			logDebug("mode", "Alla sensorer är Closed, tar bort befintlig timer")
+			if (offTimer != null) {
+				offTimer.cancel
+				offTimer = null
+			}
+			logDebug("mode", "Skapar ny timer")
 			offTimer = createTimer(now.plusMinutes(minutesOn)) [|
-			logDebug("mode", "Ingen rörelse inom angiven tid {}", minutesOn)
-				// All_Lights.allMembers.forEach[light| sendCommand(light, OFF)]	
+				logDebug("mode", "Ingen rörelse inom angiven tid {}", minutesOn)
+				// All_Lights.allMembers.forEach[light| sendCommand(light, OFF)]
 			]
+		} else {
+			logDebug("mode", "Minst en sensor är Open, tar bort timer.")
+			if (offTimer != null) {
+				offTimer.cancel
+				offTimer = null
+			}
 		}
-	]
 end
-	
-
-rule "Avsluta timer vid rörelse"
-when
-	Item gMotionSensor changed to OPEN
-then
-	logDebug("mode", "Rörelse upptäckt, tar bort timer.")
-	if (offTimer != null) {
-		offTimer.cancel
-		offTimer = null
-	}
-	
-end
-
-rule "Starta timer utan rörelse" 
-when
-	Item gMotionSensor changed to CLOSED
-then
-	logDebug("mode", "Ingen rörelse, kontrollerar timer.")
-	if (offTimer == null) {
-		logDebug("mode", "Skapar timer.")
-		offTimer = createTimer(now.plusMinutes(minutesOn)) [|
-			logDebug("mode", "Ingen rörelse inom angiven tid {}", minutesOn)
-			// All_Lights.allMembers.forEach[light| sendCommand(light, OFF)]	
-		]	
-	}
-end
-*/
