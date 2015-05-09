@@ -3,7 +3,7 @@ Number loadAverage1min  "Load avg. 1min [%.1f]" (gSystem) { systeminfo="LoadAver
 Number loadAverage5min  "Load avg. 5min [%.1f]" (gSystem) { systeminfo="LoadAverage5Min:60000" }
 Number loadAverage15min "Load avg. 15min [%.1f]" (gSystem) { systeminfo="LoadAverage15Min:60000" }
 
-Number uptime   "Server Uptime [%s]" (gSystem) { systeminfo="UptimeFormatted:600000" }
+String uptime   "Server Uptime [%s]" (gSystem) { systeminfo="UptimeFormatted:600000" }
 
 Number memFreePercent   	"Mem free [%.1f%%]" (gSystem) { systeminfo="MemFreePercent:60000" }
 Number memUsed  			"Mem used [%.1f]"   (gSystem) { systeminfo="MemUsed:60000" }

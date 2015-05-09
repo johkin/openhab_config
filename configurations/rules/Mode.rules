@@ -13,11 +13,38 @@ rule "Initiering"
 when
 	System started
 then
+	logDebug("mode", "Intiering, skapar timer.")
 	offTimer = createTimer(now.plusMinutes(minutesOn)) [|
 		logDebug("mode", "Ingen rörelse inom angiven tid {}", minutesOn)
-		// sendCommand(Shower_Dimmer, OFF)	
+		// All_Lights.allMembers.forEach[light| sendCommand(light, OFF)]
 	]
-end	
+end
+/*
+rule "Avsluta timer vid rörelse"
+when
+	Item gMotionSensor received update
+then
+	logDebug("mode", "Rörelse upptäckt")
+	gMotionSensor.allMembers.forEach[sensor |
+		
+		logDebug("mode", "Rörelse upptäckt, tar bort timer.")
+		if (offTimer != null) {
+			offTimer.cancel
+			offTimer = null
+		} 
+		if (sensor.state == OPEN) {
+			logDebug("mode", "Hittade triggad sensor {}", sensor.name)
+			return				
+		} else {
+			logDebug("mode", "Skapar timer.")
+			offTimer = createTimer(now.plusMinutes(minutesOn)) [|
+			logDebug("mode", "Ingen rörelse inom angiven tid {}", minutesOn)
+				// All_Lights.allMembers.forEach[light| sendCommand(light, OFF)]	
+			]
+		}
+	]
+end
+	
 
 rule "Avsluta timer vid rörelse"
 when
@@ -28,126 +55,20 @@ then
 		offTimer.cancel
 		offTimer = null
 	}
+	
 end
 
 rule "Starta timer utan rörelse" 
 when
 	Item gMotionSensor changed to CLOSED
 then
-	offTimer = createTimer(now.plusMinutes(minutesOn)) [|
-		logDebug("mode", "Ingen rörelse inom angiven tid {}", minutesOn)
-		// sendCommand(Shower_Dimmer, OFF)	
-	]
-end
-
-
-
-/*
-val Integer nightLevel = 3
-var Integer dayLevel = 40
-var Integer level
-
-rule "Initiering"
-when
-	System started
-then
-	if (Mode.state == 1) {
-		level = nightLevel
-	} else {
-		level = dayLevel
-	}
-	if (Shower_Dimmer.state != 0) {
+	logDebug("mode", "Ingen rörelse, kontrollerar timer.")
+	if (offTimer == null) {
+		logDebug("mode", "Skapar timer.")
 		offTimer = createTimer(now.plusMinutes(minutesOn)) [|
-			logDebug("dusch", "Släcker belysning")
-			sendCommand(Shower_Dimmer, OFF)	
-		]
-	}
-end	
-
-rule "Ta bort timer"
-when
-	System shuts down
-then
-    if (offTimer != null) {
-    	logDebug("dusch", "Avsluta timer")
-    	offTimer.cancel
-    	offTimer = null
-    }
-end
-
-rule "Tänd dusch med timer"
-when
-	Item Shower_Motion_Sensor changed to OPEN
-then
-	logDebug("dusch", "Shower_Motion_Sensor.state {}", Shower_Motion_Sensor.state)
-	logDebug("dusch", "Shower_Dimmer.state {}", Shower_Dimmer.state)
-	if (Shower_Dimmer.state == 0){
-		logDebug("dusch", "Tänder belysning")
-		sendCommand(Shower_Dimmer, level)	
-	}
-	
-	if (offTimer != null) {
-		offTimer.cancel
-		offTimer = null
-	}
-end
-
-rule "Släck dusch med timer"
-when
-	Item Shower_Motion_Sensor changed to CLOSED
-then
-	logDebug("dusch", "Shower_Motion_Sensor.state {}", Shower_Motion_Sensor.state)
-	
-	if (offTimer != null) {
-		offTimer.cancel
-		offTimer = null
-	}
-	logDebug("dusch", "Skapar ny timer")
-	offTimer = createTimer(now.plusMinutes(minutesOn)) [|
-		logDebug("dusch", "Släcker belysning")
-		sendCommand(Shower_Dimmer, OFF)	
-	]
-end
-	
-
-rule "Justera ljusstyrka"
-when
-	Item Mode changed
-then
-	logDebug("dusch", "Justera ljusstyrka Mode.state {}", Mode.state)
-	if (Mode.state == 1) {
-		level = nightLevel
-	} else {
-		level = dayLevel
-	}
-	logDebug("dusch", "Justera ljusstyrka level {}", level)
-	logDebug("dusch", "Justera ljusstyrka Shower_Dimmer.state {}", Shower_Dimmer.state)
-	if (Shower_Dimmer.state != 0) {
-		sendCommand(Shower_Dimmer, level)	
-	}
-end
-
-rule "Avsluta timer om belysning släcks"
-when 
-	Item Shower_Dimmer changed
-then
-	
-	logDebug("dusch", "Shower_Dimmer.state {}", Shower_Dimmer.state)
-	if (Shower_Dimmer.state == 0) {
-		logDebug("dusch", "Avsluta timer")
-		if (offTimer != null) {
-			offTimer.cancel
-			offTimer = null
-		}
-	} else {
-		level = (Shower_Dimmer.state as DecimalType).intValue
-		logDebug("dusch", "Stored new dimmer level {}", level)
-		if (offTimer == null) {
-			offTimer = createTimer(now.plusMinutes(minutesOn)) [|
-				logDebug("dusch", "Släcker belysning")
-				sendCommand(Shower_Dimmer, OFF)	
-			]
-		}
+			logDebug("mode", "Ingen rörelse inom angiven tid {}", minutesOn)
+			// All_Lights.allMembers.forEach[light| sendCommand(light, OFF)]	
+		]	
 	}
 end
 */
