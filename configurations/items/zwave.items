@@ -57,7 +57,7 @@ Switch Bedrom_Window_Light "Belysning fönster" <light> (gBedRoom, gLight, All_L
 /* Vardagsrum */
 Switch Livingroom_Soffa_Light "Belysning soffa" <light> (gLivingRoom, gLight, All_Lights_GroundFloor, All_Lights) { zwave="21:command=switch_binary" }
 Switch Livingroom_Window_Light "Belysning fönster, tv" <light> (gLivingRoom, gLight, All_Lights_GroundFloor, All_Lights) { zwave="22:command=switch_binary" }
-Switch Livingroom_Tv_Light "Belysning tv" <light> (gLivingRoom, gLight, All_Lights_GroundFloor, All_Lights) { zwave="23:command=SWITCH_MULTILEVEL,restore_last_value=true" }
+Dimmer Livingroom_Tv_Light "Belysning tv" <light> (gLivingRoom, gLight, All_Lights_GroundFloor, All_Lights) { zwave="23:command=SWITCH_MULTILEVEL,restore_last_value=true" }
 
 Contact Livingroom_Motion_Sensor "Rörelsesensor" (gLivingRoom, gMotionSensorIndoor) { zwave="32:command=sensor_binary" }
 Number Livingroom_Temp_Sensor "Temperatur [%.2f]" <temperature> (gLivingRoom, gTempSensor) { zwave="32:command=sensor_multilevel,sensor_type=1" }
