@@ -4,29 +4,60 @@ import org.openhab.core.library.types.DecimalType
 import org.openhab.core.library.types.DateTimeType
 import org.openhab.core.library.items.SwitchItem
 
+import java.util.concurrent.locks.ReentrantLock
+
 var Timer offTimer
 
-
 var Integer minutesOn = 120
+
+val ReentrantLock lock  = new ReentrantLock()
 
 rule "Initiering"
 when
 	System started
 then
-	logDebug("mode", "Intiering, skapar timer.")
-	offTimer = createTimer(now.plusMinutes(minutesOn)) [|
-		logDebug("mode", "Ingen rörelse inom angiven tid {}", minutesOn)
-		// All_Lights.allMembers.forEach[light| sendCommand(light, OFF)]
-	]
+	try {
+		lock.lock
+		
+		logDebug("mode", "Intiering, skapar timer.")
+		offTimer = createTimer(now.plusMinutes(minutesOn)) [|
+			logDebug("mode", "Ingen rörelse inom angiven tid {}", minutesOn)
+			// All_Lights.allMembers.forEach[light| sendCommand(light, OFF)]
+		]
+			
+	} finally {
+		lock.unlock
+	}
+end
+
+rule "Destruering"
+when
+	System shuts down
+then
+	try {
+		lock.lock
+		logDebug("mode", "Destruerar, kontrollerar timer")
+		if (offTimer != null) {
+			logDebug("mode", "Tar bort befintlig timer")
+			offTimer.cancel
+			offTimer = null
+		}
+			
+	} finally {
+		lock.unlock
+	}
 end
 
 rule "Avsluta timer vid rörelse"
 when
-	Item gMotionSensorIndoor received update
+	Item gMotionSensorIndoor changed
 then
-	logDebug("mode", "Rörelse ändrad")
-	if(gMotionSensorIndoor.allMembers.filter([sensor| 
-		sensor.state == OPEN]).empty) {
+	try {
+		lock.lock
+		
+		logDebug("mode", "Rörelse ändrad")
+		if(gMotionSensorIndoor.allMembers.filter([sensor| 
+			sensor.state == OPEN]).empty) {
 			logDebug("mode", "Alla sensorer är Closed, tar bort befintlig timer")
 			if (offTimer != null) {
 				offTimer.cancel
@@ -44,4 +75,8 @@ then
 				offTimer = null
 			}
 		}
+		
+	} finally {
+		lock.unlock
+	}
 end

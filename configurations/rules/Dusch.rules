@@ -4,12 +4,12 @@ import org.openhab.core.library.types.DecimalType
 import org.openhab.core.library.types.DateTimeType
 import org.openhab.core.library.items.SwitchItem
 
-var Timer offTimer
-
 val Integer nightLevel = 3
-var Integer dayLevel = 40
+val Integer dayLevel = 40
+val Integer minutesOn = 10
+
+var Timer offTimer
 var Integer level
-var Integer minutesOn = 10
 
 rule "Initiering"
 when
