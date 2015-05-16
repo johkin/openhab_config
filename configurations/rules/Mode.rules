@@ -19,6 +19,8 @@ then
 	try {
 		lock.lock
 		
+		sendCommand(Mode, 0)
+		
 		logDebug("mode", "Intiering, skapar timer.")
 		offTimer = createTimer(now.plusMinutes(minutesOn)) [|
 			logDebug("mode", "Ingen rörelse inom angiven tid {}", minutesOn)

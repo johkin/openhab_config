@@ -101,6 +101,7 @@ Number BackSide_Light_Sensor "Ljussensor [%.2f]" <solarplant> (gBackside, gLight
 Number BackSide_Humidity_Sensor "Fuktsensor [%.2f] %" (gBackside, gHumiditySensor) { zwave="3:command=sensor_multilevel,sensor_type=5" }
 Number BackSide_Sensor_Battery "Batteri [%.2f] %"  (gBackside, gBattery) { zwave="3:command=battery" }
 Contact BackSide_Motion_Sensor "Rörelsesensor"  (gBackside, gMotionSensorOutdoor) { zwave="3:command=sensor_binary" }
+Switch BackSide_Motion_Sensor_Active "Rörelsesensor aktiv" (gBackside)
 
 /* Modes 0=HOME, 1=NIGHT, 2=AWAY 3=Vacation*/
 Number Mode "Mode:" <present>

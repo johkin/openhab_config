@@ -2,8 +2,6 @@ import org.joda.time.*
 import org.openhab.core.library.types.DateTimeType
 import org.openhab.core.library.items.SwitchItem
 
-var Boolean controlledByMotion = false
-
 rule "Tänd utebelysning eftermiddag"
 when
 	Item Sunset_Event changed to ON
@@ -24,7 +22,7 @@ then
 		gOutsideLights.allMembers.forEach[light| sendCommand(light, ON)]	
 	}
 	logDebug("utebelysning", "Sätter controlledByMotion = false")
-	controlledByMotion = false
+	sendCommand(BackSide_Motion_Sensor_Active, OFF)
 end
 
 rule "Tänd utebelysning morgon, helg"
@@ -40,7 +38,7 @@ then
 		gOutsideLights.allMembers.forEach[light| sendCommand(light, ON)]	
 	}
 	logDebug("utebelysning", "Sätter controlledByMotion = false")
-	controlledByMotion = false
+	sendCommand(BackSide_Motion_Sensor_Active, OFF)
 end
 
 
@@ -58,7 +56,7 @@ then
 	logDebug("utebelysning", "Tid för släckning")
 	gOutsideLights.allMembers.forEach[light| sendCommand(light, OFF)]
 	logDebug("utebelysning", "Sätter controlledByMotion = true")
-	controlledByMotion = true
+	sendCommand(BackSide_Motion_Sensor_Active, ON)
 end
 
 rule "Släck utebelysning kväll, helg"
@@ -68,7 +66,7 @@ then
 	logDebug("utebelysning", "Tid för släckning")
 	gOutsideLights.allMembers.forEach[light| sendCommand(light, OFF)]
 	logDebug("utebelysning", "Sätter controlledByMotion = true")
-	controlledByMotion = true
+	sendCommand(BackSide_Motion_Sensor_Active, ON)
 end
 
 rule "Tänd utebelysning vid rörelse"
@@ -76,7 +74,7 @@ when
 	Item BackSide_Motion_Sensor changed to OPEN
 then
 	logDebug("utebelysning", "Rörelse från förrådet")
-	if (controlledByMotion) {
+	if (BackSide_Motion_Sensor_Active.state == ON) {
 		logDebug("utebelysning", "Tänder belysning")
 		gOutsideLights.allMembers.forEach[light| sendCommand(light, ON)]	
 	}
@@ -87,7 +85,7 @@ when
 	Item BackSide_Motion_Sensor changed to CLOSED
 then
 	logDebug("utebelysning", "Ingen rörelse från förrådet")
-	if (controlledByMotion) {
+	if (BackSide_Motion_Sensor_Active.state == ON) {
 		logDebug("utebelysning", "Släcker belysning")
 		gOutsideLights.allMembers.forEach[light| sendCommand(light, OFF)]	
 	}

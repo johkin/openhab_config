@@ -18,6 +18,5 @@ Number swapUsed 			"Swap used [%.1f]"  (gSystem) { systeminfo="SwapUsed:60000" }
 
 Number openhabRealMem   	"Real mem [%.1f]"   (gSystem) { systeminfo="ProcessRealMem:60000:$$" }
 Number openhabVirtualMem    "Virtual mem [%.1f]"    (gSystem) { systeminfo="ProcessVirtualMem:60000:$$" }
-Number openhabCpuPercent    "Cpu percent [%.1f%%]"  (gSystem) { systeminfo="ProcessCpuPercent:60000:$$" }
-Number openhabCpuSystem 	"CPU system [%.1f]" (gSystem) { systeminfo="ProcessCpuSystem:60000:$$" }
+Number openhabCpuPercent    "Openhab Cpu [%.1f%%]"  (gSystem) { systeminfo="ProcessCpuPercent:60000:$$" }
 String openhabUptimeFormatted "OpenHab Uptime [%s]" (gSystem) { systeminfo="ProcessUptimeFormatted:600000:$$" }
