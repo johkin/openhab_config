@@ -72,6 +72,10 @@ then
 			]
 		} else {
 			logDebug("mode", "Minst en sensor är Open, tar bort timer.")
+			if (Mode.state == 1 && now.getHourOfDay() > 5 && now.getHourOfDay() < 22) {
+				logDebug("mode", "Ändrar mode till dag.")
+				sendCommand(Mode, 0)
+			}
 			if (offTimer != null) {
 				offTimer.cancel
 				offTimer = null
