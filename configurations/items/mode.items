@@ -1,0 +1,3 @@
+/* Modes 0=HOME, 1=NIGHT, 2=AWAY 3=Vacation*/
+Number Mode "Mode:" <present>
+Number Previous_Mode

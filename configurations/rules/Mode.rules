@@ -8,7 +8,7 @@ import java.util.concurrent.locks.ReentrantLock
 
 var Timer offTimer
 
-var Integer minutesOn = 120
+var Integer minutesOn = 30
 
 val ReentrantLock lock  = new ReentrantLock()
 
@@ -50,14 +50,41 @@ then
 	}
 end
 
-rule "Avsluta timer vid rörelse"
+
+
+rule "Registrera rörelse"
 when
-	Item gMotionSensorIndoor changed
+	Item gMotionSensorIndoor changed to OPEN
 then
 	try {
 		lock.lock
 		
-		logDebug("mode", "Rörelse ändrad")
+		logDebug("mode", "Minst en sensor är Open, tar bort timer.")
+		if (offTimer != null) {
+			offTimer.cancel
+			offTimer = null
+		}
+		
+		if (now.getHourOfDay() > 5 && now.getHourOfDay() < 22) {
+			logDebug("mode", "Ändrar läge till dag.")
+			sendCommand(Mode, 0)
+		} else if (Mode.state == 2 || Mode.state == 3) {
+			sendCommand(Mode, 1)
+		}
+		
+		
+	} finally {
+		lock.unlock
+	}
+end
+
+rule "Ingen rörelse"
+when
+	Item gMotionSensorIndoor changed to CLOSED
+then
+	try {
+		lock.lock
+		
 		if(gMotionSensorIndoor.allMembers.filter([sensor| 
 			sensor.state == OPEN]).empty) {
 			logDebug("mode", "Alla sensorer är Closed, tar bort befintlig timer")
@@ -68,21 +95,30 @@ then
 			logDebug("mode", "Skapar ny timer")
 			offTimer = createTimer(now.plusMinutes(minutesOn)) [|
 				logDebug("mode", "Ingen rörelse inom angiven tid {}", minutesOn)
-				// All_Lights.allMembers.forEach[light| sendCommand(light, OFF)]
+				if (Mode.state == 0) {
+					if (now.getHourOfDay() > 22 && now.getHourOfDay() < 5) {
+						logDebug("mode", "Ändrar mode till natt.")
+						sendCommand(Mode, 1)
+					} else {
+						sendCommand(Mode, 2)
+					}
+				} 
 			]
-		} else {
-			logDebug("mode", "Minst en sensor är Open, tar bort timer.")
-			if (Mode.state == 1 && now.getHourOfDay() > 5 && now.getHourOfDay() < 22) {
-				logDebug("mode", "Ändrar mode till dag.")
-				sendCommand(Mode, 0)
-			}
-			if (offTimer != null) {
-				offTimer.cancel
-				offTimer = null
-			}
-		}
+		} 
 		
 	} finally {
 		lock.unlock
+	}
+end
+
+rule "Kontrollera senaste lägesändring"
+when
+	Time cron "0 0 7,19 ? * *"
+then
+	logDebug("mode", "Senaste ändring av läge {}", Mode.lastUpdate)
+	if (Mode.state != 3) {
+		if (Mode.lastUpdate.before(now.minusDays(1))) {
+			sendCommand(Mode, 3)
+		}	
 	}
 end

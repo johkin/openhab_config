@@ -111,7 +111,3 @@ Number BackSide_Humidity_Sensor "Luftfuktighet [%.2f] %" (gBackside, gHumiditySe
 Number BackSide_Sensor_Battery "Batteri [%.2f] %"  (gBackside, gBattery) { zwave="34:command=battery" }
 Contact BackSide_Motion_Sensor "Rörelsesensor"  (gBackside, gMotionSensorOutdoor) { zwave="34:command=sensor_binary,respond_to_basic=true" }
 Switch Outdoor_Motion_Sensor_Active "Rörelsesensor aktiv" (gOutdoor)
-
-/* Modes 0=HOME, 1=NIGHT, 2=AWAY 3=Vacation*/
-Number Mode "Mode:" <present>
-Number Previous_Mode
