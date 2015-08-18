@@ -97,11 +97,17 @@ Number BackSide_Outlet_Consume "Uttag baksida förbrukning [%.1f W]" (gBackside,
 
 
 Number BackSide_Temp_Sensor "Temperatur [%.2f] °C" <temperature> (gBackside, gTempSensor) { zwave="34:command=sensor_multilevel,sensor_type=1" }
-Number BackSide_Light_Sensor "Ljussensor [%.2f]" <solarplant> (gBackside, gLightSensor) { zwave="34:command=sensor_multilevel,sensor_type=3" }
-Number BackSide_Humidity_Sensor "Fuktsensor [%.2f] %" (gBackside, gHumiditySensor) { zwave="34:command=sensor_multilevel,sensor_type=5" }
+Number BackSide_Light_Sensor "Ljusstyrka [%.2f]" <solarplant> (gBackside, gLightSensor) { zwave="34:command=sensor_multilevel,sensor_type=3" }
+Number BackSide_Humidity_Sensor "Luftfuktighet [%.2f] %" (gBackside, gHumiditySensor) { zwave="34:command=sensor_multilevel,sensor_type=5" }
 Number BackSide_Sensor_Battery "Batteri [%.2f] %"  (gBackside, gBattery) { zwave="34:command=battery" }
 Contact BackSide_Motion_Sensor "Rörelsesensor"  (gBackside, gMotionSensorOutdoor) { zwave="34:command=sensor_binary,respond_to_basic=true" }
-Switch BackSide_Motion_Sensor_Active "Rörelsesensor aktiv" (gBackside)
+Switch Outdoor_Motion_Sensor_Active "Rörelsesensor aktiv" (gOutdoor)
+
+Number FrontSide_Temp_Sensor "Temperatur [%.2f] °C" <temperature> (gFrontside, gTempSensor) { zwave="35:command=sensor_multilevel,sensor_type=1" }
+Number FrontSide_Light_Sensor "Ljusstyrka [%.2f]" <solarplant> (gFrontside, gLightSensor) { zwave="35:command=sensor_multilevel,sensor_type=3" }
+Number FrontSide_Humidity_Sensor "Luftfuktighet [%.2f] %" (gFrontside, gHumiditySensor) { zwave="35:command=sensor_multilevel,sensor_type=5" }
+Number FrontSide_Sensor_Battery "Batteri [%.2f] %"  (gFrontside, gBattery) { zwave="35:command=battery" }
+Contact FrontSide_Motion_Sensor "Rörelsesensor"  (gFrontside, gMotionSensorOutdoor) { zwave="35:command=sensor_binary" }
 
 /* Modes 0=HOME, 1=NIGHT, 2=AWAY 3=Vacation*/
 Number Mode "Mode:" <present>
