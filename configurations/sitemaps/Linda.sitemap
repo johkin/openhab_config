@@ -5,7 +5,9 @@ sitemap Linda label="Linda hemma"
 		
 	}
 	Frame label="Belysning" {
+		Switch item=All_Lights mappings=[OFF="Släck allt", ON="Tänd allt"]
 		Switch item=All_Lights_GroundFloor mappings=[OFF="Släck allt", ON="Tänd allt"]
 		Switch item=All_Lights_FirstFloor mappings=[OFF="Släck allt", ON="Tänd allt"]
+		Switch item=All_Lights_Outdoor mappings=[OFF="Släck allt", ON="Tänd allt"]
 	}
 }

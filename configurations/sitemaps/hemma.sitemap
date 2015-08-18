@@ -9,6 +9,7 @@ sitemap hemma label="Hemma"
 		Switch item=All_Lights mappings=[OFF="Släck allt", ON="Tänd allt"]
 		Switch item=All_Lights_GroundFloor mappings=[OFF="Släck allt", ON="Tänd allt"]
 		Switch item=All_Lights_FirstFloor mappings=[OFF="Släck allt", ON="Tänd allt"]
+		Switch item=All_Lights_Outdoor mappings=[OFF="Släck allt", ON="Tänd allt"]
 	}
 	Frame label="Grupper" {
 		Group item=gFirstFloor label="Övervåning" icon="firstfloor"
