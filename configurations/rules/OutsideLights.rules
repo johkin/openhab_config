@@ -6,7 +6,7 @@ rule "Tänd utebelysning eftermiddag"
 when
 	Item Sunset_Event changed to ON
 then
-	gOutsideLights.allMembers.forEach[light| sendCommand(light, ON)]
+	gOutsideLights.allMembers.forEach[light| light.sendCommand(ON)]
 end
 
 rule "Tänd utebelysning morgon, vardag"
@@ -19,7 +19,7 @@ then
     
 	if (jodaSunriseTime.afterNow) {
 		logDebug("utebelysning", "Soluppgång efter tändning")
-		gOutsideLights.allMembers.forEach[light| sendCommand(light, ON)]	
+		gOutsideLights.allMembers.forEach[light| light.sendCommand(ON)]	
 	}
 	logDebug("utebelysning", "Sätter controlledByMotion = false")
 	sendCommand(BackSide_Motion_Sensor_Active, OFF)
@@ -46,7 +46,7 @@ rule "Släck utebelysning morgon"
 when
 	Item Sunrise_Event changed to ON
 then
-	gOutsideLights.allMembers.forEach[light| sendCommand(light, OFF)]
+	gOutsideLights.allMembers.forEach[light| light.sendCommand(OFF)]
 end
 
 rule "Släck utebelysning kväll, vardag"
@@ -54,7 +54,7 @@ when
 	Time cron "0 30 22 ? * MON-THU,SUN"
 then
 	logDebug("utebelysning", "Tid för släckning")
-	gOutsideLights.allMembers.forEach[light| sendCommand(light, OFF)]
+	gOutsideLights.allMembers.forEach[light| light.sendCommand(OFF)]
 	logDebug("utebelysning", "Sätter controlledByMotion = true")
 	sendCommand(BackSide_Motion_Sensor_Active, ON)
 end
@@ -64,7 +64,7 @@ when
 	Time cron "0 30 23 ? * FRI-SAT"
 then
 	logDebug("utebelysning", "Tid för släckning")
-	gOutsideLights.allMembers.forEach[light| sendCommand(light, OFF)]
+	gOutsideLights.allMembers.forEach[light| light.sendCommand(OFF)]
 	logDebug("utebelysning", "Sätter controlledByMotion = true")
 	sendCommand(BackSide_Motion_Sensor_Active, ON)
 end
@@ -76,17 +76,18 @@ then
 	logDebug("utebelysning", "Rörelse från förrådet")
 	if (BackSide_Motion_Sensor_Active.state == ON) {
 		logDebug("utebelysning", "Tänder belysning")
-		gOutsideLights.allMembers.forEach[light| sendCommand(light, ON)]	
+		gOutsideLights.allMembers.forEach[light| light.sendCommand(ON)]	
 	}
 end
 
 rule "Släck utebelysning vid rörelse"
 when
-	Item BackSide_Motion_Sensor changed to CLOSED
+	Item BackSide_Motion_Sensor changed
 then
+	logDebug("utebelysning", "State " + BackSide_Motion_Sensor.state)
 	logDebug("utebelysning", "Ingen rörelse från förrådet")
 	if (BackSide_Motion_Sensor_Active.state == ON) {
 		logDebug("utebelysning", "Släcker belysning")
-		gOutsideLights.allMembers.forEach[light| sendCommand(light, OFF)]	
+		gOutsideLights.allMembers.forEach[light| light.sendCommand(OFF)]	
 	}
 end
