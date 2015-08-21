@@ -69,6 +69,7 @@ then
 			logDebug("mode", "Ändrar läge till dag.")
 			sendCommand(Mode, 0)
 		} else if (Mode.state == 2 || Mode.state == 3) {
+			logDebug("mode", "Ändrar läge till natt.")
 			sendCommand(Mode, 1)
 		}
 		
@@ -97,9 +98,10 @@ then
 				logDebug("mode", "Ingen rörelse inom angiven tid {}", minutesOn)
 				if (Mode.state == 0) {
 					if (now.getHourOfDay() > 22 && now.getHourOfDay() < 5) {
-						logDebug("mode", "Ändrar mode till natt.")
+						logDebug("mode", "Ändrar läge till natt.")
 						sendCommand(Mode, 1)
 					} else {
+						logDebug("mode", "Ändrar läge till borta.")
 						sendCommand(Mode, 2)
 					}
 				} 
@@ -117,7 +119,8 @@ when
 then
 	logDebug("mode", "Senaste ändring av läge {}", Mode.lastUpdate)
 	if (Mode.state != 3) {
-		if (Mode.lastUpdate.before(now.minusDays(1))) {
+		if (Mode.lastUpdate.before(now.minusDays(1).toDate)) {
+			logDebug("mode", "Ändrar läge till semester.")
 			sendCommand(Mode, 3)
 		}	
 	}
