@@ -10,7 +10,7 @@ var Timer offTimer
 
 var Integer minutesOn = 30
 
-val ReentrantLock lock  = new ReentrantLock()
+val ReentrantLock lock = new ReentrantLock()
 
 rule "Initiering"
 when
@@ -111,6 +111,13 @@ then
 	} finally {
 		lock.unlock
 	}
+end
+
+rule "Kontrollera senaste rörelse"
+when
+	Time cron "*/10 * * ? * *"
+then
+	logDebug("mode", "Senaste rörelse {}", gMotionSensorIndoor.lastUpdate)
 end
 
 rule "Kontrollera senaste lägesändring"
