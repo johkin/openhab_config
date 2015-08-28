@@ -114,21 +114,3 @@ then
 		}
 	}
 end
-
-/* 
-rule "Tänd dusch dag"
-when
-	Item Shower_Motion_Sensor changed or
-	Item Mode changed
-then
-	if (Shower_Motion_Sensor.state == OPEN) {
-		var Integer level = 40
-		if (Mode.state == 1) {
-			level = 3
-		}
-		Shower_Dimmer.sendCommand(level)	
-	} else {
-		Shower_Dimmer.sendCommand(OFF)
-	}
-end
-*/

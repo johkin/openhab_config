@@ -115,9 +115,30 @@ end
 
 rule "Kontrollera senaste rörelse"
 when
-	Time cron "*/10 * * ? * *"
+	Time cron "0 */10 * ? * *"
 then
-	logDebug("mode", "Senaste rörelse {}", gMotionSensorIndoor.lastUpdate)
+	logDebug("mode", "Antal sensorer {}", gMotionSensorIndoor.members.size)
+	
+/* 
+	val DateTime delayTime = now.minusMinutes(30)
+	val listOfMotionSensorsNotTripped = gMotionSensorIndoor.allMembers
+		.map([sensor | 
+			logDebug("mode", "Senaste rörelse {}, {}", sensor.name, sensor.lastUpdate)
+			new DateTime(sensor.lastUpdate)
+		])
+		.filter([lastUpdate | now.mindelayTime.isBefore(lastUpdate)])
+	if (listOfMotionSensorsNotTripped.empty) {
+			if (Mode.state == 0) {
+					if (now.getHourOfDay() > 22 && now.getHourOfDay() < 5) {
+						logDebug("mode", "Ändrar läge till natt.")
+						sendCommand(Mode, 1)
+					} else {
+						logDebug("mode", "Ändrar läge till borta.")
+						sendCommand(Mode, 2)
+					}
+				} 
+	}
+	*/
 end
 
 rule "Kontrollera senaste lägesändring"
