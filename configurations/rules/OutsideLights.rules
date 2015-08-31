@@ -2,6 +2,19 @@ import org.joda.time.*
 import org.openhab.core.library.types.DateTimeType
 import org.openhab.core.library.items.SwitchItem
 
+rule "Släck utebelysning om den är tänd av rörelse"
+when
+	Item Outdoor_Motion_Sensor_Active changed to OFF
+then
+	val SunriseTime = Sunrise_Time.state as DateTimeType
+    val jodaSunriseTime = new DateTime(SunriseTime.calendar.timeInMillis)
+    
+    if (jodaSunriseTime.beforeNow) {
+		logDebug("utebelysning", "Soluppgång före avstängning av rörelsekontroll")
+		gOutsideLights.allMembers.forEach[light | light.sendCommand(OFF)]	
+	}
+end
+
 rule "Tänd utebelysning eftermiddag"
 when
 	Item Sunset_Event changed to ON
@@ -106,9 +119,9 @@ rule "Släck utebelysning vid rörelse framsida"
 when
 	Item FrontSide_Motion_Sensor changed to CLOSED
 then
-	logDebug("utebelysning framsida", "State " + FrontSide_Motion_Sensor.state)
 	logDebug("utebelysning", "Ingen rörelse från framsida")
 	if (Outdoor_Motion_Sensor_Active.state == ON) {
+		logDebug("utebelysning", "släcker belysning")
 		FrontSide_Light_Switch.sendCommand(OFF)
 	}
 end
