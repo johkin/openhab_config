@@ -68,8 +68,10 @@ then
 	}
 	logDebug("dusch", "Skapar ny timer")
 	offTimer = createTimer(now.plusMinutes(minutesOn)) [|
-		logDebug("dusch", "Släcker belysning")
-		sendCommand(Shower_Dimmer, OFF)	
+		if (Shower_Motion_Sensor.state == CLOSED) {
+			logDebug("dusch", "Släcker belysning")
+			sendCommand(Shower_Dimmer, OFF)	
+		}
 	]
 end
 	
