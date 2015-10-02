@@ -8,7 +8,6 @@ val Integer nightLevel = 3
 val Integer dayLevel = 40
 val Integer minutesOn = 10
 
-var Timer offTimer
 var Integer level
 
 rule "Initiering"
@@ -20,23 +19,22 @@ then
 	} else {
 		level = dayLevel
 	}
-	if (Shower_Dimmer.state != 0) {
-		offTimer = createTimer(now.plusMinutes(minutesOn)) [|
-			logDebug("dusch", "Släcker belysning")
-			sendCommand(Shower_Dimmer, OFF)	
-		]
-	}
 end	
 
-rule "Ta bort timer"
+rule "Släck med schema"
 when
-	System shuts down
+	Time cron "0 */5 * ? * *"
 then
-    if (offTimer != null) {
-    	logDebug("dusch", "Avsluta timer")
-    	offTimer.cancel
-    	offTimer = null
-    }
+	logDebug("dusch", "Kontrollera senaste rörelse {}", Shower_Motion_Sensor.lastUpdate)
+	val Period delayPeriod = new Period().withMinutes(minutesOn)
+	
+	val lastUpdate = new DateTime(Shower_Motion_Sensor.lastUpdate)
+	
+	if (lastUpdate.plus(delayPeriod).beforeNow) {
+		logDebug("dusch", "Släcker belysning")
+			sendCommand(Shower_Dimmer, OFF)
+	}
+	
 end
 
 rule "Tänd dusch med timer"
@@ -50,31 +48,7 @@ then
 		sendCommand(Shower_Dimmer, level)	
 	}
 	
-	if (offTimer != null) {
-		offTimer.cancel
-		offTimer = null
-	}
-end
-
-rule "Släck dusch med timer"
-when
-	Item Shower_Motion_Sensor changed to CLOSED
-then
-	logDebug("dusch", "Shower_Motion_Sensor.state {}", Shower_Motion_Sensor.state)
-	
-	if (offTimer != null) {
-		offTimer.cancel
-		offTimer = null
-	}
-	logDebug("dusch", "Skapar ny timer")
-	offTimer = createTimer(now.plusMinutes(minutesOn)) [|
-		if (Shower_Motion_Sensor.state == CLOSED) {
-			logDebug("dusch", "Släcker belysning")
-			sendCommand(Shower_Dimmer, OFF)	
-		}
-	]
-end
-	
+end	
 
 rule "Justera ljusstyrka"
 when
@@ -100,19 +74,9 @@ then
 	
 	logDebug("dusch", "Shower_Dimmer.state {}", Shower_Dimmer.state)
 	if (Shower_Dimmer.state == 0) {
-		logDebug("dusch", "Avsluta timer")
-		if (offTimer != null) {
-			offTimer.cancel
-			offTimer = null
-		}
+
 	} else {
 		level = (Shower_Dimmer.state as DecimalType).intValue
 		logDebug("dusch", "Stored new dimmer level {}", level)
-		if (offTimer == null) {
-			offTimer = createTimer(now.plusMinutes(minutesOn)) [|
-				logDebug("dusch", "Släcker belysning")
-				sendCommand(Shower_Dimmer, OFF)	
-			]
-		}
 	}
 end
