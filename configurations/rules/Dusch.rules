@@ -39,20 +39,20 @@ then
 	}
 end
 
-rule "Tänd dusch med timer"
+rule "Tänd dusch vid rörelse"
 when
 	Item Shower_Motion_Sensor changed to OPEN
 then
 	logDebug("dusch", "Shower_Motion_Sensor.state {}", Shower_Motion_Sensor.state)
 	logDebug("dusch", "Shower_Dimmer.state {}", Shower_Dimmer.state)
 	if (Shower_Dimmer.state == 0){
-		logDebug("dusch", "Tänder belysning")
+		logDebug("dusch", "Tänder belysning: {}", level)
 		sendCommand(Shower_Dimmer, level)	
 	}
 	
 end	
 
-rule "Justera ljusstyrka"
+rule "Justera ljusstyrka vid ändring av läge"
 when
 	Item Mode changed
 then

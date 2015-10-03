@@ -34,8 +34,10 @@ then
 		logDebug("mode", "Minst en sensor är Open, justerar läge.")
 		
 		if (now.getHourOfDay() > 5 && now.getHourOfDay() < 22) {
-			logDebug("mode", "Ändrar läge till dag.")
-			sendCommand(Mode, 0)
+			if (Mode.state != 0) {
+				logDebug("mode", "Ändrar läge till dag.")
+				sendCommand(Mode, 0)	
+			}
 		} else if (Mode.state == 2 || Mode.state == 3) {
 			logDebug("mode", "Ändrar läge till natt.")
 			sendCommand(Mode, 1)
