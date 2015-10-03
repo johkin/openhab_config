@@ -25,16 +25,18 @@ rule "Släck med schema"
 when
 	Time cron "0 */5 * ? * *"
 then
-	logDebug("dusch", "Kontrollera senaste rörelse {}", Shower_Motion_Sensor.lastUpdate)
-	val Period delayPeriod = new Period().withMinutes(minutesOn)
-	
-	val lastUpdate = new DateTime(Shower_Motion_Sensor.lastUpdate)
-	
-	if (lastUpdate.plus(delayPeriod).beforeNow) {
-		logDebug("dusch", "Släcker belysning")
-			sendCommand(Shower_Dimmer, OFF)
+	if (Shower_Motion_Sensor.state == CLOSED) {
+		logDebug("dusch", "Kontrollera senaste rörelse {}", Shower_Motion_Sensor.lastUpdate)
+		val Period delayPeriod = new Period().withMinutes(minutesOn)
+		val lastUpdate = new DateTime(Shower_Motion_Sensor.lastUpdate)
+		
+		if (lastUpdate.plus(delayPeriod).beforeNow) {
+			if (Shower_Dimmer.state != 0) {
+				logDebug("dusch", "Släcker belysning")
+				sendCommand(Shower_Dimmer, OFF)	
+			}
+		}	
 	}
-	
 end
 
 rule "Tänd dusch med timer"
