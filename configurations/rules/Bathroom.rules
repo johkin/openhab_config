@@ -4,8 +4,8 @@ import org.openhab.core.library.types.DecimalType
 import org.openhab.core.library.types.DateTimeType
 import org.openhab.core.library.items.SwitchItem
 
-val Integer nightLevel = 3
-val Integer dayLevel = 40
+val Integer nightLevel = 28
+val Integer dayLevel = 65
 val Integer minutesOn = 10
 
 var Integer level
@@ -32,8 +32,12 @@ then
 		
 		if (lastUpdate.plus(delayPeriod).beforeNow) {
 			if (Bathroom_Dimmer.state != 0) {
-				logDebug("badrum", "Släcker belysning")
+				logDebug("badrum", "Släcker dimmer")
 				sendCommand(Bathroom_Dimmer, OFF)	
+			}
+			if (Bathroom_Mirror_Light.state == ON) {
+				logDebug("badrum", "Släcker spegel")
+				sendCommand(Bathroom_Mirror_Light, OFF)	
 			}
 		}	
 	}
