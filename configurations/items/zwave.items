@@ -67,6 +67,15 @@ Number Livingroom_Temp_Sensor "Temperatur [%.2f]" <temperature> (gLivingRoom, gT
 Number Livingroom_Light_Sensor "Ljussensor [%.2f]" <solarplant> (gLivingRoom, gLightSensor) { zwave="32:command=sensor_multilevel,sensor_type=3" }
 Number Livingroom_Motion_Sensor_Battery "Batteri [%.2f] %" (gLivingRoom, gBattery)  { zwave="32:command=battery" }
 
+/* Badrum */
+Switch Bathroom_Mirror_Light "Belysning spegel" <light> (gBath, gLight, All_Lights_GroundFloor, All_Lights) { zwave="38:command=switch_binary" }
+Dimmer Bathroom_Dimmer "Dimmer [%d %%]" <light> (gBath, gLight, All_Lights_GroundFloor, All_Lights) { zwave="37:command=SWITCH_MULTILEVEL,restore_last_value=true" }
+
+Contact Bathroom_Motion_Sensor "Rörelsesensor" (gBath, gMotionSensorIndoor) { zwave="39:command=sensor_binary" }
+Number Bathroom_Temp_Sensor "Temperatur [%.2f]" <temperature> (gBath, gTempSensor) { zwave="39:command=sensor_multilevel,sensor_type=1" }
+Number Bathroom_Light_Sensor "Ljussensor [%.2f]" <solarplant> (gBath, gLightSensor) { zwave="39:command=sensor_multilevel,sensor_type=3" }
+Number Bathroom_Motion_Sensor_Battery "Batteri [%.2f] %" (gBath, gBattery)  { zwave="39:command=battery" }
+
 /* Kök */
 Switch Kitchen_Window_Light "Belysning fönster" <light> (gKitchen, gLight, All_Lights_GroundFloor, All_Lights) { zwave="25:command=switch_binary" }
 

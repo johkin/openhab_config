@@ -1,0 +1,84 @@
+import org.joda.time.*
+import org.openhab.model.script.actions.Timer
+import org.openhab.core.library.types.DecimalType
+import org.openhab.core.library.types.DateTimeType
+import org.openhab.core.library.items.SwitchItem
+
+val Integer nightLevel = 3
+val Integer dayLevel = 40
+val Integer minutesOn = 10
+
+var Integer level
+
+rule "Initiering"
+when
+	System started
+then
+	if (Mode.state == 1) {
+		level = nightLevel
+	} else {
+		level = dayLevel
+	}
+end	
+
+rule "Släck med schema"
+when
+	Time cron "0 */5 * ? * *"
+then
+	if (Bathroom_Motion_Sensor.state == CLOSED) {
+		logDebug("badrum", "Kontrollera senaste rörelse {}", Bathroom_Motion_Sensor.lastUpdate)
+		val Period delayPeriod = new Period().withMinutes(minutesOn)
+		val lastUpdate = new DateTime(Bathroom_Motion_Sensor.lastUpdate)
+		
+		if (lastUpdate.plus(delayPeriod).beforeNow) {
+			if (Bathroom_Dimmer.state != 0) {
+				logDebug("badrum", "Släcker belysning")
+				sendCommand(Bathroom_Dimmer, OFF)	
+			}
+		}	
+	}
+end
+
+rule "Tänd dusch vid rörelse"
+when
+	Item Bathroom_Motion_Sensor changed to OPEN
+then
+	logDebug("badrum", "Bathroom_Motion_Sensor.state {}", Bathroom_Motion_Sensor.state)
+	logDebug("badrum", "Bathroom_Dimmer.state {}", Bathroom_Dimmer.state)
+	if (Bathroom_Dimmer.state == 0){
+		logDebug("badrum", "Tänder belysning: {}", level)
+		sendCommand(Bathroom_Dimmer, level)	
+	}
+	
+end	
+
+rule "Justera ljusstyrka vid ändring av läge"
+when
+	Item Mode changed
+then
+	logDebug("badrum", "Justera ljusstyrka Mode.state {}", Mode.state)
+	if (Mode.state == 1) {
+		level = nightLevel
+	} else {
+		level = dayLevel
+	}
+	logDebug("badrum", "Justera ljusstyrka level {}", level)
+	logDebug("badrum", "Justera ljusstyrka Bathroom_Dimmer.state {}", Bathroom_Dimmer.state)
+	if (Bathroom_Dimmer.state != 0) {
+		sendCommand(Bathroom_Dimmer, level)	
+	}
+end
+
+rule "Avsluta timer om belysning släcks"
+when 
+	Item Bathroom_Dimmer changed
+then
+	
+	logDebug("badrum", "Bathroom_Dimmer.state {}", Bathroom_Dimmer.state)
+	if (Bathroom_Dimmer.state == 0) {
+
+	} else {
+		level = (Bathroom_Dimmer.state as DecimalType).intValue
+		logDebug("badrum", "Stored new dimmer level {}", level)
+	}
+end

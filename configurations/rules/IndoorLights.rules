@@ -2,6 +2,8 @@ import org.joda.time.*
 import org.openhab.core.library.types.DateTimeType
 import org.openhab.core.library.items.SwitchItem
 
+/*
+
 rule "Tänd innebelysning eftermiddag"
 when
 	Item Sunset_Event changed to ON
@@ -44,3 +46,6 @@ then
 	gFirstFloorLights.allMembers.forEach[light| light.sendCommand(OFF)]
 	gGroundFloorLights.allMembers.forEach[light| light.sendCommand(OFF)]
 end
+
+ 
+*/
