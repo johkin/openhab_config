@@ -10,7 +10,7 @@ val Integer minutesOn = 10
 
 var Integer level
 
-rule "Initiering"
+rule "Badrum, Initiering"
 when
 	System started
 then
@@ -21,7 +21,7 @@ then
 	}
 end	
 
-rule "Släck med schema"
+rule "Badrum, Släck med schema"
 when
 	Time cron "0 */5 * ? * *"
 then
@@ -43,7 +43,7 @@ then
 	}
 end
 
-rule "Tänd dusch vid rörelse"
+rule "Badrum, Tänd dusch vid rörelse"
 when
 	Item Bathroom_Motion_Sensor changed to OPEN
 then
@@ -56,7 +56,7 @@ then
 	
 end	
 
-rule "Justera ljusstyrka vid ändring av läge"
+rule "Badrum, Justera ljusstyrka vid ändring av läge"
 when
 	Item Mode changed
 then
@@ -73,7 +73,7 @@ then
 	}
 end
 
-rule "Avsluta timer om belysning släcks"
+rule "Badrum, Avsluta timer om belysning släcks"
 when 
 	Item Bathroom_Dimmer changed
 then
