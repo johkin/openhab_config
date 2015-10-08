@@ -28,11 +28,7 @@ then
 	val listOfMotionSensorsTripped = gMotionSensorIndoor.allMembers
 		.filter([sensor | sensor.state == CLOSED])
 		
-	logDebug("mode", "Antal öppna sensorer {}", listOfMotionSensorsTripped.size)
-		
 	if (!listOfMotionSensorsTripped.empty) {
-		logDebug("mode", "Minst en sensor är Open, justerar läge.")
-		
 		if (now.getHourOfDay() > 5 && now.getHourOfDay() < 22) {
 			if (Mode.state != 0) {
 				logDebug("mode", "Ändrar läge till dag.")
@@ -49,9 +45,7 @@ rule "Kontrollera senaste rörelse"
 when
 	Time cron "0 */15 * ? * *"
 then
-	logDebug("mode", "Antal sensorer {}", gMotionSensorIndoor.members.size)
-	logDebug("mode", "Antal sensorer {}", gMotionSensorIndoor.allMembers.size)
-	
+
 	val Period period = new Period().withMinutes(30)
 
 	val listOfMotionSensorsNotTripped = gMotionSensorIndoor.allMembers
