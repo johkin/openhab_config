@@ -22,7 +22,7 @@ then
 	gOutsideLights.allMembers.forEach[light| light.sendCommand(ON)]
 end
 
-rule "Tänd utebelysning morgon, vardag"
+rule "Tänd utebelysning morgon"
 when
 	Time cron "0 0 6 ? * MON-FRI" or
 	Time cron "0 0 7 ? * SAT-SUN"
@@ -46,7 +46,7 @@ then
 	gOutsideLights.allMembers.forEach[light| light.sendCommand(OFF)]
 end
 
-rule "Släck utebelysning kväll, vardag"
+rule "Släck utebelysning kväll"
 when
 	Time cron "0 30 22 ? * MON-THU,SUN" or
 	Time cron "0 30 23 ? * FRI-SAT"

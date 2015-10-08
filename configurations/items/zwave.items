@@ -36,7 +36,7 @@ DateTime Date "Datum [%1$tA, %1$td.%1$tm.%1$tY]" <calendar>	{ ntp="Europe/Stockh
 /* Gästrum */
 Switch Guestroom_Light_Window "Belysning fönster" <light> (gGuestRoom, gLight, All_Lights_FirstFloor, All_Lights, gFirstFloorLights) { zwave="17:command=switch_binary" }
 /* Dusch */
-Dimmer Shower_Dimmer "Dimmer [%d %%]"<light> (gShower, gLight) { zwave="16:command=SWITCH_MULTILEVEL,restore_last_value=true" }
+Dimmer Shower_Dimmer "Dimmer" <light> (gShower, gLight) { zwave="16:command=SWITCH_MULTILEVEL,restore_last_value=true" }
 
 Contact Shower_Motion_Sensor "Rörelsesensor" (gShower, gMotionSensorIndoor) { zwave="15:command=sensor_binary" }
 Number Shower_Temp_Sensor "Temperatur [%.2f]" <temperature> (gShower, gTempSensor) { zwave="15:command=sensor_multilevel,sensor_type=1" }
@@ -69,7 +69,7 @@ Number Livingroom_Motion_Sensor_Battery "Batteri [%.2f] %" (gLivingRoom, gBatter
 
 /* Badrum */
 Switch Bathroom_Mirror_Light "Belysning spegel" <light> (gBath, gLight) { zwave="38:command=switch_binary" }
-Dimmer Bathroom_Dimmer "Dimmer [%d %%]" <light> (gBath, gLight) { zwave="37:command=SWITCH_MULTILEVEL,restore_last_value=true" }
+Dimmer Bathroom_Dimmer "Dimmer" <light> (gBath, gLight) { zwave="37:command=SWITCH_MULTILEVEL,restore_last_value=true" }
 
 Contact Bathroom_Motion_Sensor "Rörelsesensor" (gBath, gMotionSensorIndoor) { zwave="39:command=sensor_binary" }
 Number Bathroom_Temp_Sensor "Temperatur [%.2f]" <temperature> (gBath, gTempSensor) { zwave="39:command=sensor_multilevel,sensor_type=1" }
