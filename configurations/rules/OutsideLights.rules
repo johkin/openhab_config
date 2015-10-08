@@ -22,9 +22,23 @@ then
 	gOutsideLights.allMembers.forEach[light| light.sendCommand(ON)]
 end
 
-rule "Tänd utebelysning morgon"
+rule "Tänd utebelysning morgon, vardag"
 when
-	Time cron "0 0 6 ? * MON-FRI" or
+	Time cron "0 0 6 ? * MON-FRI"
+then
+	logDebug("utebelysning", "Tid för tändning")
+	val SunriseTime = Sunrise_Time.state as DateTimeType
+    val jodaSunriseTime = new DateTime(SunriseTime.calendar.timeInMillis)
+    
+	if (jodaSunriseTime.afterNow) {
+		logDebug("utebelysning", "Soluppgång efter tändning")
+		gOutsideLights.allMembers.forEach[light| light.sendCommand(ON)]	
+	}
+	logDebug("utebelysning", "Sätter controlledByMotion = false")
+	sendCommand(Outdoor_Motion_Sensor_Active, OFF)
+end
+rule "Tänd utebelysning morgon, helg"
+when
 	Time cron "0 0 7 ? * SAT-SUN"
 then
 	logDebug("utebelysning", "Tid för tändning")
@@ -46,9 +60,21 @@ then
 	gOutsideLights.allMembers.forEach[light| light.sendCommand(OFF)]
 end
 
-rule "Släck utebelysning kväll"
+rule "Släck utebelysning kväll, vardag"
 when
-	Time cron "0 30 22 ? * MON-THU,SUN" or
+	Time cron "0 30 22 ? * MON-THU,SUN"
+then
+	logDebug("utebelysning", "Tid för släckning")
+	if (Mode.state == 0) {
+		logDebug("utebelysning", "Läge är hemma, väntar på natt.")
+	} else {
+		gOutsideLights.allMembers.forEach[light| light.sendCommand(OFF)]
+		logDebug("utebelysning", "Sätter controlledByMotion = true")
+		sendCommand(Outdoor_Motion_Sensor_Active, ON)	
+	}
+end
+rule "Släck utebelysning kväll, helg"
+when
 	Time cron "0 30 23 ? * FRI-SAT"
 then
 	logDebug("utebelysning", "Tid för släckning")
