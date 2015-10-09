@@ -9,6 +9,7 @@ Group gGroundFloor "Nedervåning" <groundfloor>   	(All)
 Group gLivingRoom	"Vardagsrum"	<groundfloor> (gGroundFloor)
 Group gKitchen	"Kök"	<kitchen> (gGroundFloor)
 Group gBath	"Badrum"	<bath> (gGroundFloor)
+Group gEntre "Entré"	<hallway> (gGroundFloor)
 Group gOutdoor "Utomhus" 		<garden>		(All)
 Group gIndoor "Inomhus" 				(All)
 Group gFrontside "Framsida" 	<garden>		(gOutdoor)
@@ -83,6 +84,15 @@ Contact Kitchen_Motion_Sensor "Rörelsesensor" (gKitchen, gMotionSensorIndoor) {
 Number Kitchen_Temp_Sensor "Temperatur [%.2f]" <temperature> (gKitchen, gTempSensor) { zwave="33:command=sensor_multilevel,sensor_type=1" }
 Number Kitchen_Light_Sensor "Ljussensor [%.2f]" <solarplant> (gKitchen, gLightSensor) { zwave="33:command=sensor_multilevel,sensor_type=3" }
 Number Kitchen_Motion_Sensor_Battery "Batteri [%.2f] %" (gKitchen, gBattery)  { zwave="33:command=battery" }
+
+/* Entre */
+Contact Entre_Motion_Sensor "Rörelsesensor" (gEntre, gMotionSensorIndoor) { zwave="40:command=sensor_binary" }
+Number Entre_Temp_Sensor "Temperatur [%.2f]" <temperature> (gEntre, gTempSensor) { zwave="40:command=sensor_multilevel,sensor_type=1" }
+Number Entre_Light_Sensor "Ljussensor [%.2f]" <solarplant> (gEntre, gLightSensor) { zwave="40:command=sensor_multilevel,sensor_type=3" }
+Number Entre_Motion_Sensor_Battery "Batteri [%.2f] %" (gEntre, gBattery)  { zwave="40:command=battery" }
+
+Dimmer Entre_Dimmer "Dimmer [%.2f %%]" <light> (gEntre, gLight) { zwave="41:command=SWITCH_MULTILEVEL,restore_last_value=true" }
+
 /* Fjärrkontroll  Node 28 */
 
 /* Fjärrkontroll Gen5 Node 31*/
