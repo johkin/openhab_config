@@ -1,0 +1,101 @@
+import org.joda.time.*
+import org.openhab.model.script.actions.Timer
+import org.openhab.core.library.types.DecimalType
+import org.openhab.core.library.types.DateTimeType
+import org.openhab.core.library.items.SwitchItem
+
+val Integer nightLevel = 10
+val Integer dayLevelHigh = 65
+val Integer dayLevelLow = 35
+val Integer minutesHighOn = 10
+val Integer minutesLowOn = 30
+
+var Integer level
+
+rule "Entre, Initiering"
+when
+	System started
+then
+	if (Mode.state == 1) {
+		level = nightLevel
+	} else {
+		level = dayLevelHigh
+	}
+end	
+
+rule "Entre, Släck med schema"
+when
+	Time cron "0 */5 * ? * *"
+then
+	if (Entre_Motion_Sensor.state == CLOSED) {
+		logDebug("entre", "Kontrollera senaste rörelse {}", Entre_Motion_Sensor.lastUpdate)
+		val Period delayPeriodHigh = new Period().withMinutes(minutesHighOn)
+		val Period delayPeriodLow = new Period().withMinutes(minutesLowOn)
+		val lastUpdate = new DateTime(Entre_Motion_Sensor.lastUpdate)
+		if (Mode.state == 0) {
+			if (lastUpdate.plus(delayPeriodLow).beforeNow) {
+				if (Entre_Dimmer.state != 0) {
+					logDebug("entre", "Släcker belysning")
+					sendCommand(Entre_Dimmer, OFF)	
+				}
+			} else if (lastUpdate.plus(delayPeriodHigh).beforeNow) {
+				if (Entre_Dimmer.state != 0 && Entre_Dimmer.state > dayLevelLow) {
+					logDebug("entre", "Sänker belysning till {}", dayLevelLow)
+					sendCommand(Entre_Dimmer, dayLevelLow)	
+				}
+			}
+		} else {
+			if (lastUpdate.plus(delayPeriodHigh).beforeNow) {
+				if (Entre_Dimmer.state != 0) {
+					logDebug("entre", "Släcker belysning")
+					sendCommand(Entre_Dimmer, OFF)	
+				}
+			}
+		}
+			
+	}
+end
+
+rule "Entre, Tänd entre vid rörelse"
+when
+	Item Entre_Motion_Sensor changed to OPEN
+then
+	logDebug("entre", "Entre_Motion_Sensor.state {}", Entre_Motion_Sensor.state)
+	logDebug("entre", "Entre_Dimmer.state {}", Entre_Dimmer.state)
+	if (Entre_Dimmer.state == 0){
+		logDebug("entre", "Tänder belysning: {}", level)
+		sendCommand(Entre_Dimmer, level)	
+	}
+	
+end	
+
+rule "Entre, Justera ljusstyrka vid ändring av läge"
+when
+	Item Mode changed
+then
+	logDebug("entre", "Justera ljusstyrka Mode.state {}", Mode.state)
+	if (Mode.state == 1) {
+		level = nightLevel
+	} else {
+		level = dayLevelHigh
+	}
+	logDebug("entre", "Justera ljusstyrka level {}", level)
+	logDebug("entre", "Justera ljusstyrka Entre_Dimmer.state {}", Entre_Dimmer.state)
+	if (Entre_Dimmer.state != 0) {
+		sendCommand(Entre_Dimmer, level)	
+	}
+end
+
+rule "Entre, Avsluta timer om belysning släcks"
+when 
+	Item Entre_Dimmer changed
+then
+	
+	logDebug("entre", "Entre_Dimmer.state {}", Entre_Dimmer.state)
+	if (Entre_Dimmer.state == 0) {
+
+	} else {
+		level = (Entre_Dimmer.state as DecimalType).intValue
+		logDebug("entre", "Stored new dimmer level {}", level)
+	}
+end
