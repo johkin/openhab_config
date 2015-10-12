@@ -4,7 +4,7 @@ import org.openhab.core.library.types.DecimalType
 import org.openhab.core.library.types.DateTimeType
 import org.openhab.core.library.items.SwitchItem
 
-val Integer nightLevel = 10
+val Integer nightLevel = 15
 val Integer dayLevelHigh = 65
 val Integer dayLevelLow = 35
 val Integer minutesHighOn = 10
@@ -62,11 +62,14 @@ when
 then
 	logDebug("entre", "Entre_Motion_Sensor.state {}", Entre_Motion_Sensor.state)
 	logDebug("entre", "Entre_Dimmer.state {}", Entre_Dimmer.state)
-	if (Entre_Dimmer.state == 0){
-		logDebug("entre", "Tänder belysning: {}", level)
-		sendCommand(Entre_Dimmer, level)	
-	}
-	
+		if (Entre_Dimmer.state == dayLevelLow) {
+			level == dayLevelHigh
+			logDebug("entre", "Ökar belysning: {}", level)
+			sendCommand(Entre_Dimmer, level)
+		} else if (Entre_Dimmer.state == 0){
+			logDebug("entre", "Tänder belysning: {}", level)
+			sendCommand(Entre_Dimmer, level)	
+		}
 end	
 
 rule "Entre, Justera ljusstyrka vid ändring av läge"
