@@ -95,7 +95,7 @@ when
 then
 	
 	logDebug("entre", "Entre_Dimmer.state {}", Entre_Dimmer.state)
-	if (Entre_Dimmer.state == 0) {
+	if (Entre_Dimmer.state == 0 || Entre_Dimmer.state == dayLevelLow) {
 
 	} else {
 		level = (Entre_Dimmer.state as DecimalType).intValue
