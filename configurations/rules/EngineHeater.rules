@@ -1,0 +1,34 @@
+import org.joda.time.*
+import org.openhab.core.library.types.DateTimeType
+import org.openhab.core.library.items.SwitchItem
+
+val Integer minutesOn = 120
+val Integer minTemperature = 5
+
+rule "Framsida, Starta motorvärmare"
+when
+	Time cron "0 0 6 ? * MON-FRI"
+then
+	if (Mode.state == 0 || Mode.state == 1) {
+		if (FrontSide_Temp_Sensor.state <= minTemperature) {
+			logDebug("motorvärmare", "Slå på motorvärmare")
+			sendCommand(FrontSide_Engine_Heater, ON);
+		}
+	}
+end
+
+rule "Framsida, stäng av motorvärmare"
+when
+	Time cron "0 */5 * ? * *"
+then
+	if (FrontSide_Engine_Heater.state == ON) {
+		logDebug("motorvärmare", "Kontrollera senaste aktivitet {}", FrontSide_Engine_Heater.lastUpdate)
+		val Period delayPeriod = new Period().withMinutes(minutesOn)
+		val lastUpdate = new DateTime(FrontSide_Engine_Heater.lastUpdate)
+		
+		if (lastUpdate.plus(delayPeriod).beforeNow) {
+			logDebug("motorvärmare", "Stänger av motorvärmare")
+			sendCommand(FrontSide_Engine_Heater, OFF)
+		}
+	}
+end
