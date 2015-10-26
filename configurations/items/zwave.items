@@ -94,8 +94,8 @@ Number Bathroom_Motion_Sensor_Battery "Batteri [%.2f] %" (gBath, gBattery)  { zw
 
 /* Kök */
 Switch Kitchen_Window_Light "Belysning fönster" <light> (gKitchen, gLight, All_Lights_GroundFloor, All_Lights) { zwave="25:command=switch_binary" }
-Number Kitchen_Window_Power "Belysning fönster förbrukning [%.1f W]" (gEntre, gPxower) {zwave="25:command=meter,meter_scale=E_W"} 
-Number Kitchen_Window_Energy "Belysning fönster total förbrukning [%.3f KWh]" (gEntre, gEnergy) {zwave="25:command=meter,meter_scale=E_KWh"}
+Number Kitchen_Window_Power "Belysning fönster förbrukning [%.1f W]" (gKitchen, gPxower) {zwave="25:command=meter,meter_scale=E_W"} 
+Number Kitchen_Window_Energy "Belysning fönster total förbrukning [%.3f KWh]" (gKitchen, gEnergy) {zwave="25:command=meter,meter_scale=E_KWh"}
 Switch Kitchen_Window_Reset "Belysning fönster förbrukning återställning" (gEnergyReset) {zwave="25:command=meter,meter_reset=true", autoupdate="false"}
 
 
