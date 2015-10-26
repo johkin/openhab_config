@@ -125,7 +125,8 @@ Contact FrontSide_Motion_Sensor "Rörelsesensor"  (gFrontside, gMotionSensorOutd
 
 Switch FrontSide_Engine_Heater "Motorvärmare" <heating> (gFrontside) { zwave="42:command=switch_binary" }
 Number FrontSide_Engine_Heater_Power "Motorvärmare förbrukning [%.1f W]" (gFrontside, gPower) { zwave="42:command=meter,meter_scale=E_W" }
-Number FrontSide_Engine_Heater_Energy "Dimmer total förbrukning [%.3f KWh]" (gEntre, gEnergy) {zwave="42:command=meter,meter_scale=E_KWh"}
+Number FrontSide_Engine_Heater_Energy "Dimmer total förbrukning [%.3f KWh]" (gFrontside, gEnergy) {zwave="42:command=meter,meter_scale=E_KWh"}
+Switch FrontSide_Engine_Heater_Reset "Dimmer förbrukning återställning" (gEnergyReset) {zwave="42:command=meter,meter_reset=true", autoupdate="false"}
 
 
 /* Outside back */
