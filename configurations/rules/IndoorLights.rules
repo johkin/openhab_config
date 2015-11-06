@@ -1,51 +1,58 @@
 import org.joda.time.*
 import org.openhab.core.library.types.DateTimeType
 import org.openhab.core.library.items.SwitchItem
+import org.openhab.core.items.GenericItem
+import java.util.*
 
-/*
+/* Modes 0=HOME, 1=NIGHT, 2=AWAY 3=Vacation*/
 
-rule "Tänd innebelysning eftermiddag"
-when
-	Item Sunset_Event changed to ON
-then
-	if (Mode.state == 0) {
-		gFirstFloorLights.allMembers.forEach[light| light.sendCommand(ON)]
-		gGroundFloorLights.allMembers.forEach[light| light.sendCommand(ON)]
-	}
-end
+val List<SwitchItem> pointLights = new ArrayList<SwitchItem>()
 
-rule "Tänd innebelysning vid hemma"
-when
+rule "IndoorLights, Tänd belysning vid hemma"
+when 
 	Item Mode changed to 0
 then
-	val SunriseTime = Sunrise_Time.state as DateTimeType
-    val jodaSunriseTime = new DateTime(SunriseTime.calendar.timeInMillis)
-    val SunsetTime = Sunset_Time.state as DateTimeType
-    val jodaSunsetTime = new DateTime(SunsetTime.calendar.timeInMillis)
-	
-	if (jodaSunriseTime.afterNow || jodaSunsetTime.beforeNow) {
-		gFirstFloorLights.allMembers.forEach[light| light.sendCommand(ON)]
-		gGroundFloorLights.allMembers.forEach[light| light.sendCommand(ON)]	
-	}
+	pointLights.forEach[
+		light | 
+		light.sendCommand(ON)
+	]
+	pointLights.clear()
 end
 
-rule "Släck innebelysning vid natt och borta"
-when
-	Item Mode changed to 1 or
+rule "IndoorLights, Släck belysning vid borta"
+when 
 	Item Mode changed to 2
 then
-	gFirstFloorLights.allMembers.forEach[light| light.sendCommand(OFF)]
-    gGroundFloorLights.allMembers.forEach[light| light.sendCommand(OFF)]	
+	gPointLight.allMembers.forEach[
+		light | 
+		if (light.state != OFF) {
+			light.sendCommand(OFF)
+			pointLights.add(light as SwitchItem)
+		}
+	]
+	gCeilingLight.allMembers.forEach[
+		light | 
+		if (light.state != OFF) {
+			light.sendCommand(OFF)
+		}
+	]
 end
 
-
-rule "Släck innebelysning morgon"
-when
-	Item Sunrise_Event changed to ON
+rule "IndoorLights, Släck belysning vid natt"
+when 
+	Item Mode changed to 1
 then
-	gFirstFloorLights.allMembers.forEach[light| light.sendCommand(OFF)]
-	gGroundFloorLights.allMembers.forEach[light| light.sendCommand(OFF)]
+	gPointLight.allMembers.forEach[
+		light | 
+		if (light.state != OFF) {
+			light.sendCommand(OFF)
+		}
+	]
+	gCeilingLight.allMembers.forEach[
+		light | 
+		if (light.state != OFF) {
+			light.sendCommand(OFF)
+		}
+	]
+	pointLights.clear()
 end
-
- 
-*/
