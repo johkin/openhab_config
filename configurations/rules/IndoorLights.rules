@@ -12,6 +12,7 @@ rule "IndoorLights, Tänd belysning vid hemma"
 when 
 	Item Mode changed to 0
 then
+	logDebug("IndoorLights", "Antal lampor att tända {}", pointLights.size)
 	pointLights.forEach[
 		light | 
 		light.sendCommand(ON)
@@ -23,10 +24,12 @@ rule "IndoorLights, Släck belysning vid borta"
 when 
 	Item Mode changed to 2
 then
+	pointLights.clear()
 	gPointLight.allMembers.forEach[
 		light | 
 		if (light.state != OFF) {
 			light.sendCommand(OFF)
+			logDebug("IndoorLights", "Lägger till lampa {}", light)
 			pointLights.add(light as SwitchItem)
 		}
 	]
