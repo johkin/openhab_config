@@ -19,7 +19,7 @@ end
 
 rule "Framsida, stäng av motorvärmare"
 when
-	Time cron "0 */5 * ? * *"
+	Time cron "0 */10 * ? * *"
 then
 	if (FrontSide_Engine_Heater.state == ON) {
 		logDebug("motorvärmare", "Kontrollera senaste aktivitet {}", FrontSide_Engine_Heater.lastUpdate)

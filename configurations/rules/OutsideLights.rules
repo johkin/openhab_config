@@ -140,3 +140,19 @@ then
 		FrontSide_Light_Switch.sendCommand(OFF)
 	}
 end
+
+rule "Utebelysning, tänd julbelysning"
+when
+	Item Sunset_Event changed to ON
+then
+	logDebug("utebelysning", "Tänder julbelysning")
+	gChristmasLight.send(ON)
+end
+
+rule "Utebelysning, släck julbelysning"
+when
+	Item Sunrise_Event changed to ON
+then
+	logDebug("utebelysning", "Släcker julbelysning")
+	gChristmasLight.send(OFF)
+end
