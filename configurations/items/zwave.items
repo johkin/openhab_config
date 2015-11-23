@@ -17,6 +17,7 @@ Group gBackside "Baksida" 		<garden>		(gOutdoor)
 Group gOutsideLights "Utebelysning" (gLight, gOutdoor)
 Group gGroundFloorLights "Innebelysning entreplan" (gLight,gIndoor)
 Group gFirstFloorLights "Innebelysning övervåning" (gLight,gIndoor)
+Group gKeyFobGen5 "Fjärrkontroll" <remote>   	(gKitchen)
 Group gBattery 		(All)
 Group gLight		(All)
 Group gOutlet		(All)
@@ -43,7 +44,7 @@ Group:Switch:OR(ON, OFF)  All_Lights_Outdoor "Utomhus [(%d)]" (All)
 DateTime Date "Datum [%1$tA, %1$td.%1$tm.%1$tY]" <calendar>	{ ntp="Europe/Stockholm:sv_SE" }
 /* Gästrum */
 Switch Guestroom_Light_Window "Belysning fönster" <light> (gGuestRoom, gPointLight, All_Lights_FirstFloor, All_Lights, gFirstFloorLights) { zwave="17:command=switch_binary" }
-Switch Guestroom_Light_Vitrine "Belysning vitrinskåp" <light> (gAllRoom, gPointLight, All_Lights_FirstFloor, All_Lights) { zwave="19:command=switch_binary" }
+Switch Guestroom_Light_Vitrine "Belysning vitrinskåp" <light> (gGuestRoom, gPointLight, All_Lights_FirstFloor, All_Lights, gFirstFloorLights) { zwave="19:command=switch_binary" }
 
 /* Dusch */
 Dimmer Shower_Dimmer "Dimmer [%d %%]" <light> (gShower, gCeilingLight) { zwave="16:command=SWITCH_MULTILEVEL,restore_last_value=true" }
@@ -122,15 +123,16 @@ Switch Entre_Dimmer_Reset "Dimmer förbrukning återställning" (gEnergyReset) {
 /* Fjärrkontroll  Node 28 */
 
 /* Fjärrkontroll Gen5 Node 31*/
-Switch KF1_B1Short "KFOB Short Button 1" (gGuestRoom) { zwave="31:command=SCENE_ACTIVATION,scene=1, state=1" }
-Switch KF1_B2Short "KFOB Short Button 2" (gGuestRoom) { zwave="31:command=SCENE_ACTIVATION,scene=3, state=1" }
-Switch KF1_B3Short "KFOB Short Button 3" (gGuestRoom) { zwave="31:command=SCENE_ACTIVATION,scene=5, state=1" }
-Switch KF1_B4Short "KFOB Short Button 4" (gGuestRoom) { zwave="31:command=SCENE_ACTIVATION,scene=7, state=1" }
+Switch KF1_B1Short "KFOB Short Button 1" (gKeyFobGen5) { zwave="31:command=SCENE_ACTIVATION,scene=1, state=1" }
+Switch KF1_B2Short "KFOB Short Button 2" (gKeyFobGen5) { zwave="31:command=SCENE_ACTIVATION,scene=3, state=1" }
+Switch KF1_B3Short "KFOB Short Button 3" (gKeyFobGen5) { zwave="31:command=SCENE_ACTIVATION,scene=5, state=1" }
+Switch KF1_B4Short "KFOB Short Button 4" (gKeyFobGen5) { zwave="31:command=SCENE_ACTIVATION,scene=7, state=1" }
 
-Switch KF1_B1Long "KFOB Long Button 1" (gGuestRoom) { zwave="31:command=SCENE_ACTIVATION,scene=2, state=1" }
-Switch KF1_B2Long "KFOB Long Button 2" (gGuestRoom) { zwave="31:command=SCENE_ACTIVATION,scene=4, state=1" }
-Switch KF1_B3Long "KFOB Long Button 3" (gGuestRoom) { zwave="31:command=SCENE_ACTIVATION,scene=6, state=1" }
-Switch KF1_B4Long "KFOB Long Button 4" (gGuestRoom) { zwave="31:command=SCENE_ACTIVATION,scene=8, state=1" }
+Switch KF1_B1Long "KFOB Long Button 1" (gKeyFobGen5) { zwave="31:command=SCENE_ACTIVATION,scene=2, state=1" }
+Switch KF1_B2Long "KFOB Long Button 2" (gKeyFobGen5) { zwave="31:command=SCENE_ACTIVATION,scene=4, state=1" }
+Switch KF1_B3Long "KFOB Long Button 3" (gKeyFobGen5) { zwave="31:command=SCENE_ACTIVATION,scene=6, state=1" }
+Switch KF1_B4Long "KFOB Long Button 4" (gKeyFobGen5) { zwave="31:command=SCENE_ACTIVATION,scene=8, state=1" }
+Number KeyFob_Battery "Batteri [%d %%]" (gKeyFobGen5, gBattery) { zwave="31:command=battery" }
 
 
 /* Outside front */
