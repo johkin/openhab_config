@@ -17,7 +17,7 @@ Group gBackside "Baksida" 		<garden>		(gOutdoor)
 Group gOutsideLights "Utebelysning" (gLight, gOutdoor)
 Group gGroundFloorLights "Innebelysning entreplan" (gLight,gIndoor)
 Group gFirstFloorLights "Innebelysning övervåning" (gLight,gIndoor)
-Group gKeyFobGen5 "Fjärrkontroll" <remote>   	(gKitchen)
+Group gKeyFobGen5 "Fjärrkontroll" <keyring>   	(gKitchen)
 Group gBattery 		(All)
 Group gLight		(All)
 Group gOutlet		(All)
@@ -136,7 +136,7 @@ Number KeyFob_Battery "Batteri [%d %%]" (gKeyFobGen5, gBattery) { zwave="31:comm
 
 
 /* Outside front */
-Switch FrontSide_Light_Switch "Belysning framsida" <light> (gFrontside, gOutsideLights, All_Lights_Outdoor) { zwave="12:1:command=switch_binary" }
+Switch FrontSide_Light_Switch "Belysning framsida" <outdoorlight> (gFrontside, gOutsideLights, All_Lights_Outdoor) { zwave="12:1:command=switch_binary" }
 Number FrontSide_Light_Power "Belysning framsida förbrukning [%.1f W]" (gFrontside, gPower) { zwave="12:1:command=meter,meter_scale=E_W" }
 Number FrontSide_Light_Energy "Belysning framsida total förbrukning [%.2f KWh]" (gFrontside, gEnergy) {zwave="12:1:command=meter,meter_scale=E_KWh"}
 Switch FrontSide_Light_Reset "Belysning framsida förbrukning återställning" (gEnergyReset) {zwave="12:1:command=meter,meter_reset=true", autoupdate="false"}
@@ -148,11 +148,11 @@ Number FrontSide_Sensor_Battery "Batteri [%d %%]"  (gFrontside, gBattery) { zwav
 Contact FrontSide_Motion_Sensor "Rörelsesensor"  (gFrontside, gMotionSensorOutdoor) { zwave="35:command=sensor_binary" }
 
 Switch FrontSide_Engine_Heater "Motorvärmare" <heating> (gFrontside) { zwave="42:command=switch_binary" }
-Switch FrontSide_Christmas_Lights "Julbelysning" <light> (gFrontside, gChristmasLight) { zwave="44:command=switch_binary" }
+Switch FrontSide_Christmas_Lights "Julbelysning" <outdoorlight> (gFrontside, gChristmasLight) { zwave="44:command=switch_binary" }
 
 
 /* Outside back */
-Switch BackSide_Light_Switch "Belysning baksida" <light> (gBackside, gOutsideLights, All_Lights_Outdoor) { zwave="11:1:command=switch_binary" } 
+Switch BackSide_Light_Switch "Belysning baksida" <outdoorlight> (gBackside, gOutsideLights, All_Lights_Outdoor) { zwave="11:1:command=switch_binary" } 
 Number BackSide_Light_Power "Belysning baksida förbrukning [%.1f W]" (gBackside, gPower) { zwave="11:1:command=meter,meter_scale=E_W" }
 Number BackSide_Light_Energy "Belysning baksida total förbrukning [%.2f KWh]" (gBackside, gEnergy) {zwave="11:1:command=meter,meter_scale=E_KWh"}
 Switch BackSide_Light_Reset "Belysning baksida förbrukning återställning" (gEnergyReset) {zwave="11:1:command=meter,meter_reset=true", autoupdate="false"}
