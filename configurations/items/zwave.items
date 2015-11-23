@@ -53,8 +53,8 @@ Number Shower_Dimmer_Energy "Dimmer total förbrukning [%.2f KWh]" (gShower, gEn
 Switch Shower_Dimmer_Reset "Dimmer förbrukning återställning" (gEnergyReset) {zwave="16:command=meter,meter_reset=true", autoupdate="false"}
 
 Contact Shower_Motion_Sensor "Rörelsesensor" (gShower, gMotionSensorIndoor) { zwave="15:command=sensor_binary" }
-Number Shower_Temp_Sensor "Temperatur [%.2f]" <temperature> (gShower, gTempSensor) { zwave="15:command=sensor_multilevel,sensor_type=1" }
-Number Shower_Light_Sensor "Ljussensor [%.2f]" <solarplant> (gShower, gLightSensor) { zwave="15:command=sensor_multilevel,sensor_type=3" }
+Number Shower_Temp_Sensor "Temperatur [%.1f °C]" <temperature> (gShower, gTempSensor) { zwave="15:command=sensor_multilevel,sensor_type=1" }
+Number Shower_Light_Sensor "Ljussensor [%d]" <solarplant> (gShower, gLightSensor) { zwave="15:command=sensor_multilevel,sensor_type=3" }
 Number Shower_Motion_Sensor_Battery "Batteri [%d %%]" (gShower, gBattery)  { zwave="15:command=battery" }
 
 /* Allrum */
@@ -64,8 +64,8 @@ Dimmer Allroom_Window_Light "Belysning glasboll [%d %%]" <light> (gAllRoom, gPoi
 
 Contact Allroom_Motion_Sensor "Rörelsesensor" (gAllRoom, gMotionSensorIndoor) { zwave="29:command=sensor_binary" }
 Number Allroom_Motion_Sensor_Battery "Batteri [%d %%]" (gAllRoom, gBattery)  { zwave="29:command=battery" }
-Number Allroom_Temp_Sensor "Temperatur [%.2f]" <temperature> (gAllRoom, gTempSensor) { zwave="29:command=sensor_multilevel,sensor_type=1" }
-Number Allroom_Light_Sensor "Ljussensor [%.2f]" <solarplant> (gAllRoom, gLightSensor) { zwave="29:command=sensor_multilevel,sensor_type=3" }
+Number Allroom_Temp_Sensor "Temperatur [%.1f °C]" <temperature> (gAllRoom, gTempSensor) { zwave="29:command=sensor_multilevel,sensor_type=1" }
+Number Allroom_Light_Sensor "Ljussensor [%d]" <solarplant> (gAllRoom, gLightSensor) { zwave="29:command=sensor_multilevel,sensor_type=3" }
 
 /* Elsas rum */
 Switch Elsas_Window_Light "Belysning fönster" <light> (gElsasRoom, gPointLight, All_Lights) { zwave="14:command=switch_binary" } 
@@ -77,8 +77,8 @@ Dimmer Livingroom_Window_Soffa_Light "Belysning fönster, soffa [%d %%]" <light>
 Switch Livingroom_Window_Light "Belysning fönster, tv" <light> (gLivingRoom, gPointLight, All_Lights_GroundFloor, All_Lights) { zwave="22:command=switch_binary" }
 
 Contact Livingroom_Motion_Sensor "Rörelsesensor" (gLivingRoom, gMotionSensorIndoor) { zwave="32:command=sensor_binary" }
-Number Livingroom_Temp_Sensor "Temperatur [%.2f]" <temperature> (gLivingRoom, gTempSensor) { zwave="32:command=sensor_multilevel,sensor_type=1" }
-Number Livingroom_Light_Sensor "Ljussensor [%.2f]" <solarplant> (gLivingRoom, gLightSensor) { zwave="32:command=sensor_multilevel,sensor_type=3" }
+Number Livingroom_Temp_Sensor "Temperatur [%.1f °C]" <temperature> (gLivingRoom, gTempSensor) { zwave="32:command=sensor_multilevel,sensor_type=1" }
+Number Livingroom_Light_Sensor "Ljussensor [%d]" <solarplant> (gLivingRoom, gLightSensor) { zwave="32:command=sensor_multilevel,sensor_type=3" }
 Number Livingroom_Motion_Sensor_Battery "Batteri [%d %%]" (gLivingRoom, gBattery)  { zwave="32:command=battery" }
 
 /* Badrum */
@@ -93,8 +93,8 @@ Number Bathroom_Dimmer_Energy "Dimmer total förbrukning [%.2f KWh]" (gBath, gEn
 Switch Bathroom_Dimmer_Reset "Dimmer förbrukning återställning" (gEnergyReset) {zwave="37:command=meter,meter_reset=true", autoupdate="false"}
 
 Contact Bathroom_Motion_Sensor "Rörelsesensor" (gBath, gMotionSensorIndoor) { zwave="39:command=sensor_binary" }
-Number Bathroom_Temp_Sensor "Temperatur [%.2f]" <temperature> (gBath, gTempSensor) { zwave="39:command=sensor_multilevel,sensor_type=1" }
-Number Bathroom_Light_Sensor "Ljussensor [%.2f]" <solarplant> (gBath, gLightSensor) { zwave="39:command=sensor_multilevel,sensor_type=3" }
+Number Bathroom_Temp_Sensor "Temperatur [%.1f °C]" <temperature> (gBath, gTempSensor) { zwave="39:command=sensor_multilevel,sensor_type=1" }
+Number Bathroom_Light_Sensor "Ljussensor [%d]" <solarplant> (gBath, gLightSensor) { zwave="39:command=sensor_multilevel,sensor_type=3" }
 Number Bathroom_Motion_Sensor_Battery "Batteri [%d %%]" (gBath, gBattery)  { zwave="39:command=battery" }
 
 /* Kök */
@@ -105,14 +105,14 @@ Switch Kitchen_Window_Reset "Belysning fönster förbrukning återställning" (g
 
 
 Contact Kitchen_Motion_Sensor "Rörelsesensor" (gKitchen, gMotionSensorIndoor) { zwave="33:command=sensor_binary" }
-Number Kitchen_Temp_Sensor "Temperatur [%.2f]" <temperature> (gKitchen, gTempSensor) { zwave="33:command=sensor_multilevel,sensor_type=1" }
-Number Kitchen_Light_Sensor "Ljussensor [%.2f]" <solarplant> (gKitchen, gLightSensor) { zwave="33:command=sensor_multilevel,sensor_type=3" }
+Number Kitchen_Temp_Sensor "Temperatur [%.1f °C]" <temperature> (gKitchen, gTempSensor) { zwave="33:command=sensor_multilevel,sensor_type=1" }
+Number Kitchen_Light_Sensor "Ljussensor [%d]" <solarplant> (gKitchen, gLightSensor) { zwave="33:command=sensor_multilevel,sensor_type=3" }
 Number Kitchen_Motion_Sensor_Battery "Batteri [%d %%]" (gKitchen, gBattery)  { zwave="33:command=battery" }
 
 /* Entre */
 Contact Entre_Motion_Sensor "Rörelsesensor" (gEntre, gMotionSensorIndoor) { zwave="40:command=sensor_binary" }
-Number Entre_Temp_Sensor "Temperatur [%.2f]" <temperature> (gEntre, gTempSensor) { zwave="40:command=sensor_multilevel,sensor_type=1" }
-Number Entre_Light_Sensor "Ljussensor [%.2f]" <solarplant> (gEntre, gLightSensor) { zwave="40:command=sensor_multilevel,sensor_type=3" }
+Number Entre_Temp_Sensor "Temperatur [%.df °C]" <temperature> (gEntre, gTempSensor) { zwave="40:command=sensor_multilevel,sensor_type=1" }
+Number Entre_Light_Sensor "Ljussensor [%d]" <solarplant> (gEntre, gLightSensor) { zwave="40:command=sensor_multilevel,sensor_type=3" }
 Number Entre_Motion_Sensor_Battery "Batteri [%d %%]" (gEntre, gBattery)  { zwave="40:command=battery" } 
 
 Dimmer Entre_Dimmer "Dimmer [%d %%]" <light> (gEntre, gCeilingLight) { zwave="41:command=SWITCH_MULTILEVEL,restore_last_value=true" }
@@ -141,9 +141,9 @@ Number FrontSide_Light_Power "Belysning framsida förbrukning [%.1f W]" (gFronts
 Number FrontSide_Light_Energy "Belysning framsida total förbrukning [%.2f KWh]" (gFrontside, gEnergy) {zwave="12:1:command=meter,meter_scale=E_KWh"}
 Switch FrontSide_Light_Reset "Belysning framsida förbrukning återställning" (gEnergyReset) {zwave="12:1:command=meter,meter_reset=true", autoupdate="false"}
 
-Number FrontSide_Temp_Sensor "Temperatur [%.2f] °C" <temperature> (gFrontside, gTempSensor) { zwave="35:command=sensor_multilevel,sensor_type=1" }
-Number FrontSide_Light_Sensor "Ljusstyrka [%.2f]" <solarplant> (gFrontside, gLightSensor) { zwave="35:command=sensor_multilevel,sensor_type=3" }
-Number FrontSide_Humidity_Sensor "Luftfuktighet [%.2f] %" (gFrontside, gHumiditySensor) { zwave="35:command=sensor_multilevel,sensor_type=5" }
+Number FrontSide_Temp_Sensor "Temperatur [%.1f °C]" <temperature> (gFrontside, gTempSensor) { zwave="35:command=sensor_multilevel,sensor_type=1" }
+Number FrontSide_Light_Sensor "Ljusstyrka [%d]" <solarplant> (gFrontside, gLightSensor) { zwave="35:command=sensor_multilevel,sensor_type=3" }
+Number FrontSide_Humidity_Sensor "Luftfuktighet [%d %%]" (gFrontside, gHumiditySensor) { zwave="35:command=sensor_multilevel,sensor_type=5" }
 Number FrontSide_Sensor_Battery "Batteri [%d %%]"  (gFrontside, gBattery) { zwave="35:command=battery" }
 Contact FrontSide_Motion_Sensor "Rörelsesensor"  (gFrontside, gMotionSensorOutdoor) { zwave="35:command=sensor_binary" }
 
@@ -163,9 +163,9 @@ Number BackSide_Outlet_Energy "Uttag baksida total förbrukning [%.2f KWh]" (gBa
 Switch BackSide_Outlet_Reset "Uttag baksida förbrukning återställning" (gEnergyReset) {zwave="11:2:command=meter,meter_reset=true", autoupdate="false"}
 
 
-Number BackSide_Temp_Sensor "Temperatur [%.2f] °C" <temperature> (gBackside, gTempSensor) { zwave="34:command=sensor_multilevel,sensor_type=1" }
-Number BackSide_Light_Sensor "Ljusstyrka [%.2f]" <solarplant> (gBackside, gLightSensor) { zwave="34:command=sensor_multilevel,sensor_type=3" }
-Number BackSide_Humidity_Sensor "Luftfuktighet [%.2f] %" (gBackside, gHumiditySensor) { zwave="34:command=sensor_multilevel,sensor_type=5" }
+Number BackSide_Temp_Sensor "Temperatur [%.1f] °C" <temperature> (gBackside, gTempSensor) { zwave="34:command=sensor_multilevel,sensor_type=1" }
+Number BackSide_Light_Sensor "Ljusstyrka [%d]" <solarplant> (gBackside, gLightSensor) { zwave="34:command=sensor_multilevel,sensor_type=3" }
+Number BackSide_Humidity_Sensor "Luftfuktighet [%d %%]" (gBackside, gHumiditySensor) { zwave="34:command=sensor_multilevel,sensor_type=5" }
 Number BackSide_Sensor_Battery "Batteri [%d %%]"  (gBackside, gBattery) { zwave="34:command=battery" }
 Contact BackSide_Motion_Sensor "Rörelsesensor"  (gBackside, gMotionSensorOutdoor) { zwave="34:command=sensor_binary,respond_to_basic=true" }
 Switch Outdoor_Motion_Sensor_Active "Rörelsesensor aktiv" (gOutdoor)
