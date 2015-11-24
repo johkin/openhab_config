@@ -111,7 +111,7 @@ Number Kitchen_Motion_Sensor_Battery "Batteri [%d %%]" (gKitchen, gBattery)  { z
 
 /* Entre */
 Contact Entre_Motion_Sensor "Rörelsesensor" (gEntre, gMotionSensorIndoor) { zwave="40:command=sensor_binary" }
-Number Entre_Temp_Sensor "Temperatur [%.df °C]" <temperature> (gEntre, gTempSensor) { zwave="40:command=sensor_multilevel,sensor_type=1" }
+Number Entre_Temp_Sensor "Temperatur [%.1f °C]" <temperature> (gEntre, gTempSensor) { zwave="40:command=sensor_multilevel,sensor_type=1" }
 Number Entre_Light_Sensor "Ljussensor [%d lx]" <solarplant> (gEntre, gLightSensor) { zwave="40:command=sensor_multilevel,sensor_type=3" }
 Number Entre_Motion_Sensor_Battery "Batteri [%d %%]" (gEntre, gBattery)  { zwave="40:command=battery" } 
 
