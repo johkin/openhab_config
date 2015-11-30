@@ -4,11 +4,11 @@ import org.openhab.core.library.types.DecimalType
 import org.openhab.core.library.types.DateTimeType
 import org.openhab.core.library.items.SwitchItem
 
-val Integer nightLevel = 3
-val Integer dayLevelHigh = 40
-val Integer dayLevelLow = 8
+val Integer nightLevel = 10
+val Integer dayLevelHigh = 100
+val Integer dayLevelLow = 35
 val Integer minutesHighOn = 10
-val Integer minutesLowOn = 30
+val Integer minutesLowOn = 60
 val Integer minLightLevel = 90
 
 var Integer level
