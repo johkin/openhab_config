@@ -156,6 +156,7 @@ Switch Entre_Dimmer_Reset "Dimmer förbrukning återställning" (gEnergyReset) {
 
 /* Fjärrkontroll  Node 28 */
 
+
 /* Fjärrkontroll Gen5 Node 31*/
 Switch KF1_B1Short "KFOB Short Button 1" (gKeyFobGen5) { zwave="31:command=SCENE_ACTIVATION,scene=1, state=1" }
 Switch KF1_B2Short "KFOB Short Button 2" (gKeyFobGen5) { zwave="31:command=SCENE_ACTIVATION,scene=3, state=1" }
