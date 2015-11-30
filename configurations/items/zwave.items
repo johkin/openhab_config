@@ -61,13 +61,13 @@ Number Shower_Motion_Sensor_Battery "Batteri [%d %%]" (gShower, gBattery)  { zwa
 Dimmer Allroom_Wall_Dimmer "Belysning hylla [%d %%]" <light> (gAllRoom,gPointLight, All_Lights_FirstFloor, All_Lights, gFirstFloorLights) { zwave="2:command=SWITCH_MULTILEVEL,restore_last_value=true" } 
 
 Switch Allroom_Window_Light_1 "Belysning fönster 1" <light> (gAllRoom, gPointLight, All_Lights_FirstFloor, All_Lights) { zwave="18:command=switch_binary" }
-Number Allroom_Window_Light_1_Power "Belysning fönster 1 förbrukning [%.1f W]" (gShower, gPxower) {zwave="18:command=meter,meter_scale=E_W"} 
-Number Allroom_Window_Light_1_Energy "Belysning fönster 1 total förbrukning [%.2f KWh]" (gShower, gEnergy) {zwave="18:command=meter,meter_scale=E_KWh"}
+Number Allroom_Window_Light_1_Power "Belysning fönster 1 förbrukning [%.1f W]" (gAllRoom, gPxower) {zwave="18:command=meter,meter_scale=E_W"} 
+Number Allroom_Window_Light_1_Energy "Belysning fönster 1 total förbrukning [%.2f KWh]" (gAllRoom, gEnergy) {zwave="18:command=meter,meter_scale=E_KWh"}
 Switch Allroom_Window_Light_1_Reset "Belysning fönster 1 förbrukning återställning" (gEnergyReset) {zwave="18:command=meter,meter_reset=true", autoupdate="false"}
 
 Switch Allroom_Window_Light_2 "Belysning fönster 2" <light> (gAllRoom, gPointLight, All_Lights_FirstFloor, All_Lights) { zwave="51:command=switch_binary" }
-Number Allroom_Window_Light_2_Power "Belysning fönster 2 förbrukning [%.1f W]" (gShower, gPxower) {zwave="51:command=meter,meter_scale=E_W"} 
-Number Allroom_Window_Light_2_Energy "Belysning fönster 2 total förbrukning [%.2f KWh]" (gShower, gEnergy) {zwave="51:command=meter,meter_scale=E_KWh"}
+Number Allroom_Window_Light_2_Power "Belysning fönster 2 förbrukning [%.1f W]" (gAllRoom, gPxower) {zwave="51:command=meter,meter_scale=E_W"} 
+Number Allroom_Window_Light_2_Energy "Belysning fönster 2 total förbrukning [%.2f KWh]" (gAllRoom, gEnergy) {zwave="51:command=meter,meter_scale=E_KWh"}
 Switch Allroom_Window_Light_2_Reset "Belysning fönster 2 förbrukning återställning" (gEnergyReset) {zwave="51:command=meter,meter_reset=true", autoupdate="false"}
 
 Dimmer Allroom_Window_Light "Belysning glasboll [%d %%]" <light> (gAllRoom, gPointLight, All_Lights_FirstFloor, All_Lights) { zwave="23:command=SWITCH_MULTILEVEL,restore_last_value=true" }
