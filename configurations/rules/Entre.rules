@@ -6,7 +6,7 @@ import org.openhab.core.library.items.SwitchItem
 
 val Integer nightLevel = 10
 val Integer dayLevelHigh = 100
-val Integer dayLevelLow = 35
+val Integer dayLevelLow = 25
 val Integer minutesHighOn = 10
 val Integer minutesLowOn = 60
 val Integer minLightLevel = 90

@@ -10,4 +10,8 @@ sitemap Linda label="Linda hemma"
 		Switch item=All_Lights_FirstFloor mappings=[OFF="Släck allt", ON="Tänd allt"]
 		Switch item=All_Lights_Outdoor mappings=[OFF="Släck allt", ON="Tänd allt"]
 	}
+	Frame label="Utomhus" {
+		Switch item=FrontSide_Engine_Heater	
+	}
+	
 }
