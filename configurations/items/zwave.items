@@ -151,10 +151,10 @@ Number Entre_Temp_Sensor "Temperatur [%.1f °C]" <temperature> (gEntre, gTempSen
 Number Entre_Light_Sensor "Ljussensor [%d lx]" <solarplant> (gEntre, gLightSensor) { zwave="40:command=sensor_multilevel,sensor_type=3" }
 Number Entre_Motion_Sensor_Battery "Batteri [%d %%]" (gEntre, gBattery)  { zwave="40:command=battery" } 
 
-Dimmer Entre_Dimmer "Dimmer [%d %%]" <light> (gEntre, gCeilingLight) { zwave="58:command=SWITCH_MULTILEVEL,restore_last_value=true" }
-Number Entre_Dimmer_Power "Dimmer förbrukning [%.1f W]" (gEntre, gPower) {zwave="58:1:command=meter,meter_scale=E_W"} 
-Number Entre_Dimmer_Energy "Dimmer total förbrukning [%.2f KWh]" (gEntre, gEnergy) {zwave="58:1:command=meter,meter_scale=E_KWh"}
-Switch Entre_Dimmer_Reset "Dimmer förbrukning återställning" (gEnergyReset) {zwave="58:1:command=meter,meter_reset=true", autoupdate="false"}
+Dimmer Entre_Dimmer "Dimmer [%d %%]" <light> (gEntre, gCeilingLight) { zwave="59:command=SWITCH_MULTILEVEL,restore_last_value=true" }
+Number Entre_Dimmer_Power "Dimmer förbrukning [%.1f W]" (gEntre, gPower) {zwave="59:1:command=meter,meter_scale=E_W"} 
+Number Entre_Dimmer_Energy "Dimmer total förbrukning [%.2f KWh]" (gEntre, gEnergy) {zwave="59:1:command=meter,meter_scale=E_KWh"}
+Switch Entre_Dimmer_Reset "Dimmer förbrukning återställning" (gEnergyReset) {zwave="59:1:command=meter,meter_reset=true", autoupdate="false"}
 
 /* Fjärrkontroll  Node 28 */
 
