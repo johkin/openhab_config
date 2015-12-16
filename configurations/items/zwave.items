@@ -47,10 +47,22 @@ Switch Guestroom_Light_Window "Belysning fönster" <light> (gGuestRoom, gPointLi
 Switch Guestroom_Light_Vitrine "Belysning vitrinskåp" <light> (gGuestRoom, gPointLight, All_Lights_FirstFloor, All_Lights, gFirstFloorLights) { zwave="19:command=switch_binary" }
 
 /* Dusch */
-Dimmer Shower_Dimmer "Dimmer [%d %%]" <light> (gShower, gCeilingLight) { zwave="16:command=SWITCH_MULTILEVEL,restore_last_value=true" }
-Number Shower_Dimmer_Power "Dimmer förbrukning [%.1f W]" (gShower, gPxower) {zwave="16:command=meter,meter_scale=E_W"} 
-Number Shower_Dimmer_Energy "Dimmer total förbrukning [%.2f KWh]" (gShower, gEnergy) {zwave="16:command=meter,meter_scale=E_KWh"}
-Switch Shower_Dimmer_Reset "Dimmer förbrukning återställning" (gEnergyReset) {zwave="16:command=meter,meter_reset=true", autoupdate="false"}
+Dimmer Shower_Dimmer "Dimmer [%d %%]" <light> (gShower, gCeilingLight) { zwave="63:command=SWITCH_MULTILEVEL,restore_last_value=true" }
+Number Shower_Dimmer_Power "Dimmer förbrukning [%.1f W]" (gShower, gPxower) {zwave="63:command=meter,meter_scale=E_W"} 
+Number Shower_Dimmer_Energy "Dimmer total förbrukning [%.2f KWh]" (gShower, gEnergy) {zwave="63:command=meter,meter_scale=E_KWh"}
+Switch Shower_Dimmer_Reset "Dimmer förbrukning återställning" (gEnergyReset) {zwave="63:command=meter,meter_reset=true", autoupdate="false"}
+
+Switch Shower_Mirror_Light "Belysning spegel" <light> (gShower, gPointLight) { zwave="64:1:command=switch_binary" }
+Number Shower_Mirror_Power "Belysning spegel förbrukning [%.1f W]" (gShower, gPxower) {zwave="64:1:command=meter,meter_scale=E_W"} 
+Number Shower_Mirror_Energy "Belysning spegel total förbrukning [%.2f KWh]" (gShower, gEnergy) {zwave="64:1:command=meter,meter_scale=E_KWh"}
+Switch Shower_Mirror_Reset "Belysning spegel förbrukning återställning" (gEnergyReset) {zwave="64:1:command=meter,meter_reset=true", autoupdate="false"}
+
+Switch Shower_Bench_Light "Belysning bänk" <light> (gShower, gPointLight) { zwave="64:2:command=switch_binary" }
+Number Shower_Bench_Power "Belysning bänk förbrukning [%.1f W]" (gShower, gPxower) {zwave="64:2:command=meter,meter_scale=E_W"} 
+Number Shower_Bench_Energy "Belysning bänk total förbrukning [%.2f KWh]" (gShower, gEnergy) {zwave="64:2:command=meter,meter_scale=E_KWh"}
+Switch Shower_Bench_Reset "Belysning bänk förbrukning återställning" (gEnergyReset) {zwave="64:2:command=meter,meter_reset=true", autoupdate="false"}
+
+
 
 Contact Shower_Motion_Sensor "Rörelsesensor" (gShower, gMotionSensorIndoor) { zwave="15:command=sensor_binary" }
 Number Shower_Temp_Sensor "Temperatur [%.1f °C]" <temperature> (gShower, gTempSensor) { zwave="15:command=sensor_multilevel,sensor_type=1" }
@@ -112,18 +124,16 @@ Number Livingroom_Light_Sensor "Ljussensor [%d lx]" <solarplant> (gLivingRoom, g
 Number Livingroom_Motion_Sensor_Battery "Batteri [%d %%]" (gLivingRoom, gBattery)  { zwave="32:command=battery" }
 
 /* Badrum */
-Switch Bathroom_Mirror_Light "Belysning spegel" <light> (gBath, gCeilingLight) { zwave="54:0:command=switch_binary" }
-Number Bathroom_Mirror_Power "Belysning spegel förbrukning [%.1f W]" (gBath, gPxower) {zwave="54:0:command=meter,meter_scale=E_W"} 
-Number Bathroom_Mirror_Energy "Belysning spegel total förbrukning [%.2f KWh]" (gBath, gEnergy) {zwave="54:0:command=meter,meter_scale=E_KWh"}
-Switch Bathroom_Mirror_Reset "Belysning spegel förbrukning återställning" (gEnergyReset) {zwave="54:0:command=meter,meter_reset=true", autoupdate="false"}
+Switch Bathroom_Mirror_Light "Belysning spegel" <light> (gBath, gPointLight) { zwave="54:1:command=switch_binary" }
+Number Bathroom_Mirror_Power "Belysning spegel förbrukning [%.1f W]" (gBath, gPxower) {zwave="54:1:command=meter,meter_scale=E_W"} 
+Number Bathroom_Mirror_Energy "Belysning spegel total förbrukning [%.2f KWh]" (gBath, gEnergy) {zwave="54:1:command=meter,meter_scale=E_KWh"}
+Switch Bathroom_Mirror_Reset "Belysning spegel förbrukning återställning" (gEnergyReset) {zwave="54:1:command=meter,meter_reset=true", autoupdate="false"}
 
-Dimmer Bathroom_Dimmer "Dimmer [%d %%]" <light>
-/* 
-Dimmer Bathroom_Dimmer "Dimmer [%d %%]" <light> (gBath, gCeilingLight) { zwave="60:command=SWITCH_MULTILEVEL,restore_last_value=true" }
-Number Bathroom_Dimmer_Power "Dimmer förbrukning [%.1f W]" (gBath, gPxower) {zwave="60:1:command=meter,meter_scale=E_W"} 
-Number Bathroom_Dimmer_Energy "Dimmer total förbrukning [%.2f KWh]" (gBath, gEnergy) {zwave="60:1:command=meter,meter_scale=E_KWh"}
-Switch Bathroom_Dimmer_Reset "Dimmer förbrukning återställning" (gEnergyReset) {zwave="60:1:command=meter,meter_reset=true", autoupdate="false"}
-*/
+Dimmer Bathroom_Dimmer "Dimmer [%d %%]" <light> (gBath, gCeilingLight) { zwave="61:command=SWITCH_MULTILEVEL,restore_last_value=true" }
+Number Bathroom_Dimmer_Power "Dimmer förbrukning [%.1f W]" (gBath, gPxower) {zwave="61:0:command=meter,meter_scale=E_W"} 
+Number Bathroom_Dimmer_Energy "Dimmer total förbrukning [%.2f KWh]" (gBath, gEnergy) {zwave="61:0:command=meter,meter_scale=E_KWh"}
+Switch Bathroom_Dimmer_Reset "Dimmer förbrukning återställning" (gEnergyReset) {zwave="61:0:command=meter,meter_reset=true", autoupdate="false"}
+
 Contact Bathroom_Motion_Sensor "Rörelsesensor" (gBath, gMotionSensorIndoor) { zwave="39:command=sensor_binary" }
 Number Bathroom_Temp_Sensor "Temperatur [%.1f °C]" <temperature> (gBath, gTempSensor) { zwave="39:command=sensor_multilevel,sensor_type=1" }
 Number Bathroom_Light_Sensor "Ljussensor [%d lx]" <solarplant> (gBath, gLightSensor) { zwave="39:command=sensor_multilevel,sensor_type=3" }
@@ -189,15 +199,15 @@ Switch FrontSide_Christmas_Lights "Julbelysning" <outdoorlight> (gFrontside, gCh
 
 
 /* Outside back */
-Switch BackSide_Light_Switch "Belysning baksida" <outdoorlight> (gBackside, gOutsideLights, All_Lights_Outdoor) { zwave="11:1:command=switch_binary" } 
-Number BackSide_Light_Power "Belysning baksida förbrukning [%.1f W]" (gBackside, gPower) { zwave="11:1:command=meter,meter_scale=E_W" }
-Number BackSide_Light_Energy "Belysning baksida total förbrukning [%.2f KWh]" (gBackside, gEnergy) {zwave="11:1:command=meter,meter_scale=E_KWh"}
-Switch BackSide_Light_Reset "Belysning baksida förbrukning återställning" (gEnergyReset) {zwave="11:1:command=meter,meter_reset=true", autoupdate="false"}
+Switch BackSide_Light_Switch "Belysning baksida" <outdoorlight> (gBackside, gOutsideLights, All_Lights_Outdoor) { zwave="62:1:command=switch_binary" } 
+Number BackSide_Light_Power "Belysning baksida förbrukning [%.1f W]" (gBackside, gPower) { zwave="62:1:command=meter,meter_scale=E_W" }
+Number BackSide_Light_Energy "Belysning baksida total förbrukning [%.2f KWh]" (gBackside, gEnergy) {zwave="62:1:command=meter,meter_scale=E_KWh"}
+Switch BackSide_Light_Reset "Belysning baksida förbrukning återställning" (gEnergyReset) {zwave="62:1:command=meter,meter_reset=true", autoupdate="false"}
 
-Switch BackSide_Outlet_Switch "Uttag baksida" <light> (gBackside, gOutlet, gChristmasLight) { zwave="11:2:command=switch_binary" } 
-Number BackSide_Outlet_Power "Uttag baksida förbrukning [%.1f W]" (gBackside, gPower) { zwave="11:2:command=meter,meter_scale=E_W" }
-Number BackSide_Outlet_Energy "Uttag baksida total förbrukning [%.2f KWh]" (gBackside, gEnergy) {zwave="11:2:command=meter,meter_scale=E_KWh"}
-Switch BackSide_Outlet_Reset "Uttag baksida förbrukning återställning" (gEnergyReset) {zwave="11:2:command=meter,meter_reset=true", autoupdate="false"}
+Switch BackSide_Outlet_Switch "Uttag baksida" <light> (gBackside, gOutlet, gChristmasLight) { zwave="62:2:command=switch_binary" } 
+Number BackSide_Outlet_Power "Uttag baksida förbrukning [%.1f W]" (gBackside, gPower) { zwave="62:2:command=meter,meter_scale=E_W" }
+Number BackSide_Outlet_Energy "Uttag baksida total förbrukning [%.2f KWh]" (gBackside, gEnergy) {zwave="62:2:command=meter,meter_scale=E_KWh"}
+Switch BackSide_Outlet_Reset "Uttag baksida förbrukning återställning" (gEnergyReset) {zwave="62:2:command=meter,meter_reset=true", autoupdate="false"}
 
 Number BackSide_Temp_Sensor "Temperatur [%.1f °C]" <temperature> (gBackside, gTempSensor) { zwave="34:command=sensor_multilevel,sensor_type=1" }
 Number BackSide_Light_Sensor "Ljusstyrka [%d lx]" <solarplant> (gBackside, gLightSensor) { zwave="34:command=sensor_multilevel,sensor_type=3" }
