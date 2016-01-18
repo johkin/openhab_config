@@ -46,6 +46,7 @@ DateTime Date "Datum [%1$tA, %1$td.%1$tm.%1$tY]" <calendar>	{ ntp="Europe/Stockh
 Switch Guestroom_Light_Window "Belysning fönster" <light> (gGuestRoom, gPointLight, All_Lights_FirstFloor, All_Lights, gFirstFloorLights) { zwave="17:command=switch_binary" }
 Switch Guestroom_Light_Vitrine "Belysning vitrinskåp" <light> (gGuestRoom, gPointLight, All_Lights_FirstFloor, All_Lights, gFirstFloorLights) { zwave="19:command=switch_binary" }
 
+
 /* Dusch */
 Dimmer Shower_Dimmer "Dimmer [%d %%]" <light> (gShower, gCeilingLight) { zwave="65:command=SWITCH_MULTILEVEL,restore_last_value=true" }
 Number Shower_Dimmer_Power "Dimmer förbrukning [%.1f W]" (gShower, gPxower) {zwave="65:command=meter,meter_scale=E_W"} 
@@ -66,6 +67,7 @@ Contact Shower_Motion_Sensor "Rörelsesensor" (gShower, gMotionSensorIndoor) { z
 Number Shower_Temp_Sensor "Temperatur [%.1f °C]" <temperature> (gShower, gTempSensor) { zwave="15:command=sensor_multilevel,sensor_type=1" }
 Number Shower_Light_Sensor "Ljussensor [%d lx]" <solarplant> (gShower, gLightSensor) { zwave="15:command=sensor_multilevel,sensor_type=3" }
 Number Shower_Motion_Sensor_Battery "Batteri [%d %%]" (gShower, gBattery)  { zwave="15:command=battery" }
+
 
 /* Allrum */
 Dimmer Allroom_Wall_Dimmer "Belysning hylla [%d %%]" <light> (gAllRoom,gPointLight, All_Lights_FirstFloor, All_Lights, gFirstFloorLights) { zwave="2:command=SWITCH_MULTILEVEL,restore_last_value=true" } 
@@ -99,6 +101,7 @@ Number Bedroom_Window_Light_Power "Belysning fönster förbrukning [%.1f W]" (gB
 Number Bedroom_Window_Light_Energy "Belysning fönster total förbrukning [%.2f KWh]" (gBedRoom, gEnergy) {zwave="20:command=meter,meter_scale=E_KWh"}
 Switch Bedroom_Window_Light_Reset "Belysning fönster förbrukning återställning" (gEnergyReset) {zwave="20:command=meter,meter_reset=true", autoupdate="false"}
 
+
 /* Vardagsrum */
 Dimmer Livingroom_Window_Tv_Light "Belysning fönster, tv [%d %%]" <light> (gLivingRoom, gPointLight, All_Lights_GroundFloor, All_Lights) { zwave="43:command=SWITCH_MULTILEVEL,restore_last_value=true" }
 Number Livingroom_Window_Tv_Light_Power "Belysning fönster, tv förbrukning [%.1f W]" (gLivingRoom, gPxower) {zwave="43:command=meter,meter_scale=E_W"} 
@@ -115,11 +118,11 @@ Number Livingroom_Window_Light_2_Power "Belysning fönster, soffa förbrukning [
 Number Livingroom_Window_Light_2_Energy "Belysning fönster, soffa total förbrukning [%.2f KWh]" (gLivingRoom, gEnergy) {zwave="49:command=meter,meter_scale=E_KWh"}
 Switch Livingroom_Window_Light_2_Reset "Belysning fönster, soffa förbrukning återställning" (gEnergyReset) {zwave="49:command=meter,meter_reset=true", autoupdate="false"}
 
-
 Contact Livingroom_Motion_Sensor "Rörelsesensor" (gLivingRoom, gMotionSensorIndoor) { zwave="32:command=sensor_binary" }
 Number Livingroom_Temp_Sensor "Temperatur [%.1f °C]" <temperature> (gLivingRoom, gTempSensor) { zwave="32:command=sensor_multilevel,sensor_type=1" }
 Number Livingroom_Light_Sensor "Ljussensor [%d lx]" <solarplant> (gLivingRoom, gLightSensor) { zwave="32:command=sensor_multilevel,sensor_type=3" }
 Number Livingroom_Motion_Sensor_Battery "Batteri [%d %%]" (gLivingRoom, gBattery)  { zwave="32:command=battery" }
+
 
 /* Badrum */
 Switch Bathroom_Mirror_Light "Belysning spegel" <light> (gBath, gPointLight) { zwave="54:1:command=switch_binary" }
@@ -136,6 +139,7 @@ Contact Bathroom_Motion_Sensor "Rörelsesensor" (gBath, gMotionSensorIndoor) { z
 Number Bathroom_Temp_Sensor "Temperatur [%.1f °C]" <temperature> (gBath, gTempSensor) { zwave="39:command=sensor_multilevel,sensor_type=1" }
 Number Bathroom_Light_Sensor "Ljussensor [%d lx]" <solarplant> (gBath, gLightSensor) { zwave="39:command=sensor_multilevel,sensor_type=3" }
 Number Bathroom_Motion_Sensor_Battery "Batteri [%d %%]" (gBath, gBattery)  { zwave="39:command=battery" }
+
 
 /* Kök */
 Switch Kitchen_Window_Light "Belysning fönster" <light> (gKitchen, gPointLight, All_Lights_GroundFloor, All_Lights) { zwave="25:command=switch_binary" }
@@ -163,9 +167,6 @@ Dimmer Entre_Dimmer "Dimmer [%d %%]" <light> (gEntre, gCeilingLight) { zwave="59
 Number Entre_Dimmer_Power "Dimmer förbrukning [%.1f W]" (gEntre, gPower) {zwave="59:1:command=meter,meter_scale=E_W"} 
 Number Entre_Dimmer_Energy "Dimmer total förbrukning [%.2f KWh]" (gEntre, gEnergy) {zwave="59:1:command=meter,meter_scale=E_KWh"}
 Switch Entre_Dimmer_Reset "Dimmer förbrukning återställning" (gEnergyReset) {zwave="59:1:command=meter,meter_reset=true", autoupdate="false"}
-
-/* Fjärrkontroll  Node 28 */
-
 
 /* Fjärrkontroll Gen5 Node 31*/
 Switch KF1_B1Short "KFOB Short Button 1" (gKeyFobGen5) { zwave="31:command=SCENE_ACTIVATION,scene=1, state=1" }
