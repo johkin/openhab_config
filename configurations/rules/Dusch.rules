@@ -32,8 +32,16 @@ then
 		
 		if (lastUpdate.plus(delayPeriod).beforeNow) {
 			if (Shower_Dimmer.state != 0) {
-				logDebug("dusch", "Släcker belysning")
+				logDebug("dusch", "Släcker dimmer")
 				sendCommand(Shower_Dimmer, OFF)	
+			}
+			if (Shower_Bench_Light.state == ON) {
+				logDebug("dusch", "Släcker bänkbelysning")
+				sendCommand(Shower_Bench_Light, OFF)	
+			}
+			if (Shower_Mirror_Light.state == ON) {
+				logDebug("dusch", "Släcker spegelbelysning")
+				sendCommand(Shower_Mirror_Light, OFF)	
 			}
 		}	
 	}

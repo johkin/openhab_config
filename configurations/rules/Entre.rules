@@ -8,7 +8,7 @@ val Integer nightLevel = 10
 val Integer dayLevelHigh = 100
 val Integer dayLevelLow = 25
 val Integer minutesHighOn = 10
-val Integer minutesLowOn = 60
+val Integer minutesLowOn = 120
 val Integer minLightLevel = 90
 
 var Integer level
