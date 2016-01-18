@@ -62,8 +62,6 @@ Number Shower_Bench_Power "Belysning bänk förbrukning [%.1f W]" (gShower, gPxo
 Number Shower_Bench_Energy "Belysning bänk total förbrukning [%.2f KWh]" (gShower, gEnergy) {zwave="64:2:command=meter,meter_scale=E_KWh"}
 Switch Shower_Bench_Reset "Belysning bänk förbrukning återställning" (gEnergyReset) {zwave="64:2:command=meter,meter_reset=true", autoupdate="false"}
 
-
-
 Contact Shower_Motion_Sensor "Rörelsesensor" (gShower, gMotionSensorIndoor) { zwave="15:command=sensor_binary" }
 Number Shower_Temp_Sensor "Temperatur [%.1f °C]" <temperature> (gShower, gTempSensor) { zwave="15:command=sensor_multilevel,sensor_type=1" }
 Number Shower_Light_Sensor "Ljussensor [%d lx]" <solarplant> (gShower, gLightSensor) { zwave="15:command=sensor_multilevel,sensor_type=3" }
