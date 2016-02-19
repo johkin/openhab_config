@@ -4,7 +4,7 @@ import org.openhab.core.library.types.DecimalType
 import org.openhab.core.library.types.DateTimeType
 import org.openhab.core.library.items.SwitchItem
 
-val Integer nightLevel = 10
+val Integer nightLevel = 6
 val Integer dayLevelHigh = 100
 val Integer dayLevelLow = 25
 val Integer minutesHighOn = 10
@@ -25,33 +25,21 @@ then
 	}
 end	
 
-rule "Entre, Släck med schema"
+rule "Entre, Justera ljusstyrka vid ändring av läge"
 when
-	Time cron "0 */5 * ? * *"
+	Item Mode changed
 then
-	if (Entre_Motion_Sensor.state == CLOSED && Entre_Dimmer.state != 0) {
-		logDebug("entre", "Kontrollera senaste rörelse {}", Entre_Motion_Sensor.lastUpdate)
-		val lastUpdate = new DateTime(Entre_Motion_Sensor.lastUpdate)
-		
-		val Period offPeriod = switch Mode.state {
-			case 0 : new Period().withMinutes(minutesLowOn)
-			case 1 : new Period().withMinutes(minutesHighOn)
-			case 2 : new Period().withMinutes(minutesLowOn)
-			default : new Period().withMinutes(minutesLowOn)
-		}
-		val Period decreasePeriod = switch Mode.state {
-			case 0 : new Period().withMinutes(minutesHighOn)
-			default : null
-		}
-		if (lastUpdate.plus(offPeriod).beforeNow) {
-			logDebug("entre", "Släcker belysning")
-			sendCommand(Entre_Dimmer, OFF)	
-		} else if (decreasePeriod != null && lastUpdate.plus(decreasePeriod).beforeNow) {
-			if (Entre_Dimmer.state > dayLevelLow) {
-				logDebug("entre", "Sänker belysning till {}", dayLevelLow)
-				sendCommand(Entre_Dimmer, dayLevelLow)	
-			}
-		}	
+	logDebug("entre", "Justera ljusstyrka Mode.state {}", Mode.state)
+	level = switch (Mode.state) {
+		case 0: dayLevelHigh  
+		case 1: nightLevel
+		case 2: dayLevelLow
+		case 3: dayLevelHigh
+	}
+	logDebug("entre", "Justera ljusstyrka level {}", level)
+	logDebug("entre", "Justera ljusstyrka Entre_Dimmer.state {}", Entre_Dimmer.state)
+	if (Entre_Dimmer.state != 0) {
+		sendCommand(Entre_Dimmer, level)	
 	}
 end
 
@@ -96,21 +84,33 @@ then
 	}
 end
 
-rule "Entre, Justera ljusstyrka vid ändring av läge"
+rule "Entre, Släck med schema"
 when
-	Item Mode changed
+	Time cron "0 */5 * ? * *"
 then
-	logDebug("entre", "Justera ljusstyrka Mode.state {}", Mode.state)
-	level = switch (Mode.state) {
-		case 0: dayLevelHigh  
-		case 1: nightLevel
-		case 2: dayLevelLow
-		case 3: dayLevelHigh
-	}
-	logDebug("entre", "Justera ljusstyrka level {}", level)
-	logDebug("entre", "Justera ljusstyrka Entre_Dimmer.state {}", Entre_Dimmer.state)
-	if (Entre_Dimmer.state != 0) {
-		sendCommand(Entre_Dimmer, level)	
+	if (Entre_Motion_Sensor.state == CLOSED && Entre_Dimmer.state != 0) {
+		logDebug("entre", "Kontrollera senaste rörelse {}", Entre_Motion_Sensor.lastUpdate)
+		val lastUpdate = new DateTime(Entre_Motion_Sensor.lastUpdate)
+		
+		val Period offPeriod = switch Mode.state {
+			case 0 : new Period().withMinutes(minutesLowOn)
+			case 1 : new Period().withMinutes(minutesHighOn)
+			case 2 : new Period().withMinutes(minutesLowOn)
+			default : new Period().withMinutes(minutesLowOn)
+		}
+		val Period decreasePeriod = switch Mode.state {
+			case 0 : new Period().withMinutes(minutesHighOn)
+			default : null
+		}
+		if (lastUpdate.plus(offPeriod).beforeNow) {
+			logDebug("entre", "Släcker belysning")
+			sendCommand(Entre_Dimmer, OFF)	
+		} else if (decreasePeriod != null && lastUpdate.plus(decreasePeriod).beforeNow) {
+			if (Entre_Dimmer.state > dayLevelLow) {
+				logDebug("entre", "Sänker belysning till {}", dayLevelLow)
+				sendCommand(Entre_Dimmer, dayLevelLow)	
+			}
+		}	
 	}
 end
 
