@@ -53,14 +53,14 @@ Number Shower_Dimmer_Power "Dimmer förbrukning [%.1f W]" (gShower, gPxower) {zw
 Number Shower_Dimmer_Energy "Dimmer total förbrukning [%.2f KWh]" (gShower, gEnergy) {zwave="66:command=meter,meter_scale=E_KWh"}
 Switch Shower_Dimmer_Reset "Dimmer förbrukning återställning" (gEnergyReset) {zwave="66:command=meter,meter_reset=true", autoupdate="false"}
 
-Switch Shower_Mirror_Light "Belysning spegel" <light> (gShower, gPointLight) { zwave="64:1:command=switch_binary" }
-Number Shower_Mirror_Power "Belysning spegel förbrukning [%.1f W]" (gShower, gPxower) {zwave="64:1:command=meter,meter_scale=E_W"} 
-Number Shower_Mirror_Energy "Belysning spegel total förbrukning [%.2f KWh]" (gShower, gEnergy) {zwave="64:1:command=meter,meter_scale=E_KWh"}
+Switch Shower_Mirror_Light "Belysning spegel" <light> (gShower, gPointLight) { zwave="64:1:command=switch_binary,refresh_interval=300" }
+Number Shower_Mirror_Power "Belysning spegel förbrukning [%.1f W]" (gShower, gPxower) {zwave="64:1:command=meter,meter_scale=E_W,refresh_interval=300"} 
+Number Shower_Mirror_Energy "Belysning spegel total förbrukning [%.2f KWh]" (gShower, gEnergy) {zwave="64:1:command=meter,meter_scale=E_KWh,refresh_interval=300"}
 Switch Shower_Mirror_Reset "Belysning spegel förbrukning återställning" (gEnergyReset) {zwave="64:1:command=meter,meter_reset=true", autoupdate="false"}
 
-Switch Shower_Bench_Light "Belysning bänk" <light> (gShower, gPointLight) { zwave="64:2:command=switch_binary" }
-Number Shower_Bench_Power "Belysning bänk förbrukning [%.1f W]" (gShower, gPxower) {zwave="64:2:command=meter,meter_scale=E_W"} 
-Number Shower_Bench_Energy "Belysning bänk total förbrukning [%.2f KWh]" (gShower, gEnergy) {zwave="64:2:command=meter,meter_scale=E_KWh"}
+Switch Shower_Bench_Light "Belysning bänk" <light> (gShower, gPointLight) { zwave="64:2:command=switch_binary,refresh_interval=300" }
+Number Shower_Bench_Power "Belysning bänk förbrukning [%.1f W]" (gShower, gPxower) {zwave="64:2:command=meter,meter_scale=E_W,refresh_interval=300"} 
+Number Shower_Bench_Energy "Belysning bänk total förbrukning [%.2f KWh]" (gShower, gEnergy) {zwave="64:2:command=meter,meter_scale=E_KWh,refresh_interval=300"}
 Switch Shower_Bench_Reset "Belysning bänk förbrukning återställning" (gEnergyReset) {zwave="64:2:command=meter,meter_reset=true", autoupdate="false"}
 
 Contact Shower_Motion_Sensor "Rörelsesensor" (gShower, gMotionSensorIndoor) { zwave="15:command=sensor_binary" }
