@@ -1,0 +1,83 @@
+import org.joda.time.*
+import org.openhab.Presencel.script.actions.Timer
+import org.openhab.core.library.types.DecimalType
+import org.openhab.core.library.types.DateTimeType
+import org.openhab.core.library.items.SwitchItem
+
+rule "Presence, Initiering"
+when
+	System started
+then
+
+	if (now.getHourOfDay() > 5 || now.getHourOfDay() < 22) {
+		logDebug("presence", "Ändrar närvaro till dag.")
+		sendCommand(Presence, 0)
+	} else if (Presence.state == 2 || Presence.state == 3) {
+		logDebug("presence", "Ändrar närvaro till natt.")
+		sendCommand(Presence, 1)
+	}
+end
+
+
+rule "Presence, Registrera rörelse"
+when
+	Item gMotionSensorIndoor changed
+then
+
+	val listOfMotionSensorsTripped = gMotionSensorIndoor.allMembers
+		.filter([sensor | sensor.state == CLOSED])
+		
+	if (!listOfMotionSensorsTripped.empty) {
+		if (now.getHourOfDay() > 5 && now.getHourOfDay() < 22) {
+			if (Mode.state != 0) {
+				logDebug("mode", "Ändrar närvaro till dag.")
+				sendCommand(Mode, 0)	
+			}
+		} else if (Mode.state == 2 || Mode.state == 3) {
+			logDebug("mode", "Ändrar närvaro till natt.")
+			sendCommand(Mode, 1)
+		}
+	}
+end
+
+rule "Presence, Kontrollera senaste rörelse"
+when
+	Time cron "0 */15 * ? * *"
+then
+
+	val Period period = new Period().withMinutes(30)
+
+	val listOfMotionSensorsNotTripped = gMotionSensorIndoor.allMembers
+		.map([sensor | 
+			logDebug("presence", "Senaste rörelse {}, {}", sensor.name, sensor.lastUpdate)
+			new DateTime(sensor.lastUpdate)
+		])
+		.filter([lastUpdate | lastUpdate.plus(period).afterNow])
+		
+	logDebug("presence", "Antal sensorer som inte rört sig sedan {},  {}", now.minus(period), listOfMotionSensorsNotTripped.size)
+		
+	if (listOfMotionSensorsNotTripped.empty) {
+		if (Presence.state == 0) {
+			if (now.getHourOfDay() > 22 || now.getHourOfDay() < 5) {
+				logDebug("presence", "Ändrar närvaro till natt.")
+				sendCommand(Presence, 1)
+			} else {
+				logDebug("presence", "Ändrar närvaro till borta.")
+				sendCommand(Presence, 2)
+			}
+		}
+	}
+end
+
+rule "Presence, Kontrollera senaste närvaroändring"
+when
+	Time cron "0 0 7,19 ? * *"
+then
+	logDebug("presence", "Senaste ändring av närvaro {}", Presence.lastUpdate)
+	if (Presence.state != 2) {
+		if (Presence.lastUpdate.before(now.minusDays(1).toDate)) {
+			logDebug("presence", "Ändrar närvaro till semester.")
+			sendCommand(Presence, 2)
+		}	
+	}
+end

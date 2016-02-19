@@ -4,13 +4,13 @@ import org.openhab.core.library.items.SwitchItem
 import org.openhab.core.items.GenericItem
 import java.util.*
 
-/* Modes 0=HOME, 1=NIGHT, 2=AWAY 3=Vacation*/
+/* Presence, 0=HOME, 1=NIGHT, 2=AWAY 3=Vacation*/
 
 val List<SwitchItem> pointLights = new ArrayList<SwitchItem>()
 
 rule "IndoorLights, Tänd belysning vid hemma"
 when 
-	Item Mode changed to 0
+	Item Presence changed to 0
 then
 	logDebug("IndoorLights", "Antal lampor att tända {}", pointLights.size)
 	pointLights.forEach[
@@ -22,7 +22,7 @@ end
 
 rule "IndoorLights, Släck belysning vid borta"
 when 
-	Item Mode changed to 2
+	Item Presence changed to 2
 then
 	pointLights.clear()
 	gPointLight.allMembers.forEach[
@@ -51,11 +51,13 @@ then
 			light.sendCommand(OFF)
 		}
 	]
+	/*
 	gCeilingLight.allMembers.forEach[
 		light | 
 		if (light.state != OFF) {
 			light.sendCommand(OFF)
 		}
 	]
+	*/
 	pointLights.clear()
 end

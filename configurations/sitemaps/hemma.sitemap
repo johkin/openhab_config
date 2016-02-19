@@ -2,7 +2,8 @@ sitemap hemma label="Hemma"
 {
 	
 	Frame label="Närvaro" {
-			Selection item=Mode mappings=[0="Hemma", 1="Natt", 2="Borta", 3="Semester"] label="Läge" icon="present" 		
+			Selection item=Presence mappings=[0="Hemma", 1="Natt", 2="Borta", 3="Semester"] label="Närvaro" icon="present"
+			Selection item=Mode mappings=[0="Dag", 1="Natt", 2="Mys", 3="Städning"] label="Läge" icon="present" 		
 		
 	}
 	Frame label="Belysning" {

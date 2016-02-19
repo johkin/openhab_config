@@ -4,7 +4,7 @@ import org.openhab.core.library.types.DecimalType
 import org.openhab.core.library.types.DateTimeType
 import org.openhab.core.library.items.SwitchItem
 
-rule "Initiering"
+rule "Mode, Initiering"
 when
 	System started
 then
@@ -16,69 +16,19 @@ then
 		logDebug("mode", "Ändrar läge till natt.")
 		sendCommand(Mode, 1)
 	}
-
 end
 
 
-rule "Registrera rörelse"
+rule "Mode, Följ ändring av närvaro"
 when
-	Item gMotionSensorIndoor changed
+	Item Presence changed
 then
 
-	val listOfMotionSensorsTripped = gMotionSensorIndoor.allMembers
-		.filter([sensor | sensor.state == CLOSED])
-		
-	if (!listOfMotionSensorsTripped.empty) {
-		if (now.getHourOfDay() > 5 && now.getHourOfDay() < 22) {
-			if (Mode.state != 0) {
-				logDebug("mode", "Ändrar läge till dag.")
-				sendCommand(Mode, 0)	
-			}
-		} else if (Mode.state == 2 || Mode.state == 3) {
-			logDebug("mode", "Ändrar läge till natt.")
-			sendCommand(Mode, 1)
-		}
-	}
-end
-
-rule "Kontrollera senaste rörelse"
-when
-	Time cron "0 */15 * ? * *"
-then
-
-	val Period period = new Period().withMinutes(30)
-
-	val listOfMotionSensorsNotTripped = gMotionSensorIndoor.allMembers
-		.map([sensor | 
-			logDebug("mode", "Senaste rörelse {}, {}", sensor.name, sensor.lastUpdate)
-			new DateTime(sensor.lastUpdate)
-		])
-		.filter([lastUpdate | lastUpdate.plus(period).afterNow])
-		
-	logDebug("mode", "Antal sensorer som inte rört sig sedan {},  {}", now.minus(period), listOfMotionSensorsNotTripped.size)
-		
-	if (listOfMotionSensorsNotTripped.empty) {
-		if (Mode.state == 0) {
-			if (now.getHourOfDay() > 22 || now.getHourOfDay() < 5) {
-				logDebug("mode", "Ändrar läge till natt.")
-				sendCommand(Mode, 1)
-			} else {
-				logDebug("mode", "Ändrar läge till borta.")
-				sendCommand(Mode, 2)
-			}
-		} 
-	}
-end
-
-rule "Kontrollera senaste lägesändring"
-when
-	Time cron "0 0 7,19 ? * *"
-then
-	logDebug("mode", "Senaste ändring av läge {}", Mode.lastUpdate)
-	if (Mode.state != 3) {
-		if (Mode.lastUpdate.before(now.minusDays(1).toDate)) {
-			logDebug("mode", "Ändrar läge till semester.")
-			sendCommand(Mode, 3)
-		}	
+	if (Presence.state == 0) {
+		// Hemma -> Dag
+		sendCommand(Mode, 0);
+	} else if (Presence.state == 1) {
+		// Natt -> Natt
+		sendCommand(Mode, 1);
 	}
 end

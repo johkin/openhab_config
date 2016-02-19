@@ -17,10 +17,11 @@ rule "Entre, Initiering"
 when
 	System started
 then
-	if (Mode.state == 1) {
-		level = nightLevel
-	} else {
-		level = dayLevelHigh
+	level = switch (Mode.state) {
+		case 0: dayLevelHigh  
+		case 1: nightLevel
+		case 2: dayLevelLow
+		default: dayLevelHigh
 	}
 end	
 
@@ -28,32 +29,29 @@ rule "Entre, Släck med schema"
 when
 	Time cron "0 */5 * ? * *"
 then
-	if (Entre_Motion_Sensor.state == CLOSED) {
+	if (Entre_Motion_Sensor.state == CLOSED && Entre_Dimmer.state != 0) {
 		logDebug("entre", "Kontrollera senaste rörelse {}", Entre_Motion_Sensor.lastUpdate)
-		val Period delayPeriodHigh = new Period().withMinutes(minutesHighOn)
-		val Period delayPeriodLow = new Period().withMinutes(minutesLowOn)
 		val lastUpdate = new DateTime(Entre_Motion_Sensor.lastUpdate)
-		if (Mode.state == 0) {
-			if (lastUpdate.plus(delayPeriodLow).beforeNow) {
-				if (Entre_Dimmer.state != 0) {
-					logDebug("entre", "Släcker belysning")
-					sendCommand(Entre_Dimmer, OFF)	
-				}
-			} else if (lastUpdate.plus(delayPeriodHigh).beforeNow) {
-				if (Entre_Dimmer.state != 0 && Entre_Dimmer.state > dayLevelLow) {
-					logDebug("entre", "Sänker belysning till {}", dayLevelLow)
-					sendCommand(Entre_Dimmer, dayLevelLow)	
-				}
-			}
-		} else {
-			if (lastUpdate.plus(delayPeriodHigh).beforeNow) {
-				if (Entre_Dimmer.state != 0) {
-					logDebug("entre", "Släcker belysning")
-					sendCommand(Entre_Dimmer, OFF)	
-				}
-			}
+		
+		val Period offPeriod = switch Mode.state {
+			case 0 : new Period().withMinutes(minutesLowOn)
+			case 1 : new Period().withMinutes(minutesHighOn)
+			case 2 : new Period().withMinutes(minutesLowOn)
+			default : new Period().withMinutes(minutesLowOn)
 		}
-			
+		val Period decreasePeriod = switch Mode.state {
+			case 0 : new Period().withMinutes(minutesHighOn)
+			default : null
+		}
+		if (lastUpdate.plus(offPeriod).beforeNow) {
+			logDebug("entre", "Släcker belysning")
+			sendCommand(Entre_Dimmer, OFF)	
+		} else if (decreasePeriod != null && lastUpdate.plus(decreasePeriod).beforeNow) {
+			if (Entre_Dimmer.state > dayLevelLow) {
+				logDebug("entre", "Sänker belysning till {}", dayLevelLow)
+				sendCommand(Entre_Dimmer, dayLevelLow)	
+			}
+		}	
 	}
 end
 
@@ -64,7 +62,7 @@ then
 	logDebug("entre", "Entre_Motion_Sensor.state {}", Entre_Motion_Sensor.state)
 	logDebug("entre", "Entre_Dimmer.state {}", Entre_Dimmer.state)
 	if (Entre_Light_Sensor.state <= minLightLevel) {
-		if (Entre_Dimmer.state == dayLevelLow) {
+		if (Mode.state == 0 && Entre_Dimmer.state == dayLevelLow) {
 			level == dayLevelHigh
 			logDebug("entre", "Ökar belysning: {}", level)
 			sendCommand(Entre_Dimmer, level)
@@ -84,7 +82,7 @@ then
 	logDebug("entre", "Entre_Dimmer.state {}", Entre_Dimmer.state)
 	if (Entre_Light_Sensor.state <= minLightLevel) {
 		if (Entre_Motion_Sensor.state == OPEN) {
-			if (Entre_Dimmer.state == dayLevelLow) {
+			if (Mode.state == 0 && Entre_Dimmer.state == dayLevelLow) {
 				level == dayLevelHigh
 				logDebug("entre", "Ökar belysning: {}", level)
 				sendCommand(Entre_Dimmer, level)
@@ -103,10 +101,11 @@ when
 	Item Mode changed
 then
 	logDebug("entre", "Justera ljusstyrka Mode.state {}", Mode.state)
-	if (Mode.state == 1) {
-		level = nightLevel
-	} else {
-		level = dayLevelHigh
+	level = switch (Mode.state) {
+		case 0: dayLevelHigh  
+		case 1: nightLevel
+		case 2: dayLevelLow
+		case 3: dayLevelHigh
 	}
 	logDebug("entre", "Justera ljusstyrka level {}", level)
 	logDebug("entre", "Justera ljusstyrka Entre_Dimmer.state {}", Entre_Dimmer.state)
@@ -115,16 +114,14 @@ then
 	}
 end
 
-rule "Entre, Avsluta timer om belysning släcks"
+rule "Entre, Lagra nivå vid ändring"
 when 
 	Item Entre_Dimmer changed
 then
 	
 	logDebug("entre", "Entre_Dimmer.state {}", Entre_Dimmer.state)
-	if (Entre_Dimmer.state == 0 || Entre_Dimmer.state == dayLevelLow) {
-
-	} else {
+	if (Entre_Dimmer.state != 0 && Entre_Dimmer.state != dayLevelLow) {
 		level = (Entre_Dimmer.state as DecimalType).intValue
 		logDebug("entre", "Stored new dimmer level {}", level)
-	}
+	} 
 end

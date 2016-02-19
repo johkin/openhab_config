@@ -1,3 +1,5 @@
-/* Modes 0=HOME, 1=NIGHT, 2=AWAY 3=Vacation*/
-Number Mode "Mode:" <present>
-Number Previous_Mode
+/* Presence 0=Home, 1=Night, 2=Away, 3=Vacation*/
+Number Presence "Närvaro:" <present>
+
+/* Modes 0=Day, 1=NIGHT, 2=Cosy, 3=Cleaning*/
+Number Mode "Läge:" <present>
