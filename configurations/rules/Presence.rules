@@ -4,6 +4,7 @@ import org.openhab.core.library.types.DecimalType
 import org.openhab.core.library.types.DateTimeType
 import org.openhab.core.library.items.SwitchItem
 
+
 rule "Presence, Initiering"
 when
 	System started
