@@ -1,6 +1,7 @@
 import org.joda.time.*
 import org.openhab.core.library.types.DateTimeType
 import org.openhab.core.library.items.SwitchItem
+
 /*
  
 val Integer minutesOn = 120
