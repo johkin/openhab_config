@@ -124,6 +124,7 @@ Number Livingroom_Light_Sensor "Ljussensor [%d lx]" <solarplant> (gLivingRoom, g
 Number Livingroom_Motion_Sensor_Battery "Batteri [%d %%]" (gLivingRoom, gBattery)  { zwave="32:command=battery" }
 
 
+
 /* Badrum */
 Switch Bathroom_Mirror_Light "Belysning spegel" <light> (gBath, gPointLight) { zwave="54:1:command=switch_binary" }
 Number Bathroom_Mirror_Power "Belysning spegel förbrukning [%.1f W]" (gBath, gPxower) {zwave="54:1:command=meter,meter_scale=E_W"} 
