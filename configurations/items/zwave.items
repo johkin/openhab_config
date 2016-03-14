@@ -193,8 +193,8 @@ Number FrontSide_Humidity_Sensor "Luftfuktighet [%d %%]" (gFrontside, gHumidityS
 Number FrontSide_Sensor_Battery "Batteri [%d %%]"  (gFrontside, gBattery) { zwave="35:command=battery" }
 Contact FrontSide_Motion_Sensor "Rörelsesensor"  (gFrontside, gMotionSensorOutdoor) { zwave="35:command=sensor_binary" }
 
-Switch FrontSide_Engine_Heater "Motorvärmare" <heating> (gFrontside) { zwave="42:command=switch_binary" }
-Switch FrontSide_Christmas_Lights "Julbelysning" <outdoorlight> (gFrontside, gChristmasLight) { zwave="44:command=switch_binary" }
+// Switch FrontSide_Engine_Heater "Motorvärmare" <heating> (gFrontside) { zwave="42:command=switch_binary" }
+// Switch FrontSide_Christmas_Lights "Julbelysning" <outdoorlight> (gFrontside, gChristmasLight) { zwave="44:command=switch_binary" }
 
 
 /* Outside back */

@@ -1,7 +1,8 @@
 import org.joda.time.*
 import org.openhab.core.library.types.DateTimeType
 import org.openhab.core.library.items.SwitchItem
-
+/*
+ 
 val Integer minutesOn = 120
 val Integer minTemperature = 5
 
@@ -19,7 +20,7 @@ end
 
 rule "Framsida, stäng av motorvärmare"
 when
-	Time cron "0 */10 * ? * *"
+	Time cron "0 * / 10 * ? * *"
 then
 	if (FrontSide_Engine_Heater.state == ON) {
 		logDebug("motorvärmare", "Kontrollera senaste aktivitet {}", FrontSide_Engine_Heater.lastUpdate)
@@ -32,3 +33,5 @@ then
 		}
 	}
 end
+
+*/

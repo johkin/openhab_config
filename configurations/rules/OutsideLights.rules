@@ -141,6 +141,8 @@ then
 	}
 end
 
+/*
+
 rule "Utebelysning, tänd julbelysning"
 when
 	Item Sunset_Event changed to ON
@@ -156,3 +158,5 @@ then
 	logDebug("utebelysning", "Släcker julbelysning")
 	gChristmasLight.send(OFF)
 end
+ 
+*/
