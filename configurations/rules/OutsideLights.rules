@@ -2,6 +2,7 @@ import org.joda.time.*
 import org.openhab.core.library.types.DateTimeType
 import org.openhab.core.library.items.SwitchItem
 
+
 rule "Släck utebelysning om den är tänd av rörelse"
 when
 	Item Outdoor_Motion_Sensor_Active changed to OFF
