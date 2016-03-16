@@ -9,7 +9,6 @@ rule "Mode, Initiering"
 when
 	System started
 then
-
 	if (now.getHourOfDay() > 5 || now.getHourOfDay() < 22) {
 		logDebug("mode", "Ändrar läge till dag.")
 		sendCommand(Mode, 0)

@@ -30,13 +30,13 @@ then
 		
 	if (!listOfMotionSensorsTripped.empty) {
 		if (now.getHourOfDay() > 5 && now.getHourOfDay() < 22) {
-			if (Mode.state != 0) {
-				logDebug("mode", "Ändrar närvaro till dag.")
-				sendCommand(Mode, 0)	
+			if (Presence.state != 0) {
+				logDebug("presence", "Ändrar närvaro till dag.")
+				sendCommand(Presence, 0)	
 			}
-		} else if (Mode.state == 2 || Mode.state == 3) {
-			logDebug("mode", "Ändrar närvaro till natt.")
-			sendCommand(Mode, 1)
+		} else if (Presence.state == 2 || Presence.state == 3) {
+			logDebug("presence", "Ändrar närvaro till natt.")
+			sendCommand(Presence, 1)
 		}
 	}
 end

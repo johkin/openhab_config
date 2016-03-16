@@ -51,13 +51,5 @@ then
 			light.sendCommand(OFF)
 		}
 	]
-	/*
-	gCeilingLight.allMembers.forEach[
-		light | 
-		if (light.state != OFF) {
-			light.sendCommand(OFF)
-		}
-	]
-	*/
 	pointLights.clear()
 end
