@@ -18,8 +18,7 @@ then
 	}
 end
 
-
-rule "Mode, Följ ändring av närvaro"
+rule "Mode, Följ ändring av Presence"
 when
 	Item Presence changed
 then

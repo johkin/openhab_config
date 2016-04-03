@@ -4,12 +4,13 @@ import org.openhab.core.library.types.DecimalType
 import org.openhab.core.library.types.DateTimeType
 import org.openhab.core.library.items.SwitchItem
 
-val Integer nightLevel = 10
+val Integer nightLevel = 6
 val Integer dayLevel = 40
 val Integer minutesOn = 10
 
 var Integer level
 
+/* 
 rule "Badrum, Initiering"
 when
 	System started
@@ -23,7 +24,7 @@ end
 
 rule "Badrum, Släck med schema"
 when
-	Time cron "0 */5 * ? * *"
+// Fixa cron Time cron "0 * /5 * ? * *"
 then
 	if (Bathroom_Motion_Sensor.state == CLOSED) {
 		logDebug("badrum", "Kontrollera senaste rörelse {}", Bathroom_Motion_Sensor.lastUpdate)
@@ -86,3 +87,6 @@ then
 		logDebug("badrum", "Stored new dimmer level {}", level)
 	}
 end
+
+* 
+*/
