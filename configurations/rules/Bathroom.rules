@@ -11,7 +11,7 @@ val Integer minutesOn = 10
 var Integer level
 
  
-rule "Badrum, Initiering"
+rule "Bathroom, Initialization"
 when
 	System started
 then
@@ -22,68 +22,65 @@ then
 	}
 end	
 
-rule "Badrum, Släck med schema"
+rule "Bathroom, Turn off with schedule"
 when
-Time cron "0 * /5 * ? * *"
+Time cron "0 */5 * ? * *"
 then
 	if (Bathroom_Motion_Sensor.state == CLOSED) {
-		logDebug("badrum", "Kontrollera senaste rörelse {}", Bathroom_Motion_Sensor.lastUpdate)
+		logDebug("Bathroom", "Kontrollera senaste rörelse {}", Bathroom_Motion_Sensor.lastUpdate)
 		val Period delayPeriod = new Period().withMinutes(minutesOn)
 		val lastUpdate = new DateTime(Bathroom_Motion_Sensor.lastUpdate)
 		
 		if (lastUpdate.plus(delayPeriod).beforeNow) {
 			if (Bathroom_Dimmer.state != 0) {
-				logDebug("badrum", "Släcker dimmer")
+				logDebug("Bathroom", "Släcker dimmer")
 				sendCommand(Bathroom_Dimmer, OFF)	
 			}
 			if (Bathroom_Mirror_Light.state == ON) {
-				logDebug("badrum", "Släcker spegel")
+				logDebug("Bathroom", "Släcker spegel")
 				sendCommand(Bathroom_Mirror_Light, OFF)	
 			}
 		}	
 	}
 end
 
-rule "Badrum, Tänd dusch vid rörelse"
+rule "Bathroom, Turn on by movement"
 when
 	Item Bathroom_Motion_Sensor changed to OPEN
 then
-	logDebug("badrum", "Bathroom_Motion_Sensor.state {}", Bathroom_Motion_Sensor.state)
-	logDebug("badrum", "Bathroom_Dimmer.state {}", Bathroom_Dimmer.state)
+	logDebug("Bathroom", "Bathroom_Motion_Sensor.state {}", Bathroom_Motion_Sensor.state)
+	logDebug("Bathroom", "Bathroom_Dimmer.state {}", Bathroom_Dimmer.state)
 	if (Bathroom_Dimmer.state == 0){
-		logDebug("badrum", "Tänder belysning: {}", level)
+		logDebug("Bathroom", "Tänder belysning: {}", level)
 		sendCommand(Bathroom_Dimmer, level)	
 	}
 	
 end	
 
-rule "Badrum, Justera ljusstyrka vid ändring av läge"
+rule "Bathroom, Adjust level at change of Mode"
 when
 	Item Mode changed
 then
-	logDebug("badrum", "Justera ljusstyrka Mode.state {}", Mode.state)
+	logDebug("Bathroom", "Justera ljusstyrka Mode.state {}", Mode.state)
 	if (Mode.state == 1) {
 		level = nightLevel
 	} else {
 		level = dayLevel
 	}
-	logDebug("badrum", "Justera ljusstyrka level {}", level)
-	logDebug("badrum", "Justera ljusstyrka Bathroom_Dimmer.state {}", Bathroom_Dimmer.state)
+	logDebug("Bathroom", "Justera ljusstyrka level {}", level)
+	logDebug("Bathroom", "Justera ljusstyrka Bathroom_Dimmer.state {}", Bathroom_Dimmer.state)
 	if (Bathroom_Dimmer.state != 0) {
 		sendCommand(Bathroom_Dimmer, level)	
 	}
 end
 
-rule "Badrum, Avsluta timer om belysning släcks"
+rule "Bathroom, Store changed level"
 when 
 	Item Bathroom_Dimmer changed
 then
-	
-	logDebug("badrum", "Bathroom_Dimmer.state {}", Bathroom_Dimmer.state)
-	if (Bathroom_Dimmer.state == 0) {
-
-	} else {
+	logDebug("Bathroom", "Bathroom_Dimmer.state {}", Bathroom_Dimmer.state)
+	if (Bathroom_Dimmer.state != 0) {
 		level = (Bathroom_Dimmer.state as DecimalType).intValue
-		logDebug("badrum", "Stored new dimmer level {}", level)
+		logDebug("Bathroom", "Stored new dimmer level {}", level)
 	}
 end
