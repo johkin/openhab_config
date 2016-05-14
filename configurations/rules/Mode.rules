@@ -5,20 +5,20 @@ import org.openhab.core.library.types.DateTimeType
 import org.openhab.core.library.items.SwitchItem
 
 
-rule "Mode, Initiering"
+rule "Mode, Initialization"
 when
 	System started
 then
 	if (now.getHourOfDay() > 5 || now.getHourOfDay() < 22) {
-		logDebug("mode", "Ändrar läge till dag.")
+		logDebug("mode", "Changing Mode to day.")
 		sendCommand(Mode, 0)
 	} else if (Mode.state == 2 || Mode.state == 3) {
-		logDebug("mode", "Ändrar läge till natt.")
+		logDebug("mode", "Changing Mode to night.")
 		sendCommand(Mode, 1)
 	}
 end
 
-rule "Mode, Följ ändring av Presence"
+rule "Mode, Follow change of Presence"
 when
 	Item Presence changed
 then

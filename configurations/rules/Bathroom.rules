@@ -10,7 +10,7 @@ val Integer minutesOn = 10
 
 var Integer level
 
-/* 
+ 
 rule "Badrum, Initiering"
 when
 	System started
@@ -24,7 +24,7 @@ end
 
 rule "Badrum, Släck med schema"
 when
-// Fixa cron Time cron "0 * /5 * ? * *"
+Time cron "0 * /5 * ? * *"
 then
 	if (Bathroom_Motion_Sensor.state == CLOSED) {
 		logDebug("badrum", "Kontrollera senaste rörelse {}", Bathroom_Motion_Sensor.lastUpdate)
@@ -87,6 +87,3 @@ then
 		logDebug("badrum", "Stored new dimmer level {}", level)
 	}
 end
-
-* 
-*/

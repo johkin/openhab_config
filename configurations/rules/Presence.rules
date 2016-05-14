@@ -11,16 +11,15 @@ when
 then
 
 	if (now.getHourOfDay() > 5 || now.getHourOfDay() < 22) {
-		logDebug("presence", "Ändrar närvaro till dag.")
+		logDebug("presence", "Changing presence to day.")
 		sendCommand(Presence, 0)
 	} else if (Presence.state == 2 || Presence.state == 3) {
-		logDebug("presence", "Ändrar närvaro till natt.")
+		logDebug("presence", "Changing presence to night.")
 		sendCommand(Presence, 1)
 	}
 end
 
-
-rule "Presence, Registrera rörelse"
+rule "Presence, Register movement"
 when
 	Item gMotionSensorIndoor changed
 then
@@ -31,17 +30,17 @@ then
 	if (!listOfMotionSensorsTripped.empty) {
 		if (now.getHourOfDay() > 5 && now.getHourOfDay() < 22) {
 			if (Presence.state != 0) {
-				logDebug("presence", "Ändrar närvaro till dag.")
+				logDebug("presence", "Changing presence to day.")
 				sendCommand(Presence, 0)	
 			}
 		} else if (Presence.state == 2 || Presence.state == 3) {
-			logDebug("presence", "Ändrar närvaro till natt.")
+			logDebug("presence", "Changing presence to night.")
 			sendCommand(Presence, 1)
 		}
 	}
 end
 
-rule "Presence, Kontrollera senaste rörelse"
+rule "Presence, Check latest movement"
 when
 	Time cron "0 */15 * ? * *"
 then
@@ -50,34 +49,34 @@ then
 
 	val listOfMotionSensorsNotTripped = gMotionSensorIndoor.allMembers
 		.map([sensor | 
-			logDebug("presence", "Senaste rörelse {}, {}", sensor.name, sensor.lastUpdate)
+			logDebug("presence", "Latest movement {}, {}", sensor.name, sensor.lastUpdate)
 			new DateTime(sensor.lastUpdate)
 		])
 		.filter([lastUpdate | lastUpdate.plus(period).afterNow])
 		
-	logDebug("presence", "Antal sensorer som inte rört sig sedan {},  {}", now.minus(period), listOfMotionSensorsNotTripped.size)
+	logDebug("presence", "Number of sensors that hasn't moved since {},  {}", now.minus(period), listOfMotionSensorsNotTripped.size)
 		
 	if (listOfMotionSensorsNotTripped.empty) {
 		if (Presence.state == 0) {
 			if (now.getHourOfDay() > 22 || now.getHourOfDay() < 5) {
-				logDebug("presence", "Ändrar närvaro till natt.")
+				logDebug("presence", "Changing presence to night.")
 				sendCommand(Presence, 1)
 			} else {
-				logDebug("presence", "Ändrar närvaro till borta.")
+				logDebug("presence", "Changing presence to away.")
 				sendCommand(Presence, 2)
 			}
 		}
 	}
 end
 
-rule "Presence, Kontrollera senaste närvaroändring"
+rule "Presence, Check latest presence-change"
 when
 	Time cron "0 0 7,19 ? * *"
 then
-	logDebug("presence", "Senaste ändring av närvaro {}", Presence.lastUpdate)
+	logDebug("presence", "Latest change of presence {}", Presence.lastUpdate)
 	if (Presence.state != 2) {
 		if (Presence.lastUpdate.before(now.minusDays(1).toDate)) {
-			logDebug("presence", "Ändrar närvaro till semester.")
+			logDebug("presence", "Changing presence to vacation.")
 			sendCommand(Presence, 2)
 		}	
 	}
