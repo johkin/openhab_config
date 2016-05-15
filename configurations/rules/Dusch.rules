@@ -10,7 +10,7 @@ val Integer minutesOn = 10
 
 var Integer level
 
-rule "Dusch, Initiering"
+rule "Shower, Initialization"
 when
 	System started
 then
@@ -21,72 +21,70 @@ then
 	}
 end	
 
-rule "Dusch, Släck med schema"
+rule "Shower, Turn off by schedule"
 when
 	Time cron "0 */5 * ? * *"
 then
 	if (Shower_Motion_Sensor.state == CLOSED) {
-		logDebug("dusch", "Kontrollera senaste rörelse {}", Shower_Motion_Sensor.lastUpdate)
+		logDebug("Shower", "Check latest movement {}", Shower_Motion_Sensor.lastUpdate)
 		val Period delayPeriod = new Period().withMinutes(minutesOn)
 		val lastUpdate = new DateTime(Shower_Motion_Sensor.lastUpdate)
 		
 		if (lastUpdate.plus(delayPeriod).beforeNow) {
 			if (Shower_Dimmer.state != 0) {
-				logDebug("dusch", "Släcker dimmer")
+				logDebug("shower", "Turning off dimmer")
 				sendCommand(Shower_Dimmer, OFF)	
 			}
 			if (Shower_Bench_Light.state == ON) {
-				logDebug("dusch", "Släcker bänkbelysning")
+				logDebug("shower", "Turning off bench lights")
 				sendCommand(Shower_Bench_Light, OFF)	
 			}
 			if (Shower_Mirror_Light.state == ON) {
-				logDebug("dusch", "Släcker spegelbelysning")
+				logDebug("shower", "Turning off mirror ligths")
 				sendCommand(Shower_Mirror_Light, OFF)	
 			}
 		}	
 	}
 end
 
-rule "Dusch, Tänd dusch vid rörelse"
+rule "Shower, Turn on by movement"
 when
 	Item Shower_Motion_Sensor changed to OPEN
 then
-	logDebug("dusch", "Shower_Motion_Sensor.state {}", Shower_Motion_Sensor.state)
-	logDebug("dusch", "Shower_Dimmer.state {}", Shower_Dimmer.state)
+	logDebug("shower", "Shower_Motion_Sensor.state {}", Shower_Motion_Sensor.state)
+	logDebug("shower", "Shower_Dimmer.state {}", Shower_Dimmer.state)
 	if (Shower_Dimmer.state == 0){
-		logDebug("dusch", "Tänder belysning: {}", level)
+		logDebug("shower", "Turning on dimmer: {}", level)
 		sendCommand(Shower_Dimmer, level)	
 	}
 	
 end	
 
-rule "Dusch, Justera ljusstyrka vid ändring av läge"
+rule "Shower, Ajust level at change of Mode"
 when
 	Item Mode changed
 then
-	logDebug("dusch", "Justera ljusstyrka Mode.state {}", Mode.state)
+	logDebug("shower", "Adjust level, Mode.state {}", Mode.state)
 	if (Mode.state == 1) {
 		level = nightLevel
 	} else {
 		level = dayLevel
 	}
-	logDebug("dusch", "Justera ljusstyrka level {}", level)
-	logDebug("dusch", "Justera ljusstyrka Shower_Dimmer.state {}", Shower_Dimmer.state)
+	logDebug("shower", "Adjust level {}", level)
+	logDebug("shower", "Adjust level Shower_Dimmer.state {}", Shower_Dimmer.state)
 	if (Shower_Dimmer.state != 0) {
 		sendCommand(Shower_Dimmer, level)	
 	}
 end
 
-rule "Dusch, Avsluta timer om belysning släcks"
+rule "Shower, Store new level"
 when 
 	Item Shower_Dimmer changed
 then
 	
-	logDebug("dusch", "Shower_Dimmer.state {}", Shower_Dimmer.state)
-	if (Shower_Dimmer.state == 0) {
-
-	} else {
+	logDebug("shower", "Shower_Dimmer.state {}", Shower_Dimmer.state)
+	if (Shower_Dimmer.state != 0) {
 		level = (Shower_Dimmer.state as DecimalType).intValue
-		logDebug("dusch", "Stored new dimmer level {}", level)
+		logDebug("shower", "Stored new dimmer level {}", level)
 	}
 end

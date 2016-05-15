@@ -13,7 +13,7 @@ val Integer minLightLevel = 90
 
 var Integer level
 
-rule "Entre, Initiering"
+rule "Entre, Initialization"
 when
 	System started
 then
@@ -25,25 +25,25 @@ then
 	}
 end	
 
-rule "Entre, Justera ljusstyrka vid ändring av läge"
+rule "Entre, Adjust level at change of Mode"
 when
 	Item Mode changed
 then
-	logDebug("entre", "Justera ljusstyrka Mode.state {}", Mode.state)
+	logDebug("entre", "Adjust level Mode.state {}", Mode.state)
 	level = switch (Mode.state) {
 		case 0: dayLevelHigh  
 		case 1: nightLevel
 		case 2: dayLevelLow
 		case 3: dayLevelHigh
 	}
-	logDebug("entre", "Justera ljusstyrka level {}", level)
-	logDebug("entre", "Justera ljusstyrka Entre_Dimmer.state {}", Entre_Dimmer.state)
+	logDebug("entre", "Ajust level {}", level)
+	logDebug("entre", "Adjust level Entre_Dimmer.state {}", Entre_Dimmer.state)
 	if (Entre_Dimmer.state != 0) {
 		sendCommand(Entre_Dimmer, level)	
 	}
 end
 
-rule "Entre, Tänd entre vid rörelse"
+rule "Entre, Turn on lights by movement"
 when
 	Item Entre_Motion_Sensor changed to OPEN
 then
@@ -52,16 +52,16 @@ then
 	if (Entre_Light_Sensor.state <= minLightLevel) {
 		if (Mode.state == 0 && Entre_Dimmer.state == dayLevelLow) {
 			level == dayLevelHigh
-			logDebug("entre", "Ökar belysning: {}", level)
+			logDebug("entre", "Raise level: {}", level)
 			sendCommand(Entre_Dimmer, level)
 		} else if (Entre_Dimmer.state == 0){
-			logDebug("entre", "Tänder belysning: {}", level)
+			logDebug("entre", "Turning on lights: {}", level)
 			sendCommand(Entre_Dimmer, level)	
 		}	
 	}
 end
 
-rule "Entre, Tänd entre vid mörker"
+rule "Entre, Turn on lights when dark"
 when
 	Item Entre_Light_Sensor changed
 then
@@ -72,10 +72,10 @@ then
 		if (Entre_Motion_Sensor.state == OPEN) {
 			if (Mode.state == 0 && Entre_Dimmer.state == dayLevelLow) {
 				level == dayLevelHigh
-				logDebug("entre", "Ökar belysning: {}", level)
+				logDebug("entre", "Raise level to: {}", level)
 				sendCommand(Entre_Dimmer, level)
 			} else if (Entre_Dimmer.state == 0){
-				logDebug("entre", "Tänder belysning: {}", level)
+				logDebug("entre", "Turning on lights: {}", level)
 				sendCommand(Entre_Dimmer, level)	
 			}	
 		}
@@ -84,12 +84,12 @@ then
 	}
 end
 
-rule "Entre, Släck med schema"
+rule "Entre, Turn off by schedule"
 when
 	Time cron "0 */5 * ? * *"
 then
 	if (Entre_Motion_Sensor.state == CLOSED && Entre_Dimmer.state != 0) {
-		logDebug("entre", "Kontrollera senaste rörelse {}", Entre_Motion_Sensor.lastUpdate)
+		logDebug("entre", "Check latest movement {}", Entre_Motion_Sensor.lastUpdate)
 		val lastUpdate = new DateTime(Entre_Motion_Sensor.lastUpdate)
 		
 		val Period offPeriod = switch Mode.state {
@@ -103,18 +103,18 @@ then
 			default : null
 		}
 		if (lastUpdate.plus(offPeriod).beforeNow) {
-			logDebug("entre", "Släcker belysning")
+			logDebug("entre", "Turning off lights")
 			sendCommand(Entre_Dimmer, OFF)	
 		} else if (decreasePeriod != null && lastUpdate.plus(decreasePeriod).beforeNow) {
 			if (Entre_Dimmer.state > dayLevelLow) {
-				logDebug("entre", "Sänker belysning till {}", dayLevelLow)
+				logDebug("entre", "Lower level to {}", dayLevelLow)
 				sendCommand(Entre_Dimmer, dayLevelLow)	
 			}
 		}	
 	}
 end
 
-rule "Entre, Lagra nivå vid ändring"
+rule "Entre, Store new level"
 when 
 	Item Entre_Dimmer changed
 then
