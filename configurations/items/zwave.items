@@ -66,7 +66,6 @@ Number Shower_Temp_Sensor "Temperatur [%.1f °C]" <temperature> (gShower, gTempS
 Number Shower_Light_Sensor "Ljussensor [%d lx]" <solarplant> (gShower, gLightSensor) { zwave="15:command=sensor_multilevel,sensor_type=3" }
 Number Shower_Motion_Sensor_Battery "Batteri [%d %%]" (gShower, gBattery)  { zwave="15:command=battery" }
 
-
 /* Allrum */ 
 Switch Allroom_Window_Light_1 "Belysning fönster 1" <light> (gAllRoom, gPointLight, All_Lights_FirstFloor, All_Lights) { zwave="18:command=switch_binary" }
 Number Allroom_Window_Light_1_Power "Belysning fönster 1 förbrukning [%.1f W]" (gAllRoom, gPower) {zwave="18:command=meter,meter_scale=E_W"} 
@@ -79,6 +78,11 @@ Number Allroom_Window_Light_2_Energy "Belysning fönster 2 total förbrukning [%
 Switch Allroom_Window_Light_2_Reset "Belysning fönster 2 förbrukning återställning" (gEnergyReset) {zwave="51:command=meter,meter_reset=true", autoupdate="false"}
 
 Dimmer Allroom_Window_Light "Belysning glasboll [%d %%]" <light> (gAllRoom, gPointLight, All_Lights_FirstFloor, All_Lights) { zwave="23:command=SWITCH_MULTILEVEL,restore_last_value=true" }
+
+Switch Allroom_Hallway_Light "Belysning hall" <light> (gAllRoom, gPointLight, All_Lights_FirstFloor, All_Lights) { zwave="49:command=switch_binary" }
+Number Allroom_Hallway_Light_Power "Belysning hall förbrukning [%.1f W]" (gAllRoom, gPower) {zwave="49:command=meter,meter_scale=E_W"} 
+Number Allroom_Hallway_Light_Energy "Belysning hall total förbrukning [%.2f KWh]" (gAllRoom, gEnergy) {zwave="49:command=meter,meter_scale=E_KWh"}
+Switch Allroom_Hallway_Light_Reset "Belysning hall förbrukning återställning" (gEnergyReset) {zwave="49:command=meter,meter_reset=true", autoupdate="false"}
 
 Contact Allroom_Motion_Sensor "Rörelsesensor" (gAllRoom, gMotionSensorIndoor) { zwave="29:command=sensor_binary" }
 Number Allroom_Motion_Sensor_Battery "Batteri [%d %%]" (gAllRoom, gBattery)  { zwave="29:command=battery" }
@@ -108,11 +112,6 @@ Switch Livingroom_Window_Light "Belysning tv" <light> (gLivingRoom, gPointLight,
 Number Livingroom_Window_Light_Power "Belysning tv förbrukning [%.1f W]" (gLivingRoom, gPower) {zwave="22:command=meter,meter_scale=E_W"} 
 Number Livingroom_Window_Light_Energy "Belysning tv total förbrukning [%.2f KWh]" (gLivingRoom, gEnergy) {zwave="22:command=meter,meter_scale=E_KWh"}
 Switch Livingroom_Window_Light_Reset "Belysning tv förbrukning återställning" (gEnergyReset) {zwave="22:command=meter,meter_reset=true", autoupdate="false"}
-
-Switch Livingroom_Window_Light_2 "Belysning fönster, soffa" <light> (gLivingRoom, gPointLight, All_Lights_GroundFloor, All_Lights) { zwave="49:command=switch_binary" }
-Number Livingroom_Window_Light_2_Power "Belysning fönster, soffa förbrukning [%.1f W]" (gLivingRoom, gPower) {zwave="49:command=meter,meter_scale=E_W"} 
-Number Livingroom_Window_Light_2_Energy "Belysning fönster, soffa total förbrukning [%.2f KWh]" (gLivingRoom, gEnergy) {zwave="49:command=meter,meter_scale=E_KWh"}
-Switch Livingroom_Window_Light_2_Reset "Belysning fönster, soffa förbrukning återställning" (gEnergyReset) {zwave="49:command=meter,meter_reset=true", autoupdate="false"}
 
 Contact Livingroom_Motion_Sensor "Rörelsesensor" (gLivingRoom, gMotionSensorIndoor) { zwave="32:command=sensor_binary" }
 Number Livingroom_Temp_Sensor "Temperatur [%.1f °C]" <temperature> (gLivingRoom, gTempSensor) { zwave="32:command=sensor_multilevel,sensor_type=1" }

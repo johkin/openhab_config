@@ -5,7 +5,7 @@ import org.openhab.core.library.types.DateTimeType
 import org.openhab.core.library.items.SwitchItem
 
 val Integer nightLevel = 6
-val Integer dayLevel = 40
+val Integer dayLevel = 50
 val Integer minutesOn = 10
 
 var Integer level

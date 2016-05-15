@@ -8,11 +8,11 @@ import java.util.*
 
 val List<SwitchItem> pointLights = new ArrayList<SwitchItem>()
 
-rule "IndoorLights, Tänd belysning vid hemma"
+rule "IndoorLights, Turn on lights when home"
 when 
 	Item Presence changed to 0
 then
-	logDebug("IndoorLights", "Antal lampor att tända {}", pointLights.size)
+	logDebug("IndoorLights", "Number of lights to turn on {}", pointLights.size)
 	pointLights.forEach[
 		light | 
 		light.sendCommand(ON)
@@ -20,7 +20,7 @@ then
 	pointLights.clear()
 end
 
-rule "IndoorLights, Släck belysning vid borta"
+rule "IndoorLights, Turn off lights when away"
 when 
 	Item Presence changed to 2
 then
@@ -29,7 +29,7 @@ then
 		light | 
 		if (light.state != OFF) {
 			light.sendCommand(OFF)
-			logDebug("IndoorLights", "Lägger till lampa {}", light)
+			logDebug("IndoorLights", "Adding light {}", light)
 			pointLights.add(light as SwitchItem)
 		}
 	]
@@ -41,7 +41,7 @@ then
 	]
 end
 
-rule "IndoorLights, Släck belysning vid natt"
+rule "IndoorLights, Turn off lights when night"
 when 
 	Item Mode changed to 1
 then
