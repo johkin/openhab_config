@@ -1,5 +1,6 @@
 import org.joda.time.*
 import org.openhab.core.library.types.DateTimeType
+import org.openhab.core.library.types.PercentType
 import org.openhab.core.library.items.SwitchItem
 import org.openhab.core.items.GenericItem
 import java.util.*
@@ -27,11 +28,20 @@ then
 	pointLights.clear()
 	gPointLight.allMembers.forEach[
 		light | 
-		if (light.state != OFF) {
-			light.sendCommand(OFF)
-			logDebug("IndoorLights", "Adding light {}", light)
-			pointLights.add(light as SwitchItem)
+		if (light.acceptedCommandTypes.contains(PercentType.class)) {
+			if (light.state != PercentType.ZERO) {
+				light.sendCommand(OFF)
+				logDebug("IndoorLights", "Adding dimmer {}", light)
+				pointLights.add(light as SwitchItem)
+			}
+		} else {
+			if (light.state != OFF) {
+				light.sendCommand(OFF)
+				logDebug("IndoorLights", "Adding switch {}", light)
+				pointLights.add(light as SwitchItem)
+			}	
 		}
+		
 	]
 	gCeilingLight.allMembers.forEach[
 		light | 
