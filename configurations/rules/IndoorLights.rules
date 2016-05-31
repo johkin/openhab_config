@@ -28,8 +28,9 @@ then
 	pointLights.clear()
 	gPointLight.allMembers.forEach[
 		light | 
-		if (light.acceptedCommandTypes.contains(PercentType.class)) {
-			if (light.state != PercentType.ZERO) {
+		
+		if (light.state instanceof PercentType) {
+			if (light.state > 0) {
 				light.sendCommand(OFF)
 				logDebug("IndoorLights", "Adding dimmer {}", light)
 				pointLights.add(light as SwitchItem)
